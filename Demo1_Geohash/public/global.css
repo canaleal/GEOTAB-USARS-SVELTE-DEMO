@@ -1,0 +1,352 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+Pro:wght@300&display=swap');
+
+:root {
+	font-family: 'Poppins', sans-serif;
+  }
+  
+  html {
+	scroll-behavior: smooth;
+  }
+  
+  body {
+	color: black;
+	margin: 0;
+	padding: 0;
+  }
+  
+
+  main{
+	padding-left: 1rem; /* 16px */
+	padding-right: 1rem; /* 16px */
+
+	margin-top: 2.5rem; /* 40px */
+	margin-bottom: 2.5rem; /* 40px */
+  }
+ 
+  
+  h1, h2, h3, h4, h5, h6 {
+	font-family: 'Source Serif Pro', serif;
+  }
+  
+  .bg-green {
+	background-color: #007a3e;
+  }
+  
+  .bg-blue {
+	background-color: #4648a4;
+  }
+  
+  .bg-red {
+	background-color: #793434;
+  }
+  
+  .bg-smoke {
+	background-color: #f8f9f2;
+  }
+
+  .bg-dark{
+    background-color: #353535;
+  }
+
+
+.bg-dark-blue{
+  background-color: #00355a;
+}
+
+  
+  hr {
+	border: none;
+	height: 1px;
+	/* Set the hr color */
+	background-color: #E6E8DE;
+  }
+  
+  .ellipsis {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
+  }
+
+
+
+
+
+  
+
+/* Add a border and shadow to the rounded rectangle */
+.mapboxgl-popup-content {
+    border: 1px solid #323241;
+    box-shadow: 0px 2px 4px 2px rgba(0,0,0,.1)
+}
+
+/* Move the content above the :before element so rotated rectangle doesn't cover content */
+.mapboxgl-popup-content div {
+    position: relative;
+    z-index: 5;
+}
+
+/* This is the new tip */
+.mapboxgl-popup-content:before {
+    content: '';
+    position: absolute;
+    /* I've found 9px looks better than 10px */
+    top: -webkit-calc(100% - 9px);
+    top: calc(100% - 9px);
+    left: calc(50% - 10px);
+    height: 20px;
+    width: 20px;
+    background: white;
+    transform: rotate(45deg);
+    border-bottom: inherit;
+    border-right: inherit;
+    /* The shadow is translated down a bit so it doesn't show inside the pop-up */
+    box-shadow: 4px 4px 4px -1px rgba(0, 0, 0, 0.1);
+    z-index: 4;
+}
+
+/* Since the new tip is absolutely-positioned, it doesn't force the rectangle up on its own */
+.mapboxgl-popup {
+    margin-top: -10px;
+}
+
+/* Hide the old tip */
+.mapboxgl-popup-tip {
+    display: none;
+}
+
+.mapboxgl-popup-close-button{
+  
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  padding-top: 0.125rem;
+  padding-bottom: 0.125rem;
+  color: red;
+  font-size: x-large;
+  font-weight: bold;
+}
+
+
+
+
+
+
+
+
+.card {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: 3rem;
+  color: #fff;
+  height: 15rem;
+  width: 100%;
+  -webkit-transition: all 1s;
+  transition: all 1s;
+  overflow: hidden;
+  background-size: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.card-noHover {
+  pointer-events: none;
+}
+
+.card:hover {
+  -webkit-box-shadow: rgba(2, 8, 20, 0.1) 0px 0.35em 1.175em, rgba(2, 8, 20, 0.08) 0px 0.175em 0.5em;
+          box-shadow: rgba(2, 8, 20, 0.1) 0px 0.35em 1.175em, rgba(2, 8, 20, 0.08) 0px 0.175em 0.5em;
+  -webkit-transform: scale(1.03);
+          transform: scale(1.03);
+  cursor: pointer;
+  -webkit-filter: opacity(1) saturate(150%);
+          filter: opacity(1) saturate(150%);
+}
+
+.card-xs {
+  height: 10rem;
+}
+
+.card-sm {
+  height: 15rem;
+}
+
+.card-md {
+  height: 20rem;
+}
+
+.card-lg {
+  height: 25rem;
+}
+
+.card-xl {
+  height: 30rem;
+}
+
+.card-2xl {
+  height: 35rem;
+}
+
+.card-3xl {
+  height: 40rem;
+}
+
+.card-4xl {
+  height: 45rem;
+}
+
+.blur {
+  -webkit-filter: blur(8px);
+          filter: blur(8px);
+  -webkit-transition: all 1s;
+  transition: all 1s;
+}
+
+.blur:hover {
+  -webkit-filter: none;
+          filter: none;
+}
+
+.blur-none {
+  -webkit-filter: none;
+          filter: none;
+}
+
+.card-btn {
+  display: inline-block;
+  padding: 0.35em 1.2em;
+  text-align: left;
+  -webkit-transition: all 200ms;
+  transition: all 200ms;
+  border: 0.1em solid #000;
+}
+
+.card-btn:hover {
+  padding: 0.35em 2em;
+}
+
+
+.card-btn-blue {
+  color: white;
+  background-color: #4648a4;
+}
+
+.card-btn-blue:hover {
+  background-color: #2b2c73;
+}
+
+.card-btn-red{
+  color: white;
+  background-color: #d44343;
+}
+
+.card-btn-red:hover{
+  background-color: #b63636;
+}
+
+.card-btn-green {
+  color: white;
+  background-color: #007a3e;
+}
+
+.card-btn-green:hover {
+  background-color: #084828;
+}
+
+
+
+.slide-in-left {
+  -webkit-animation: slide-in-left 1s ease-in-out both;
+  animation: slide-in-left 1s ease-in-out both;
+  animation-delay: calc(var(--order) * 100ms);
+}
+
+/* ----------------------------------------------
+ * Generated by Animista on 2022-2-22 8:46:8
+ * Licensed under FreeBSD License.
+ * See http://animista.net/license for more info. 
+ * w: http://animista.net, t: @cssanimista
+ * ---------------------------------------------- */
+/**
+ * ----------------------------------------
+ * animation slide-in-left
+ * ----------------------------------------
+ */
+@-webkit-keyframes slide-in-left {
+  0% {
+    -webkit-transform: translateX(-1000px);
+    transform: translateX(-1000px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-in-left {
+  0% {
+    -webkit-transform: translateX(-1000px);
+    transform: translateX(-1000px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.slide-in-right {
+  -webkit-animation: slide-in-right 1s ease-in-out both;
+  animation: slide-in-right 1s ease-in-out both;
+  animation-delay: calc(var(--order) * 100ms);
+}
+
+/* ----------------------------------------------
+ * Generated by Animista on 2022-2-22 8:48:14
+ * Licensed under FreeBSD License.
+ * See http://animista.net/license for more info. 
+ * w: http://animista.net, t: @cssanimista
+ * ---------------------------------------------- */
+@-webkit-keyframes slide-in-right {
+  0% {
+    -webkit-transform: translateX(1000px);
+    transform: translateX(1000px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-in-right {
+  0% {
+    -webkit-transform: translateX(1000px);
+    transform: translateX(1000px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
