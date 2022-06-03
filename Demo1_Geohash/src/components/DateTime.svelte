@@ -1,6 +1,4 @@
 <script>
-	import { getCurrentDate } from 'utils/fetch-time';
-	import { getCurrentTime } from 'utils/fetch-time';
 </script>
 
 <section class="h-full rounded-lg shadow-xl  p-4">

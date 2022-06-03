@@ -2,7 +2,6 @@
 	import Navbar from "components/Navbar.svelte";
 	import Footer from "components/Footer.svelte";
 	import Map from "components/Map.svelte";
-	import Profile from "components/Profile.svelte";
 	import AttentionBar from "components/AttentionBar.svelte";
 	import DateTime from "components/DateTime.svelte";
 	import Layers from "components/Layers.svelte";
