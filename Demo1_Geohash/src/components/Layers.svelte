@@ -1,5 +1,4 @@
 <script>
-	export let mapStyle;
 	export let collectionList = [];
 
 	let toggleBool = 0;
@@ -44,24 +43,17 @@
 		}
 	}
 
-	function reset() {
-		toggleBool = 0;
-		toggleName = "Disable All";
-	}
-
-	// If the mapstyle changes, reset the entire layer menu
-	$: mapStyle && reset();
 </script>
 
-<section class="h-full rounded-lg shadow-xl p-4">
-	<p class=" my-1">Layers:</p>
+<section class="h-full rounded-lg shadow-xl p-4 text-sm">
+	<p class="font-bold my-1">Layers:</p>
 
 	{#if collectionList.length >= 1}
 		<div>
-			<button on:click={() => toggleAll()} class={`card-btn  text-sm ${toggleBool ? "card-btn-green" : "card-btn-red"}  w-full block my-1 rounded-lg`}> {toggleName} </button>
+			<button on:click={() => toggleAll()} class={`card-btn   ${toggleBool ? "card-btn-green" : "card-btn-red"}  w-full block my-1 rounded-lg`}> {toggleName} </button>
 			<div class="overflow-y-auto">
 				{#each collectionList as item}
-					<button on:click={() => toggleIsShown(item)} class={`card-btn w-full block text-sm ${item["isShown"] ? "card-btn-blue" : ""} my-1 rounded-lg `}>
+					<button on:click={() => toggleIsShown(item)} class={`card-btn w-full block ${item["isShown"] ? "card-btn-blue" : ""} my-1 rounded-lg `}>
 						{item["name"]}
 					</button>
 				{/each}
@@ -69,7 +61,7 @@
 		</div>
 	{:else}
  
-  <div class="bg-green-100 rounded-lg py-5 px-6 mb-4 text-base text-green-700" role="alert">
+  <div class="bg-green-100 rounded-lg py-5 px-6 mb-4 text-green-700" role="alert">
     Loading Data.
   </div>
 

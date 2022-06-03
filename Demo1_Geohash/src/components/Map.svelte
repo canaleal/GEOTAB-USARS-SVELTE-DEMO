@@ -7,6 +7,7 @@
 	// User ID passed from parent
 	export let collectionList;
 	export let mapStyle;
+	export let isReadyForStyleSwitching;
 	export let kingstonDetails;
 	let isDataLoaded = false;
 	let map;
@@ -22,85 +23,60 @@
 			let geohashLayerName = "Kingston_Geohash";
 			let geohashSourceName = "geohashSource";
 			let geohashData = await getDataWithAxios(Data.GEOHASH_URL);
-			tempList.push({ id: 2, type: "Polygon", isShown: true, name: geohashLayerName, layerName: geohashLayerName, sourceName: geohashSourceName });
-			tempList.push({ id: 3, type: "Polygon", isShown: true, name: geohashLayerName + " Outline", layerName: geohashLayerName + " Outline", sourceName: geohashSourceName });
+			tempList.push({ id: 2, type: "Polygon", isShown: false, name: geohashLayerName, layerName: geohashLayerName, sourceName: geohashSourceName, data: geohashData });
+			tempList.push({ id: 3, type: "Polygon", isShown: false, name: geohashLayerName + " Outline", layerName: geohashLayerName + " Outline", sourceName: geohashSourceName, data: geohashData });
 
-			// Neighbourhoods Data
-			let neighbourhoodsLayerName = "Neighbourhoods";
-			let neighbourhoodsSourceName = "neighbourhoodsSource";
-			let neighbourhoodsData = await getDataWithAxios(Data.NEIGHBOURHOODS_URL);
-			tempList.push({ id: 4, type: "Polygon", isShown: true, name: neighbourhoodsLayerName, layerName: neighbourhoodsLayerName, sourceName: neighbourhoodsSourceName });
-			tempList.push({ id: 5, type: "Polygon", isShown: true, name: neighbourhoodsLayerName + " Outline", layerName: neighbourhoodsLayerName + " Outline", sourceName: neighbourhoodsSourceName });
+			// // Neighbourhoods Data
+			// let neighbourhoodsLayerName = "Neighbourhoods";
+			// let neighbourhoodsSourceName = "neighbourhoodsSource";
+			// let neighbourhoodsData = await getDataWithAxios(Data.NEIGHBOURHOODS_URL);
+			// tempList.push({ id: 4, type: "Polygon", isShown: true, name: neighbourhoodsLayerName, layerName: neighbourhoodsLayerName, sourceName: neighbourhoodsSourceName, data:neighbourhoodsData });
+			// tempList.push({ id: 5, type: "Polygon", isShown: true, name: neighbourhoodsLayerName + " Outline", layerName: neighbourhoodsLayerName + " Outline", sourceName: neighbourhoodsSourceName, data:neighbourhoodsData });
 
-			let treesLayerName = "Trees";
-			let treesSourceName = "tressSource";
-			let treesData = await getDataWithAxios(Data.TREES_URL);
-			tempList.push({ id: 6, type: "Point", isShown: true, name: treesLayerName, layerName: treesLayerName, sourceName: treesSourceName });
+			// let treesLayerName = "Trees";
+			// let treesSourceName = "treesSource";
+			// let treesData = await getDataWithAxios(Data.TREES_URL);
+			// tempList.push({ id: 6, type: "Point", isShown: true, name: treesLayerName, layerName: treesLayerName, sourceName: treesSourceName, data:treesData });
 
 			collectionList = tempList;
 		} catch (e) {}
 	};
 
-	const addDataSources = async () => {
+	const getObjectFromListWhereKeyEquals = (list, key, value) => list.find((item) => item[key]);
+	const addDataSources = () => {
 		try {
-			let tempList = [];
+			const geohashList = collectionList[2];
+			map.addSource(geohashList.sourceName, {
+				type: "geojson",
+				data: geohashList.data,
+			});
 
-			tempList.push({ id: 0, type: "Polygon", isShown: true, name: "Buildings", layerName: "add-3d-buildings", sourceName: "building" });
-			tempList.push({ id: 1, type: "Polygon", isShown: true, name: "Sky Box", layerName: "sky", sourceName: "sky" });
+			// const neighbourhoodsList = collectionList[4]
+			// map.addSource(neighbourhoodsList.sourceName, {
+			// 	type: "geojson",
+			// 	data: neighbourhoodsList.data,
+			// });
 
-			try {
-				// Kingston geohash Data
-				let geohashLayerName = "Kingston_Geohash";
-				let geohashSourceName = "geohashSource";
-				let geohashData = await getDataWithAxios(Data.GEOHASH_URL);
-				map.addSource(geohashSourceName, {
-					type: "geojson",
-					data: geohashData,
-				});
-				tempList.push({ id: 2, type: "Polygon", isShown: true, name: geohashLayerName, layerName: geohashLayerName, sourceName: geohashSourceName });
-				tempList.push({ id: 3, type: "Polygon", isShown: true, name: geohashLayerName + " Outline", layerName: geohashLayerName + " Outline", sourceName: geohashSourceName });
-			} catch (e) {}
+			// const treesList = collectionList[6]
+			// map.addSource(treesList.sourceName, {
+			// 	type: "geojson",
+			// 	data: treesList.data,
+			// });
 
-			try {
-				// Neighbourhoods Data
-				let neighbourhoodsLayerName = "Neighbourhoods";
-				let neighbourhoodsSourceName = "neighbourhoodsSource";
-				let neighbourhoodsData = await getDataWithAxios(Data.NEIGHBOURHOODS_URL);
-				map.addSource(neighbourhoodsSourceName, {
-					type: "geojson",
-					data: neighbourhoodsData,
-				});
-
-				tempList.push({ id: 4, type: "Polygon", isShown: true, name: neighbourhoodsLayerName, layerName: neighbourhoodsLayerName, sourceName: neighbourhoodsSourceName });
-				tempList.push({ id: 5, type: "Polygon", isShown: true, name: neighbourhoodsLayerName + " Outline", layerName: neighbourhoodsLayerName + " Outline", sourceName: neighbourhoodsSourceName });
-			} catch (e) {}
-
-			try {
-				let treesLayerName = "Trees";
-				let treesSourceName = "tressSource";
-				let treesData = await getDataWithAxios(Data.TREES_URL);
-
-				map.addSource(treesSourceName, {
-					type: "geojson",
-					data: treesData,
-				});
-				tempList.push({ id: 6, type: "Point", isShown: true, name: treesLayerName, layerName: treesLayerName, sourceName: treesSourceName });
-			} catch (e) {}
-
-			collectionList = tempList;
 			isDataLoaded = true;
-			addLayers(collectionList);
+			addLayers();
 		} catch (e) {
-			console.log(e);
+			console.error(e);
 		}
 	};
 
-	const addLayers = (tempList) => {
-		addTerrainLayer(tempList[0]);
-		addBuildingLayer(tempList[1]);
-		addKingstonGeoHashLayer(tempList[2], tempList[3]);
-		addNeighbourhoodsLayer(tempList[4], tempList[5]);
-		addTreesLayer(tempList[6]);
+	const addLayers = () => {
+		addTerrainLayer(collectionList[0]);
+		addBuildingLayer(collectionList[1]);
+
+		// addNeighbourhoodsLayer(collectionList[4], collectionList[5]);
+		// addTreesLayer(collectionList[6]);
+		addKingstonGeoHashLayer(collectionList[2], collectionList[3]);
 	};
 
 	const addTerrainLayer = () => {
@@ -134,10 +110,10 @@
 			type: "fill-extrusion",
 			minzoom: 15,
 			paint: {
-				"fill-extrusion-color": "#aaa",
+				"fill-extrusion-color": "#dee7e7",
 				"fill-extrusion-height": ["interpolate", ["linear"], ["zoom"], 15, 0, 15.05, ["get", "height"]],
 				"fill-extrusion-base": ["interpolate", ["linear"], ["zoom"], 15, 0, 15.05, ["get", "min_height"]],
-				"fill-extrusion-opacity": 0.6,
+				"fill-extrusion-opacity": 1,
 			},
 		});
 	};
@@ -149,9 +125,35 @@
 			source: fillList.sourceName,
 			layout: {},
 			paint: {
-				"fill-color": "#fe1615", // blue color fill
-				"fill-opacity": 0.3,
+				"fill-color": "#008bac", // blue color fill
+				"fill-opacity": 0.7,
 			},
+		});
+		map.setLayoutProperty(fillList.layerName, "visibility", "none");
+
+		// When a click event occurs on a feature in the states layer,
+		// open a popup at the location of the click, with description
+		// HTML from the click event's properties.
+		map.on("click", fillList.layerName, (e) => {
+
+			let description = "";
+			const sliced = Object.fromEntries(Object.entries(e.features[0].properties).slice(0, 3));
+			for (const [key, value] of Object.entries(sliced)) {
+				description += `<span class="block font-bold">${key}</span><span class="block">${value}</span>`;
+			}
+			new mapboxgl.Popup().setLngLat(e.lngLat).setHTML(description).addTo(map);
+		});
+
+		// Change the cursor to a pointer when
+		// the mouse is over the states layer.
+		map.on("mouseenter", fillList.layerName, () => {
+			map.getCanvas().style.cursor = "pointer";
+		});
+
+		// Change the cursor back to a pointer
+		// when it leaves the states layer.
+		map.on("mouseleave", fillList.layerName, () => {
+			map.getCanvas().style.cursor = "";
 		});
 
 		map.addLayer({
@@ -160,10 +162,11 @@
 			source: outlineList.sourceName,
 			layout: {},
 			paint: {
-				"line-color": "#ffffff",
+				"line-color": "#0083b7",
 				"line-width": 1,
 			},
 		});
+		map.setLayoutProperty(outlineList.layerName, "visibility", "none");
 	};
 
 	const addNeighbourhoodsLayer = (fillList, outlineList) => {
@@ -177,6 +180,7 @@
 				"fill-opacity": ["case", ["boolean", ["feature-state", "hover"], false], 0.8, 0.5],
 			},
 		});
+		map.setLayoutProperty(fillList.layerName, "visibility", "none");
 
 		map.addLayer({
 			id: outlineList.layerName,
@@ -188,6 +192,7 @@
 				"line-width": 1,
 			},
 		});
+		map.setLayoutProperty(outlineList.layerName, "visibility", "none");
 
 		let hoveredStateId = null;
 		map.on("mousemove", fillList.layerName, (e) => {
@@ -233,6 +238,7 @@
 			},
 			"waterway-label"
 		);
+		map.setLayoutProperty(fillList.layerName, "visibility", "none");
 
 		// When a click event occurs on a feature in the places layer, open a popup at the
 		// location of the feature, with description HTML from its properties.
@@ -290,6 +296,7 @@
 	$: collectionList && isDataLoaded && addFilter();
 
 	const switchStyle = () => {
+		if (isReadyForStyleSwitching === false) return;
 		try {
 			map.setStyle("mapbox://styles/mapbox/" + mapStyle);
 		} catch (e) {}
@@ -297,6 +304,9 @@
 	$: mapStyle && isDataLoaded && switchStyle();
 
 	onMount(async () => {
+		// Get the initial Data
+		await fetchInitialMapData();
+
 		mapboxgl.accessToken = "pk.eyJ1IjoiY2FuYWxlYWwiLCJhIjoiY2t6NmgzdGd0MTBhcTJ3bXprNjM1a3NsbiJ9.umUsk2Ky68kLBFUa6PeAxA";
 		map = new mapboxgl.Map({
 			center: kingstonDetails.center,
@@ -318,13 +328,10 @@
 		map.addControl(new mapboxgl.FullscreenControl(), "bottom-right");
 		map.addControl(new mapboxgl.NavigationControl(), "bottom-right");
 
-		// map.on("load", () => {
-		// 	addDataSources();
-		// });
-
-		// map.on("style.load", function () {
-		// 	addDataSources();
-		// });
+		map.on("style.load", function () {
+			addDataSources();
+			addFilter();
+		});
 	});
 
 	onDestroy(() => {

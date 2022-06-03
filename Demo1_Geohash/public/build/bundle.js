@@ -24,14 +24,6 @@ var app = (function () {
     function safe_not_equal(a, b) {
         return a != a ? b == b : a !== b || ((a && typeof a === 'object') || typeof a === 'function');
     }
-    let src_url_equal_anchor;
-    function src_url_equal(element_src, url) {
-        if (!src_url_equal_anchor) {
-            src_url_equal_anchor = document.createElement('a');
-        }
-        src_url_equal_anchor.href = url;
-        return element_src === src_url_equal_anchor.href;
-    }
     function is_empty(obj) {
         return Object.keys(obj).length === 0;
     }
@@ -450,12 +442,12 @@ var app = (function () {
     			hr = element("hr");
     			attr_dev(p, "href", "#/");
     			attr_dev(p, "class", "text-white py-4 text-xl ");
-    			add_location(p, file$8, 5, 4, 124);
+    			add_location(p, file$8, 5, 2, 98);
     			attr_dev(div, "class", "flex items-center space-x-4");
-    			add_location(div, file$8, 4, 2, 77);
-    			attr_dev(nav, "class", "bg-blue py-4 px-5 sticky top-0 z-10");
+    			add_location(div, file$8, 4, 1, 53);
+    			attr_dev(nav, "class", "bg-dark px-5 ");
     			add_location(nav, file$8, 3, 0, 23);
-    			add_location(hr, file$8, 9, 0, 210);
+    			add_location(hr, file$8, 9, 0, 183);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -536,7 +528,7 @@ var app = (function () {
     	return child_ctx;
     }
 
-    // (75:6) {#each projectList as item}
+    // (75:3) {#each projectList as item}
     function create_each_block_2(ctx) {
     	let div;
     	let a;
@@ -554,10 +546,10 @@ var app = (function () {
     			attr_dev(a, "target", "_blank");
     			attr_dev(a, "rel", "noreferrer");
     			attr_dev(a, "class", "text-sm hover:underline");
-    			add_location(a, file$7, 76, 10, 1672);
+    			add_location(a, file$7, 76, 5, 1506);
     			attr_dev(div, "key", /*item*/ ctx[3].id);
     			attr_dev(div, "class", "my-2");
-    			add_location(div, file$7, 75, 8, 1628);
+    			add_location(div, file$7, 75, 4, 1467);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -575,14 +567,14 @@ var app = (function () {
     		block,
     		id: create_each_block_2.name,
     		type: "each",
-    		source: "(75:6) {#each projectList as item}",
+    		source: "(75:3) {#each projectList as item}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (84:6) {#each applicationToolsList as item}
+    // (84:3) {#each applicationToolsList as item}
     function create_each_block_1(ctx) {
     	let div;
     	let a;
@@ -600,10 +592,10 @@ var app = (function () {
     			attr_dev(a, "target", "_blank");
     			attr_dev(a, "rel", "noreferrer");
     			attr_dev(a, "class", "text-sm hover:underline");
-    			add_location(a, file$7, 85, 10, 2002);
+    			add_location(a, file$7, 85, 5, 1810);
     			attr_dev(div, "key", /*item*/ ctx[3].id);
     			attr_dev(div, "class", "my-2");
-    			add_location(div, file$7, 84, 8, 1958);
+    			add_location(div, file$7, 84, 4, 1771);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -621,14 +613,14 @@ var app = (function () {
     		block,
     		id: create_each_block_1.name,
     		type: "each",
-    		source: "(84:6) {#each applicationToolsList as item}",
+    		source: "(84:3) {#each applicationToolsList as item}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (94:6) {#each aboutList as item}
+    // (94:3) {#each aboutList as item}
     function create_each_block$2(ctx) {
     	let div;
     	let a;
@@ -646,10 +638,10 @@ var app = (function () {
     			attr_dev(a, "target", "_blank");
     			attr_dev(a, "class", "text-sm hover:underline");
     			attr_dev(a, "rel", "noreferrer");
-    			add_location(a, file$7, 95, 10, 2311);
+    			add_location(a, file$7, 95, 5, 2093);
     			attr_dev(div, "key", /*item*/ ctx[3].id);
     			attr_dev(div, "class", "my-2");
-    			add_location(div, file$7, 94, 8, 2267);
+    			add_location(div, file$7, 94, 4, 2054);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -667,7 +659,7 @@ var app = (function () {
     		block,
     		id: create_each_block$2.name,
     		type: "each",
-    		source: "(94:6) {#each aboutList as item}",
+    		source: "(94:3) {#each aboutList as item}",
     		ctx
     	});
 
@@ -779,7 +771,7 @@ var app = (function () {
     			p5.textContent = "Website Terms and Policies";
     			t15 = space();
     			p6 = element("p");
-    			p6.textContent = "If you require any more information or have any questions about our sites disclaimer, please feel free to\r\n        contact me by email at alexcanales766@gmail.com. The Disclaimer was generated with the help of the Disclaimer\r\n        Generator. All the information on this website - Showcase - is published in good faith and for general\r\n        information purpose only.";
+    			p6.textContent = "If you require any more information or have any questions about our sites disclaimer, please feel free to contact me by email at alexcanales766@gmail.com. The Disclaimer was generated with the\r\n\t\t\t\thelp of the Disclaimer Generator. All the information on this website - Showcase - is published in good faith and for general information purpose only.";
     			t17 = space();
     			div5 = element("div");
     			t18 = space();
@@ -788,44 +780,44 @@ var app = (function () {
     			p7.textContent = "License Terms";
     			t20 = space();
     			p8 = element("p");
-    			p8.textContent = "Welcome to the CAPSTONE API portal. The objective of this site is to make CAPSTONE data, including imagery,\r\n        eminently accessible to application developers.";
-    			add_location(hr, file$7, 68, 0, 1404);
+    			p8.textContent = "Welcome to the CAPSTONE API portal. The objective of this site is to make CAPSTONE data, including imagery, eminently accessible to application developers.";
+    			add_location(hr, file$7, 68, 0, 1256);
     			attr_dev(p0, "class", "font-bold");
-    			add_location(p0, file$7, 72, 6, 1541);
+    			add_location(p0, file$7, 72, 3, 1387);
     			attr_dev(div0, "class", "col-span-1 ");
-    			add_location(div0, file$7, 71, 4, 1508);
+    			add_location(div0, file$7, 71, 2, 1357);
     			attr_dev(p1, "class", "font-bold");
-    			add_location(p1, file$7, 82, 6, 1862);
+    			add_location(p1, file$7, 82, 3, 1682);
     			attr_dev(div1, "class", "col-span-1");
-    			add_location(div1, file$7, 81, 4, 1830);
+    			add_location(div1, file$7, 81, 2, 1653);
     			attr_dev(p2, "class", "font-bold");
-    			add_location(p2, file$7, 91, 6, 2192);
+    			add_location(p2, file$7, 91, 3, 1986);
     			attr_dev(div2, "class", "col-span-1 ");
-    			add_location(div2, file$7, 90, 4, 2159);
+    			add_location(div2, file$7, 90, 2, 1956);
     			attr_dev(div3, "class", "grid grid-cols-1 md:grid-cols-3 py-2");
-    			add_location(div3, file$7, 70, 2, 1452);
+    			add_location(div3, file$7, 70, 1, 1303);
     			attr_dev(p3, "class", "font-bold");
-    			add_location(p3, file$7, 103, 6, 2564);
+    			add_location(p3, file$7, 103, 3, 2330);
     			attr_dev(p4, "class", "font-bold text-xs my-2");
-    			add_location(p4, file$7, 104, 6, 2607);
+    			add_location(p4, file$7, 104, 3, 2370);
     			attr_dev(p5, "class", "font-bold text-xs my-2");
-    			add_location(p5, file$7, 105, 6, 2689);
+    			add_location(p5, file$7, 105, 3, 2449);
     			attr_dev(p6, "class", "text-xs my-2");
-    			add_location(p6, file$7, 107, 6, 2763);
+    			add_location(p6, file$7, 107, 3, 2520);
     			attr_dev(div4, "class", "col-span-1");
-    			add_location(div4, file$7, 102, 4, 2532);
+    			add_location(div4, file$7, 102, 2, 2301);
     			attr_dev(div5, "class", "col-span-1 py-2 ");
-    			add_location(div5, file$7, 115, 4, 3200);
+    			add_location(div5, file$7, 113, 2, 2924);
     			attr_dev(p7, "class", "font-bold");
-    			add_location(p7, file$7, 118, 6, 3272);
+    			add_location(p7, file$7, 116, 3, 2991);
     			attr_dev(p8, "class", "text-xs my-2");
-    			add_location(p8, file$7, 120, 6, 3320);
+    			add_location(p8, file$7, 118, 3, 3036);
     			attr_dev(div6, "class", "col-span-1");
-    			add_location(div6, file$7, 117, 4, 3240);
+    			add_location(div6, file$7, 115, 2, 2962);
     			attr_dev(div7, "class", "grid grid-cols-1 sm:grid-cols-3 mt-8");
-    			add_location(div7, file$7, 101, 2, 2476);
+    			add_location(div7, file$7, 101, 1, 2247);
     			attr_dev(footer, "class", "bg-smoke py-8 px-5");
-    			add_location(footer, file$7, 69, 0, 1412);
+    			add_location(footer, file$7, 69, 0, 1264);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -982,69 +974,69 @@ var app = (function () {
     	const projectList = [
     		{
     			id: 0,
-    			name: 'Mapping UI Github',
-    			link: 'https://github.com/canaleal/Capstone_Map_Client'
+    			name: "Mapping UI Github",
+    			link: "https://github.com/canaleal/Capstone_Map_Client"
     		},
     		{
     			id: 1,
-    			name: 'Pothole Object Detection',
-    			link: 'https://github.com/canaleal/PotholeObjectDetection'
+    			name: "Pothole Object Detection",
+    			link: "https://github.com/canaleal/PotholeObjectDetection"
     		},
     		{
     			id: 2,
-    			name: 'Project Capstone',
-    			link: 'https://github.com/canaleal/Capstone'
+    			name: "Project Capstone",
+    			link: "https://github.com/canaleal/Capstone"
     		}
     	];
 
     	const applicationToolsList = [
     		{
     			id: 0,
-    			name: 'Animista',
-    			link: 'https://animista.net/play/basic'
+    			name: "Animista",
+    			link: "https://animista.net/play/basic"
     		},
     		{
     			id: 1,
-    			name: 'Developer Icons',
-    			link: 'https://devicon.dev/'
+    			name: "Developer Icons",
+    			link: "https://devicon.dev/"
     		},
     		{
     			id: 2,
-    			name: 'Color Designer',
-    			link: 'https://colordesigner.io/tools'
+    			name: "Color Designer",
+    			link: "https://colordesigner.io/tools"
     		},
     		{
     			id: 3,
-    			name: 'Font Awesome',
-    			link: 'https://fontawesome.com/'
+    			name: "Font Awesome",
+    			link: "https://fontawesome.com/"
     		},
     		{
     			id: 4,
-    			name: 'Cool Backgrounds',
-    			link: 'https://coolbackgrounds.io/'
+    			name: "Cool Backgrounds",
+    			link: "https://coolbackgrounds.io/"
     		},
     		{
     			id: 5,
-    			name: 'Gradient Generator',
-    			link: 'https://cssgradient.io/'
+    			name: "Gradient Generator",
+    			link: "https://cssgradient.io/"
     		}
     	];
 
     	const aboutList = [
     		{
     			id: 0,
-    			name: 'Linkedin',
-    			link: 'https://www.linkedin.com/in/alex-canales'
+    			name: "Linkedin",
+    			link: "https://www.linkedin.com/in/alex-canales"
     		},
     		{
     			id: 1,
-    			name: 'Github',
-    			link: 'https://github.com/canaleal'
+    			name: "Github",
+    			link: "https://github.com/canaleal"
     		},
     		{
     			id: 2,
-    			name: 'Bitbucket',
-    			link: 'https://bitbucket.org/Canaleal/'
+    			name: "Bitbucket",
+    			link: "https://bitbucket.org/Canaleal/"
     		}
     	];
 
@@ -3118,7 +3110,7 @@ var app = (function () {
 
     /* src\components\Map.svelte generated by Svelte v3.48.0 */
 
-    const { Object: Object_1, console: console_1$2 } = globals;
+    const { Object: Object_1, console: console_1$1 } = globals;
     const file$6 = "src\\components\\Map.svelte";
 
     function create_fragment$7(ctx) {
@@ -3129,7 +3121,7 @@ var app = (function () {
     			div = element("div");
     			attr_dev(div, "id", "map");
     			attr_dev(div, "class", "h-96 md:h-full rounded-lg shadow-xl");
-    			add_location(div, file$6, 326, 0, 9633);
+    			add_location(div, file$6, 347, 0, 11046);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -3161,11 +3153,12 @@ var app = (function () {
     	validate_slots('Map', slots, []);
     	let { collectionList } = $$props;
     	let { mapStyle } = $$props;
+    	let { isReadyForStyleSwitching } = $$props;
     	let { kingstonDetails } = $$props;
     	let isDataLoaded = false;
     	let map;
 
-    	const addDataSources = async () => {
+    	const fetchInitialMapData = async () => {
     		try {
     			let tempList = [];
 
@@ -3187,100 +3180,80 @@ var app = (function () {
     				sourceName: "sky"
     			});
 
-    			try {
-    				// Kingston geohash Data
-    				let geohashLayerName = "Kingston_Geohash";
+    			// Kingston geohash Data
+    			let geohashLayerName = "Kingston_Geohash";
 
-    				let geohashSourceName = "geohashSource";
-    				let geohashData = await getDataWithAxios(Data.GEOHASH_URL);
-    				map.addSource(geohashSourceName, { type: "geojson", data: geohashData });
+    			let geohashSourceName = "geohashSource";
+    			let geohashData = await getDataWithAxios(Data.GEOHASH_URL);
 
-    				tempList.push({
-    					id: 2,
-    					type: "Polygon",
-    					isShown: true,
-    					name: geohashLayerName,
-    					layerName: geohashLayerName,
-    					sourceName: geohashSourceName
-    				});
+    			tempList.push({
+    				id: 2,
+    				type: "Polygon",
+    				isShown: false,
+    				name: geohashLayerName,
+    				layerName: geohashLayerName,
+    				sourceName: geohashSourceName,
+    				data: geohashData
+    			});
 
-    				tempList.push({
-    					id: 3,
-    					type: "Polygon",
-    					isShown: true,
-    					name: geohashLayerName + " Outline",
-    					layerName: geohashLayerName + " Outline",
-    					sourceName: geohashSourceName
-    				});
-    			} catch(e) {
-    				
-    			}
+    			tempList.push({
+    				id: 3,
+    				type: "Polygon",
+    				isShown: false,
+    				name: geohashLayerName + " Outline",
+    				layerName: geohashLayerName + " Outline",
+    				sourceName: geohashSourceName,
+    				data: geohashData
+    			});
 
-    			try {
-    				// Neighbourhoods Data
-    				let neighbourhoodsLayerName = "Neighbourhoods";
-
-    				let neighbourhoodsSourceName = "neighbourhoodsSource";
-    				let neighbourhoodsData = await getDataWithAxios(Data.NEIGHBOURHOODS_URL);
-
-    				map.addSource(neighbourhoodsSourceName, {
-    					type: "geojson",
-    					data: neighbourhoodsData
-    				});
-
-    				tempList.push({
-    					id: 4,
-    					type: "Polygon",
-    					isShown: true,
-    					name: neighbourhoodsLayerName,
-    					layerName: neighbourhoodsLayerName,
-    					sourceName: neighbourhoodsSourceName
-    				});
-
-    				tempList.push({
-    					id: 5,
-    					type: "Polygon",
-    					isShown: true,
-    					name: neighbourhoodsLayerName + " Outline",
-    					layerName: neighbourhoodsLayerName + " Outline",
-    					sourceName: neighbourhoodsSourceName
-    				});
-    			} catch(e) {
-    				
-    			}
-
-    			try {
-    				let treesLayerName = "Trees";
-    				let tressSourceName = "tressSource";
-    				let tressData = await getDataWithAxios(Data.TREES_URL);
-    				map.addSource(tressSourceName, { type: "geojson", data: tressData });
-
-    				tempList.push({
-    					id: 6,
-    					type: "Point",
-    					isShown: true,
-    					name: treesLayerName,
-    					layerName: treesLayerName,
-    					sourceName: tressSourceName
-    				});
-    			} catch(e) {
-    				
-    			}
-
+    			// // Neighbourhoods Data
+    			// let neighbourhoodsLayerName = "Neighbourhoods";
+    			// let neighbourhoodsSourceName = "neighbourhoodsSource";
+    			// let neighbourhoodsData = await getDataWithAxios(Data.NEIGHBOURHOODS_URL);
+    			// tempList.push({ id: 4, type: "Polygon", isShown: true, name: neighbourhoodsLayerName, layerName: neighbourhoodsLayerName, sourceName: neighbourhoodsSourceName, data:neighbourhoodsData });
+    			// tempList.push({ id: 5, type: "Polygon", isShown: true, name: neighbourhoodsLayerName + " Outline", layerName: neighbourhoodsLayerName + " Outline", sourceName: neighbourhoodsSourceName, data:neighbourhoodsData });
+    			// let treesLayerName = "Trees";
+    			// let treesSourceName = "treesSource";
+    			// let treesData = await getDataWithAxios(Data.TREES_URL);
+    			// tempList.push({ id: 6, type: "Point", isShown: true, name: treesLayerName, layerName: treesLayerName, sourceName: treesSourceName, data:treesData });
     			$$invalidate(0, collectionList = tempList);
-    			$$invalidate(3, isDataLoaded = true);
-    			addLayers(collectionList);
     		} catch(e) {
-    			console.log(e);
+    			
     		}
     	};
 
-    	const addLayers = tempList => {
-    		addTerrainLayer(tempList[0]);
-    		addBuildingLayer(tempList[1]);
-    		addKingstonGeoHashLayer(tempList[2], tempList[3]);
-    		addNeighbourhoodsLayer(tempList[4], tempList[5]);
-    		addTreesLayer(tempList[6]);
+    	const getObjectFromListWhereKeyEquals = (list, key, value) => list.find(item => item[key]);
+
+    	const addDataSources = () => {
+    		try {
+    			const geohashList = collectionList[2];
+    			map.addSource(geohashList.sourceName, { type: "geojson", data: geohashList.data });
+
+    			// const neighbourhoodsList = collectionList[4]
+    			// map.addSource(neighbourhoodsList.sourceName, {
+    			// 	type: "geojson",
+    			// 	data: neighbourhoodsList.data,
+    			// });
+    			// const treesList = collectionList[6]
+    			// map.addSource(treesList.sourceName, {
+    			// 	type: "geojson",
+    			// 	data: treesList.data,
+    			// });
+    			$$invalidate(4, isDataLoaded = true);
+
+    			addLayers();
+    		} catch(e) {
+    			console.error(e);
+    		}
+    	};
+
+    	const addLayers = () => {
+    		addTerrainLayer(collectionList[0]);
+    		addBuildingLayer(collectionList[1]);
+
+    		// addNeighbourhoodsLayer(collectionList[4], collectionList[5]);
+    		// addTreesLayer(collectionList[6]);
+    		addKingstonGeoHashLayer(collectionList[2], collectionList[3]);
     	};
 
     	const addTerrainLayer = () => {
@@ -3307,10 +3280,6 @@ var app = (function () {
     	};
 
     	const addBuildingLayer = () => {
-    		// Insert the layer beneath any symbol layer.
-    		// The 'building' layer in the Mapbox Streets
-    		// vector tileset contains building height data
-    		// from OpenStreetMap.
     		map.addLayer({
     			id: "add-3d-buildings",
     			source: "composite",
@@ -3319,13 +3288,10 @@ var app = (function () {
     			type: "fill-extrusion",
     			minzoom: 15,
     			paint: {
-    				"fill-extrusion-color": "#aaa",
-    				// Use an 'interpolate' expression to
-    				// add a smooth transition effect to
-    				// the buildings as the user zooms in.
+    				"fill-extrusion-color": "#dee7e7",
     				"fill-extrusion-height": ["interpolate", ["linear"], ["zoom"], 15, 0, 15.05, ["get", "height"]],
     				"fill-extrusion-base": ["interpolate", ["linear"], ["zoom"], 15, 0, 15.05, ["get", "min_height"]],
-    				"fill-extrusion-opacity": 0.6
+    				"fill-extrusion-opacity": 1
     			}
     		});
     	};
@@ -3337,9 +3303,37 @@ var app = (function () {
     			source: fillList.sourceName,
     			layout: {},
     			paint: {
-    				"fill-color": "#fe1615", // blue color fill
-    				"fill-opacity": 0.3
+    				"fill-color": "#008bac", // blue color fill
+    				"fill-opacity": 0.7
     			}
+    		});
+
+    		map.setLayoutProperty(fillList.layerName, "visibility", "none");
+
+    		// When a click event occurs on a feature in the states layer,
+    		// open a popup at the location of the click, with description
+    		// HTML from the click event's properties.
+    		map.on("click", fillList.layerName, e => {
+    			let description = "";
+    			const sliced = Object.fromEntries(Object.entries(e.features[0].properties).slice(0, 3));
+
+    			for (const [key, value] of Object.entries(sliced)) {
+    				description += `<span class="block font-bold">${key}</span><span class="block">${value}</span>`;
+    			}
+
+    			new mapboxgl.Popup().setLngLat(e.lngLat).setHTML(description).addTo(map);
+    		});
+
+    		// Change the cursor to a pointer when
+    		// the mouse is over the states layer.
+    		map.on("mouseenter", fillList.layerName, () => {
+    			map.getCanvas().style.cursor = "pointer";
+    		});
+
+    		// Change the cursor back to a pointer
+    		// when it leaves the states layer.
+    		map.on("mouseleave", fillList.layerName, () => {
+    			map.getCanvas().style.cursor = "";
     		});
 
     		map.addLayer({
@@ -3347,8 +3341,10 @@ var app = (function () {
     			type: "line",
     			source: outlineList.sourceName,
     			layout: {},
-    			paint: { "line-color": "#ffffff", "line-width": 1 }
+    			paint: { "line-color": "#0083b7", "line-width": 1 }
     		});
+
+    		map.setLayoutProperty(outlineList.layerName, "visibility", "none");
     	};
 
     	const addNeighbourhoodsLayer = (fillList, outlineList) => {
@@ -3363,6 +3359,8 @@ var app = (function () {
     			}
     		});
 
+    		map.setLayoutProperty(fillList.layerName, "visibility", "none");
+
     		map.addLayer({
     			id: outlineList.layerName,
     			type: "line",
@@ -3371,6 +3369,7 @@ var app = (function () {
     			paint: { "line-color": "#ffffff", "line-width": 1 }
     		});
 
+    		map.setLayoutProperty(outlineList.layerName, "visibility", "none");
     		let hoveredStateId = null;
 
     		map.on("mousemove", fillList.layerName, e => {
@@ -3435,6 +3434,8 @@ var app = (function () {
     			"waterway-label"
     		);
 
+    		map.setLayoutProperty(fillList.layerName, "visibility", "none");
+
     		// When a click event occurs on a feature in the places layer, open a popup at the
     		// location of the feature, with description HTML from its properties.
     		map.on("click", fillList.layerName, e => {
@@ -3479,7 +3480,6 @@ var app = (function () {
     				let tempLayerIsShown = collectionList[i]["isShown"];
 
     				if (!map.getLayer(tempLayerName)) {
-    					console.log("No layer found");
     					return;
     				}
 
@@ -3490,16 +3490,24 @@ var app = (function () {
     				}
     			}
     		} catch(e) {
-    			console.log(e);
+    			
     		}
     	};
 
     	const switchStyle = () => {
-    		map.setStyle("mapbox://styles/mapbox/" + mapStyle);
-    		map.resize();
+    		if (isReadyForStyleSwitching === false) return;
+
+    		try {
+    			map.setStyle("mapbox://styles/mapbox/" + mapStyle);
+    		} catch(e) {
+    			
+    		}
     	};
 
     	onMount(async () => {
+    		// Get the initial Data
+    		await fetchInitialMapData();
+
     		mapboxgl.accessToken = "pk.eyJ1IjoiY2FuYWxlYWwiLCJhIjoiY2t6NmgzdGd0MTBhcTJ3bXprNjM1a3NsbiJ9.umUsk2Ky68kLBFUa6PeAxA";
 
     		map = new mapboxgl.Map({
@@ -3520,36 +3528,36 @@ var app = (function () {
     		map.addControl(new mapboxgl.FullscreenControl(), "bottom-right");
     		map.addControl(new mapboxgl.NavigationControl(), "bottom-right");
 
-    		map.on("load", () => {
-    			addDataSources();
-    		});
-
     		map.on("style.load", function () {
     			addDataSources();
+    			addFilter();
     		});
     	});
 
     	onDestroy(() => {
-    		for (let i = 0; i < collectionList.length; i++) {
-    			let tempLayerName = collectionList[i]["layerName"];
-    			let tempSourceName = collectionList[i]["sourceName"];
-    			map.removeLayer(tempLayerName);
-    			map.removeSource(tempSourceName);
-    		}
+    		try {
+    			for (let i = 0; i < collectionList.length; i++) {
+    				map.removeLayer(collectionList[i]["layerName"]);
+    				map.removeSource(collectionList[i]["sourceName"]);
+    			}
 
-    		map = null;
+    			map = null;
+    		} catch(e) {
+    			
+    		}
     	});
 
-    	const writable_props = ['collectionList', 'mapStyle', 'kingstonDetails'];
+    	const writable_props = ['collectionList', 'mapStyle', 'isReadyForStyleSwitching', 'kingstonDetails'];
 
     	Object_1.keys($$props).forEach(key => {
-    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console_1$2.warn(`<Map> was created with unknown prop '${key}'`);
+    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console_1$1.warn(`<Map> was created with unknown prop '${key}'`);
     	});
 
     	$$self.$$set = $$props => {
     		if ('collectionList' in $$props) $$invalidate(0, collectionList = $$props.collectionList);
     		if ('mapStyle' in $$props) $$invalidate(1, mapStyle = $$props.mapStyle);
-    		if ('kingstonDetails' in $$props) $$invalidate(2, kingstonDetails = $$props.kingstonDetails);
+    		if ('isReadyForStyleSwitching' in $$props) $$invalidate(2, isReadyForStyleSwitching = $$props.isReadyForStyleSwitching);
+    		if ('kingstonDetails' in $$props) $$invalidate(3, kingstonDetails = $$props.kingstonDetails);
     	};
 
     	$$self.$capture_state = () => ({
@@ -3559,9 +3567,12 @@ var app = (function () {
     		Data,
     		collectionList,
     		mapStyle,
+    		isReadyForStyleSwitching,
     		kingstonDetails,
     		isDataLoaded,
     		map,
+    		fetchInitialMapData,
+    		getObjectFromListWhereKeyEquals,
     		addDataSources,
     		addLayers,
     		addTerrainLayer,
@@ -3576,8 +3587,9 @@ var app = (function () {
     	$$self.$inject_state = $$props => {
     		if ('collectionList' in $$props) $$invalidate(0, collectionList = $$props.collectionList);
     		if ('mapStyle' in $$props) $$invalidate(1, mapStyle = $$props.mapStyle);
-    		if ('kingstonDetails' in $$props) $$invalidate(2, kingstonDetails = $$props.kingstonDetails);
-    		if ('isDataLoaded' in $$props) $$invalidate(3, isDataLoaded = $$props.isDataLoaded);
+    		if ('isReadyForStyleSwitching' in $$props) $$invalidate(2, isReadyForStyleSwitching = $$props.isReadyForStyleSwitching);
+    		if ('kingstonDetails' in $$props) $$invalidate(3, kingstonDetails = $$props.kingstonDetails);
+    		if ('isDataLoaded' in $$props) $$invalidate(4, isDataLoaded = $$props.isDataLoaded);
     		if ('map' in $$props) map = $$props.map;
     	};
 
@@ -3586,16 +3598,22 @@ var app = (function () {
     	}
 
     	$$self.$$.update = () => {
-    		if ($$self.$$.dirty & /*collectionList, isDataLoaded*/ 9) {
+    		if ($$self.$$.dirty & /*collectionList, isDataLoaded*/ 17) {
     			collectionList && isDataLoaded && addFilter();
     		}
 
-    		if ($$self.$$.dirty & /*mapStyle, isDataLoaded*/ 10) {
+    		if ($$self.$$.dirty & /*mapStyle, isDataLoaded*/ 18) {
     			mapStyle && isDataLoaded && switchStyle();
     		}
     	};
 
-    	return [collectionList, mapStyle, kingstonDetails, isDataLoaded];
+    	return [
+    		collectionList,
+    		mapStyle,
+    		isReadyForStyleSwitching,
+    		kingstonDetails,
+    		isDataLoaded
+    	];
     }
 
     class Map$1 extends SvelteComponentDev {
@@ -3605,7 +3623,8 @@ var app = (function () {
     		init(this, options, instance$7, create_fragment$7, safe_not_equal, {
     			collectionList: 0,
     			mapStyle: 1,
-    			kingstonDetails: 2
+    			isReadyForStyleSwitching: 2,
+    			kingstonDetails: 3
     		});
 
     		dispatch_dev("SvelteRegisterComponent", {
@@ -3619,15 +3638,19 @@ var app = (function () {
     		const props = options.props || {};
 
     		if (/*collectionList*/ ctx[0] === undefined && !('collectionList' in props)) {
-    			console_1$2.warn("<Map> was created without expected prop 'collectionList'");
+    			console_1$1.warn("<Map> was created without expected prop 'collectionList'");
     		}
 
     		if (/*mapStyle*/ ctx[1] === undefined && !('mapStyle' in props)) {
-    			console_1$2.warn("<Map> was created without expected prop 'mapStyle'");
+    			console_1$1.warn("<Map> was created without expected prop 'mapStyle'");
     		}
 
-    		if (/*kingstonDetails*/ ctx[2] === undefined && !('kingstonDetails' in props)) {
-    			console_1$2.warn("<Map> was created without expected prop 'kingstonDetails'");
+    		if (/*isReadyForStyleSwitching*/ ctx[2] === undefined && !('isReadyForStyleSwitching' in props)) {
+    			console_1$1.warn("<Map> was created without expected prop 'isReadyForStyleSwitching'");
+    		}
+
+    		if (/*kingstonDetails*/ ctx[3] === undefined && !('kingstonDetails' in props)) {
+    			console_1$1.warn("<Map> was created without expected prop 'kingstonDetails'");
     		}
     	}
 
@@ -3647,6 +3670,14 @@ var app = (function () {
     		throw new Error("<Map>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
 
+    	get isReadyForStyleSwitching() {
+    		throw new Error("<Map>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set isReadyForStyleSwitching(value) {
+    		throw new Error("<Map>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
     	get kingstonDetails() {
     		throw new Error("<Map>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
@@ -3663,100 +3694,55 @@ var app = (function () {
       return currentDateTime;
     };
 
-    const getCurrentDate = () => {
-      const currentDate = new Date();
-      return currentDate;
-    };
-
-    const getCurrentTime = () => {
-      const currentDate = new Date();
-      const currentTime = `${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}`;
-      return currentTime;
-    };
-
-    /* src\components\Profile.svelte generated by Svelte v3.48.0 */
-    const file$5 = "src\\components\\Profile.svelte";
+    /* src\components\AttentionBar.svelte generated by Svelte v3.48.0 */
+    const file$5 = "src\\components\\AttentionBar.svelte";
 
     function create_fragment$6(ctx) {
     	let section;
-    	let img;
-    	let img_src_value;
-    	let img_alt_value;
-    	let t0;
     	let div;
-    	let p0;
+    	let p;
+    	let span;
+    	let t1;
+    	let t2_value = getCurrentDateTime() + "";
     	let t2;
-    	let p1;
-    	let t3_value = /*kingstonDetails*/ ctx[0].displayName + "";
     	let t3;
-    	let t4;
-    	let p2;
-    	let t6;
-    	let p3;
+    	let hr;
 
     	const block = {
     		c: function create() {
     			section = element("section");
-    			img = element("img");
-    			t0 = space();
     			div = element("div");
-    			p0 = element("p");
-    			p0.textContent = "City:";
-    			t2 = space();
-    			p1 = element("p");
-    			t3 = text(t3_value);
-    			t4 = space();
-    			p2 = element("p");
-    			p2.textContent = "Map Data:";
-    			t6 = space();
-    			p3 = element("p");
-    			p3.textContent = `Data taken from API on ${getCurrentDateTime()}`;
-    			attr_dev(img, "height", "100");
-    			attr_dev(img, "width", "auto");
-    			if (!src_url_equal(img.src, img_src_value = `${/*kingstonDetails*/ ctx[0].photoURL}`)) attr_dev(img, "src", img_src_value);
-    			attr_dev(img, "alt", img_alt_value = `${/*kingstonDetails*/ ctx[0].photoURL}`);
-    			attr_dev(img, "class", "card card-xsm md:card-md rounded-lg");
-    			attr_dev(img, "loading", "lazy");
-    			add_location(img, file$5, 8, 2, 158);
-    			attr_dev(p0, "class", "font-bold my-2");
-    			add_location(p0, file$5, 18, 4, 384);
-    			add_location(p1, file$5, 19, 4, 425);
-    			attr_dev(p2, "class", "font-bold my-2");
-    			add_location(p2, file$5, 21, 4, 469);
-    			add_location(p3, file$5, 22, 4, 514);
-    			attr_dev(div, "class", "p-4");
-    			add_location(div, file$5, 17, 2, 361);
-    			attr_dev(section, "class", "rounded-lg shadow-xl");
-    			add_location(section, file$5, 7, 0, 116);
+    			p = element("p");
+    			span = element("span");
+    			span.textContent = "Last Updated :";
+    			t1 = text(" Fetch to API on ");
+    			t2 = text(t2_value);
+    			t3 = space();
+    			hr = element("hr");
+    			attr_dev(span, "class", "font-bold");
+    			add_location(span, file$5, 6, 32, 185);
+    			attr_dev(p, "class", "text-white text-sm");
+    			add_location(p, file$5, 6, 2, 155);
+    			attr_dev(div, "class", "py-1 px-5");
+    			add_location(div, file$5, 5, 1, 127);
+    			add_location(hr, file$5, 9, 1, 287);
+    			attr_dev(section, "class", "bg-blue sticky top-0 z-10");
+    			add_location(section, file$5, 4, 0, 80);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, section, anchor);
-    			append_dev(section, img);
-    			append_dev(section, t0);
     			append_dev(section, div);
-    			append_dev(div, p0);
-    			append_dev(div, t2);
-    			append_dev(div, p1);
-    			append_dev(p1, t3);
-    			append_dev(div, t4);
-    			append_dev(div, p2);
-    			append_dev(div, t6);
-    			append_dev(div, p3);
+    			append_dev(div, p);
+    			append_dev(p, span);
+    			append_dev(p, t1);
+    			append_dev(p, t2);
+    			append_dev(section, t3);
+    			append_dev(section, hr);
     		},
-    		p: function update(ctx, [dirty]) {
-    			if (dirty & /*kingstonDetails*/ 1 && !src_url_equal(img.src, img_src_value = `${/*kingstonDetails*/ ctx[0].photoURL}`)) {
-    				attr_dev(img, "src", img_src_value);
-    			}
-
-    			if (dirty & /*kingstonDetails*/ 1 && img_alt_value !== (img_alt_value = `${/*kingstonDetails*/ ctx[0].photoURL}`)) {
-    				attr_dev(img, "alt", img_alt_value);
-    			}
-
-    			if (dirty & /*kingstonDetails*/ 1 && t3_value !== (t3_value = /*kingstonDetails*/ ctx[0].displayName + "")) set_data_dev(t3, t3_value);
-    		},
+    		p: noop,
     		i: noop,
     		o: noop,
     		d: function destroy(detaching) {
@@ -3776,6 +3762,111 @@ var app = (function () {
     }
 
     function instance$6($$self, $$props, $$invalidate) {
+    	let { $$slots: slots = {}, $$scope } = $$props;
+    	validate_slots('AttentionBar', slots, []);
+    	const writable_props = [];
+
+    	Object.keys($$props).forEach(key => {
+    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<AttentionBar> was created with unknown prop '${key}'`);
+    	});
+
+    	$$self.$capture_state = () => ({ getCurrentDateTime });
+    	return [];
+    }
+
+    class AttentionBar extends SvelteComponentDev {
+    	constructor(options) {
+    		super(options);
+    		init(this, options, instance$6, create_fragment$6, safe_not_equal, {});
+
+    		dispatch_dev("SvelteRegisterComponent", {
+    			component: this,
+    			tagName: "AttentionBar",
+    			options,
+    			id: create_fragment$6.name
+    		});
+    	}
+    }
+
+    /* src\components\Profile.svelte generated by Svelte v3.48.0 */
+    const file$4 = "src\\components\\Profile.svelte";
+
+    function create_fragment$5(ctx) {
+    	let section;
+    	let div;
+    	let p0;
+    	let t1;
+    	let p1;
+    	let t2_value = /*kingstonDetails*/ ctx[0].displayName + "";
+    	let t2;
+    	let t3;
+    	let p2;
+    	let t5;
+    	let p3;
+
+    	const block = {
+    		c: function create() {
+    			section = element("section");
+    			div = element("div");
+    			p0 = element("p");
+    			p0.textContent = "City:";
+    			t1 = space();
+    			p1 = element("p");
+    			t2 = text(t2_value);
+    			t3 = space();
+    			p2 = element("p");
+    			p2.textContent = "Map Data:";
+    			t5 = space();
+    			p3 = element("p");
+    			p3.textContent = `Data taken from API on ${getCurrentDateTime()}`;
+    			attr_dev(p0, "class", "font-bold my-2");
+    			add_location(p0, file$4, 8, 2, 182);
+    			add_location(p1, file$4, 9, 2, 221);
+    			attr_dev(p2, "class", "font-bold my-2");
+    			add_location(p2, file$4, 11, 2, 263);
+    			add_location(p3, file$4, 12, 2, 306);
+    			attr_dev(div, "class", "p-4");
+    			add_location(div, file$4, 7, 1, 161);
+    			attr_dev(section, "class", "rounded-lg shadow-xl text-sm");
+    			add_location(section, file$4, 5, 0, 110);
+    		},
+    		l: function claim(nodes) {
+    			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, section, anchor);
+    			append_dev(section, div);
+    			append_dev(div, p0);
+    			append_dev(div, t1);
+    			append_dev(div, p1);
+    			append_dev(p1, t2);
+    			append_dev(div, t3);
+    			append_dev(div, p2);
+    			append_dev(div, t5);
+    			append_dev(div, p3);
+    		},
+    		p: function update(ctx, [dirty]) {
+    			if (dirty & /*kingstonDetails*/ 1 && t2_value !== (t2_value = /*kingstonDetails*/ ctx[0].displayName + "")) set_data_dev(t2, t2_value);
+    		},
+    		i: noop,
+    		o: noop,
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(section);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_fragment$5.name,
+    		type: "component",
+    		source: "",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    function instance$5($$self, $$props, $$invalidate) {
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('Profile', slots, []);
     	let { kingstonDetails } = $$props;
@@ -3805,13 +3896,13 @@ var app = (function () {
     class Profile extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init(this, options, instance$6, create_fragment$6, safe_not_equal, { kingstonDetails: 0 });
+    		init(this, options, instance$5, create_fragment$5, safe_not_equal, { kingstonDetails: 0 });
 
     		dispatch_dev("SvelteRegisterComponent", {
     			component: this,
     			tagName: "Profile",
     			options,
-    			id: create_fragment$6.name
+    			id: create_fragment$5.name
     		});
 
     		const { ctx } = this.$$;
@@ -3831,101 +3922,8 @@ var app = (function () {
     	}
     }
 
-    /* src\components\AttentionBar.svelte generated by Svelte v3.48.0 */
-    const file$4 = "src\\components\\AttentionBar.svelte";
-
-    function create_fragment$5(ctx) {
-    	let section;
-    	let div;
-    	let p;
-    	let span;
-    	let t1;
-    	let t2_value = getCurrentDateTime() + "";
-    	let t2;
-    	let t3;
-    	let hr;
-
-    	const block = {
-    		c: function create() {
-    			section = element("section");
-    			div = element("div");
-    			p = element("p");
-    			span = element("span");
-    			span.textContent = "Last Updated :";
-    			t1 = text(" Fetch to API on ");
-    			t2 = text(t2_value);
-    			t3 = space();
-    			hr = element("hr");
-    			attr_dev(span, "class", "font-bold");
-    			add_location(span, file$4, 7, 36, 200);
-    			attr_dev(p, "class", "text-white text-sm");
-    			add_location(p, file$4, 7, 6, 170);
-    			attr_dev(div, "class", "py-1 px-5");
-    			add_location(div, file$4, 6, 4, 138);
-    			add_location(hr, file$4, 11, 4, 313);
-    			attr_dev(section, "class", "bg-black sticky top-0 z-10");
-    			add_location(section, file$4, 4, 0, 85);
-    		},
-    		l: function claim(nodes) {
-    			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
-    		},
-    		m: function mount(target, anchor) {
-    			insert_dev(target, section, anchor);
-    			append_dev(section, div);
-    			append_dev(div, p);
-    			append_dev(p, span);
-    			append_dev(p, t1);
-    			append_dev(p, t2);
-    			append_dev(section, t3);
-    			append_dev(section, hr);
-    		},
-    		p: noop,
-    		i: noop,
-    		o: noop,
-    		d: function destroy(detaching) {
-    			if (detaching) detach_dev(section);
-    		}
-    	};
-
-    	dispatch_dev("SvelteRegisterBlock", {
-    		block,
-    		id: create_fragment$5.name,
-    		type: "component",
-    		source: "",
-    		ctx
-    	});
-
-    	return block;
-    }
-
-    function instance$5($$self, $$props, $$invalidate) {
-    	let { $$slots: slots = {}, $$scope } = $$props;
-    	validate_slots('AttentionBar', slots, []);
-    	const writable_props = [];
-
-    	Object.keys($$props).forEach(key => {
-    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<AttentionBar> was created with unknown prop '${key}'`);
-    	});
-
-    	$$self.$capture_state = () => ({ getCurrentDateTime });
-    	return [];
-    }
-
-    class AttentionBar extends SvelteComponentDev {
-    	constructor(options) {
-    		super(options);
-    		init(this, options, instance$5, create_fragment$5, safe_not_equal, {});
-
-    		dispatch_dev("SvelteRegisterComponent", {
-    			component: this,
-    			tagName: "AttentionBar",
-    			options,
-    			id: create_fragment$5.name
-    		});
-    	}
-    }
-
     /* src\components\DateTime.svelte generated by Svelte v3.48.0 */
+
     const file$3 = "src\\components\\DateTime.svelte";
 
     function create_fragment$4(ctx) {
@@ -3963,34 +3961,34 @@ var app = (function () {
     			t5 = space();
     			label1 = element("label");
     			label1.textContent = "Select a time";
-    			attr_dev(p, "class", "my-1");
-    			add_location(p, file$3, 6, 1, 182);
+    			attr_dev(p, "class", "font-bold my-1");
+    			add_location(p, file$3, 4, 1, 84);
     			attr_dev(input0, "type", "date");
-    			attr_dev(input0, "class", "form-control block w-full px-3 py-1.5 text-sm text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none");
+    			attr_dev(input0, "class", "form-control block w-full text-sm text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none");
     			attr_dev(input0, "placeholder", "Select a date");
     			attr_dev(input0, "data-mdb-toggle", "datepicker");
-    			add_location(input0, file$3, 10, 3, 365);
+    			add_location(input0, file$3, 8, 3, 275);
     			attr_dev(label0, "for", "floatingInput");
     			attr_dev(label0, "class", "text-gray-700 text-sm");
-    			add_location(label0, file$3, 16, 3, 713);
-    			attr_dev(div0, "class", "datepicker form-floating mb-3 xl:w-96");
+    			add_location(label0, file$3, 14, 3, 610);
+    			attr_dev(div0, "class", "datepicker form-floating my-1 w-full");
     			attr_dev(div0, "data-mdb-toggle-button", "false");
-    			add_location(div0, file$3, 9, 2, 278);
+    			add_location(div0, file$3, 7, 2, 189);
     			attr_dev(div1, "class", "flex items-center justify-center");
-    			add_location(div1, file$3, 8, 1, 228);
+    			add_location(div1, file$3, 6, 1, 139);
     			attr_dev(input1, "type", "time");
-    			attr_dev(input1, "class", "form-control block w-full px-3 py-1.5 text-sm text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none");
+    			attr_dev(input1, "class", "form-control block w-full text-sm text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none");
     			attr_dev(input1, "placeholder", "Select a date");
-    			add_location(input1, file$3, 22, 3, 909);
+    			add_location(input1, file$3, 20, 3, 805);
     			attr_dev(label1, "for", "floatingInput");
     			attr_dev(label1, "class", "text-gray-700 text-sm");
-    			add_location(label1, file$3, 27, 3, 1223);
-    			attr_dev(div2, "class", "timepicker form-floating mb-3 xl:w-96");
-    			add_location(div2, file$3, 21, 2, 853);
+    			add_location(label1, file$3, 25, 3, 1106);
+    			attr_dev(div2, "class", "timepicker form-floating my-1 w-full");
+    			add_location(div2, file$3, 19, 2, 750);
     			attr_dev(div3, "class", "flex justify-center");
-    			add_location(div3, file$3, 20, 1, 816);
-    			attr_dev(section, "class", "h-full rounded-lg shadow-xl p-4");
-    			add_location(section, file$3, 5, 0, 129);
+    			add_location(div3, file$3, 18, 1, 713);
+    			attr_dev(section, "class", "h-full rounded-lg shadow-xl p-4 text-sm");
+    			add_location(section, file$3, 3, 0, 23);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -4030,7 +4028,7 @@ var app = (function () {
     	return block;
     }
 
-    function instance$4($$self, $$props, $$invalidate) {
+    function instance$4($$self, $$props) {
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('DateTime', slots, []);
     	const writable_props = [];
@@ -4039,7 +4037,6 @@ var app = (function () {
     		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<DateTime> was created with unknown prop '${key}'`);
     	});
 
-    	$$self.$capture_state = () => ({ getCurrentDate, getCurrentTime });
     	return [];
     }
 
@@ -4059,16 +4056,16 @@ var app = (function () {
 
     /* src\components\Layers.svelte generated by Svelte v3.48.0 */
 
-    const { console: console_1$1 } = globals;
+    const { console: console_1 } = globals;
     const file$2 = "src\\components\\Layers.svelte";
 
     function get_each_context$1(ctx, list, i) {
     	const child_ctx = ctx.slice();
-    	child_ctx[9] = list[i];
+    	child_ctx[7] = list[i];
     	return child_ctx;
     }
 
-    // (70:1) {:else}
+    // (62:1) {:else}
     function create_else_block(ctx) {
     	let div;
 
@@ -4076,9 +4073,9 @@ var app = (function () {
     		c: function create() {
     			div = element("div");
     			div.textContent = "Loading Data.";
-    			attr_dev(div, "class", "bg-green-100 rounded-lg py-5 px-6 mb-4 text-base text-green-700");
+    			attr_dev(div, "class", "bg-green-100 rounded-lg py-5 px-6 mb-4 text-green-700");
     			attr_dev(div, "role", "alert");
-    			add_location(div, file$2, 71, 2, 2006);
+    			add_location(div, file$2, 63, 2, 1824);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -4093,14 +4090,14 @@ var app = (function () {
     		block,
     		id: create_else_block.name,
     		type: "else",
-    		source: "(70:1) {:else}",
+    		source: "(62:1) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (59:1) {#if collectionList.length >= 1}
+    // (51:1) {#if collectionList.length >= 1}
     function create_if_block(ctx) {
     	let div1;
     	let button;
@@ -4130,14 +4127,14 @@ var app = (function () {
     				each_blocks[i].c();
     			}
 
-    			attr_dev(button, "class", button_class_value = `card-btn  text-sm ${/*toggleBool*/ ctx[1]
+    			attr_dev(button, "class", button_class_value = `card-btn   ${/*toggleBool*/ ctx[1]
 			? "card-btn-green"
 			: "card-btn-red"}  w-full block my-1 rounded-lg`);
 
-    			add_location(button, file$2, 60, 3, 1528);
+    			add_location(button, file$2, 52, 3, 1361);
     			attr_dev(div0, "class", "overflow-y-auto");
-    			add_location(div0, file$2, 61, 3, 1701);
-    			add_location(div1, file$2, 59, 2, 1518);
+    			add_location(div0, file$2, 53, 3, 1527);
+    			add_location(div1, file$2, 51, 2, 1351);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div1, anchor);
@@ -4151,14 +4148,14 @@ var app = (function () {
     			}
 
     			if (!mounted) {
-    				dispose = listen_dev(button, "click", /*click_handler*/ ctx[6], false, false, false);
+    				dispose = listen_dev(button, "click", /*click_handler*/ ctx[5], false, false, false);
     				mounted = true;
     			}
     		},
     		p: function update(ctx, dirty) {
     			if (dirty & /*toggleName*/ 4) set_data_dev(t0, /*toggleName*/ ctx[2]);
 
-    			if (dirty & /*toggleBool*/ 2 && button_class_value !== (button_class_value = `card-btn  text-sm ${/*toggleBool*/ ctx[1]
+    			if (dirty & /*toggleBool*/ 2 && button_class_value !== (button_class_value = `card-btn   ${/*toggleBool*/ ctx[1]
 			? "card-btn-green"
 			: "card-btn-red"}  w-full block my-1 rounded-lg`)) {
     				attr_dev(button, "class", button_class_value);
@@ -4200,17 +4197,17 @@ var app = (function () {
     		block,
     		id: create_if_block.name,
     		type: "if",
-    		source: "(59:1) {#if collectionList.length >= 1}",
+    		source: "(51:1) {#if collectionList.length >= 1}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (63:4) {#each collectionList as item}
+    // (55:4) {#each collectionList as item}
     function create_each_block$1(ctx) {
     	let button;
-    	let t0_value = /*item*/ ctx[9]["name"] + "";
+    	let t0_value = /*item*/ ctx[7]["name"] + "";
     	let t0;
     	let t1;
     	let button_class_value;
@@ -4218,7 +4215,7 @@ var app = (function () {
     	let dispose;
 
     	function click_handler_1() {
-    		return /*click_handler_1*/ ctx[7](/*item*/ ctx[9]);
+    		return /*click_handler_1*/ ctx[6](/*item*/ ctx[7]);
     	}
 
     	const block = {
@@ -4226,8 +4223,8 @@ var app = (function () {
     			button = element("button");
     			t0 = text(t0_value);
     			t1 = space();
-    			attr_dev(button, "class", button_class_value = `card-btn w-full block text-sm ${/*item*/ ctx[9]["isShown"] ? "card-btn-blue" : ""} my-1 rounded-lg `);
-    			add_location(button, file$2, 63, 5, 1773);
+    			attr_dev(button, "class", button_class_value = `card-btn w-full block ${/*item*/ ctx[7]["isShown"] ? "card-btn-blue" : ""} my-1 rounded-lg `);
+    			add_location(button, file$2, 55, 5, 1599);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, button, anchor);
@@ -4241,9 +4238,9 @@ var app = (function () {
     		},
     		p: function update(new_ctx, dirty) {
     			ctx = new_ctx;
-    			if (dirty & /*collectionList*/ 1 && t0_value !== (t0_value = /*item*/ ctx[9]["name"] + "")) set_data_dev(t0, t0_value);
+    			if (dirty & /*collectionList*/ 1 && t0_value !== (t0_value = /*item*/ ctx[7]["name"] + "")) set_data_dev(t0, t0_value);
 
-    			if (dirty & /*collectionList*/ 1 && button_class_value !== (button_class_value = `card-btn w-full block text-sm ${/*item*/ ctx[9]["isShown"] ? "card-btn-blue" : ""} my-1 rounded-lg `)) {
+    			if (dirty & /*collectionList*/ 1 && button_class_value !== (button_class_value = `card-btn w-full block ${/*item*/ ctx[7]["isShown"] ? "card-btn-blue" : ""} my-1 rounded-lg `)) {
     				attr_dev(button, "class", button_class_value);
     			}
     		},
@@ -4258,7 +4255,7 @@ var app = (function () {
     		block,
     		id: create_each_block$1.name,
     		type: "each",
-    		source: "(63:4) {#each collectionList as item}",
+    		source: "(55:4) {#each collectionList as item}",
     		ctx
     	});
 
@@ -4285,10 +4282,10 @@ var app = (function () {
     			p.textContent = "Layers:";
     			t1 = space();
     			if_block.c();
-    			attr_dev(p, "class", "my-1");
-    			add_location(p, file$2, 56, 1, 1449);
-    			attr_dev(section, "class", "h-full rounded-lg shadow-xl p-4");
-    			add_location(section, file$2, 55, 0, 1397);
+    			attr_dev(p, "class", "font-bold my-1");
+    			add_location(p, file$2, 48, 1, 1273);
+    			attr_dev(section, "class", "h-full rounded-lg shadow-xl p-4 text-sm");
+    			add_location(section, file$2, 47, 0, 1213);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -4334,7 +4331,6 @@ var app = (function () {
     function instance$3($$self, $$props, $$invalidate) {
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('Layers', slots, []);
-    	let { mapStyle } = $$props;
     	let { collectionList = [] } = $$props;
     	let toggleBool = 0;
     	let toggleName = "Disable All";
@@ -4380,37 +4376,28 @@ var app = (function () {
     		}
     	}
 
-    	function reset() {
-    		$$invalidate(1, toggleBool = 0);
-    		$$invalidate(2, toggleName = "Disable All");
-    	}
-
-    	const writable_props = ['mapStyle', 'collectionList'];
+    	const writable_props = ['collectionList'];
 
     	Object.keys($$props).forEach(key => {
-    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console_1$1.warn(`<Layers> was created with unknown prop '${key}'`);
+    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console_1.warn(`<Layers> was created with unknown prop '${key}'`);
     	});
 
     	const click_handler = () => toggleAll();
     	const click_handler_1 = item => toggleIsShown(item);
 
     	$$self.$$set = $$props => {
-    		if ('mapStyle' in $$props) $$invalidate(5, mapStyle = $$props.mapStyle);
     		if ('collectionList' in $$props) $$invalidate(0, collectionList = $$props.collectionList);
     	};
 
     	$$self.$capture_state = () => ({
-    		mapStyle,
     		collectionList,
     		toggleBool,
     		toggleName,
     		toggleAll,
-    		toggleIsShown,
-    		reset
+    		toggleIsShown
     	});
 
     	$$self.$inject_state = $$props => {
-    		if ('mapStyle' in $$props) $$invalidate(5, mapStyle = $$props.mapStyle);
     		if ('collectionList' in $$props) $$invalidate(0, collectionList = $$props.collectionList);
     		if ('toggleBool' in $$props) $$invalidate(1, toggleBool = $$props.toggleBool);
     		if ('toggleName' in $$props) $$invalidate(2, toggleName = $$props.toggleName);
@@ -4420,20 +4407,12 @@ var app = (function () {
     		$$self.$inject_state($$props.$$inject);
     	}
 
-    	$$self.$$.update = () => {
-    		if ($$self.$$.dirty & /*mapStyle*/ 32) {
-    			// If the mapstyle changes, reset the entire layer menu
-    			mapStyle && reset();
-    		}
-    	};
-
     	return [
     		collectionList,
     		toggleBool,
     		toggleName,
     		toggleAll,
     		toggleIsShown,
-    		mapStyle,
     		click_handler,
     		click_handler_1
     	];
@@ -4442,7 +4421,7 @@ var app = (function () {
     class Layers extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init(this, options, instance$3, create_fragment$3, safe_not_equal, { mapStyle: 5, collectionList: 0 });
+    		init(this, options, instance$3, create_fragment$3, safe_not_equal, { collectionList: 0 });
 
     		dispatch_dev("SvelteRegisterComponent", {
     			component: this,
@@ -4450,21 +4429,6 @@ var app = (function () {
     			options,
     			id: create_fragment$3.name
     		});
-
-    		const { ctx } = this.$$;
-    		const props = options.props || {};
-
-    		if (/*mapStyle*/ ctx[5] === undefined && !('mapStyle' in props)) {
-    			console_1$1.warn("<Layers> was created without expected prop 'mapStyle'");
-    		}
-    	}
-
-    	get mapStyle() {
-    		throw new Error("<Layers>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
-    	}
-
-    	set mapStyle(value) {
-    		throw new Error("<Layers>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
 
     	get collectionList() {
@@ -4478,30 +4442,29 @@ var app = (function () {
 
     /* src\components\StyleSelector.svelte generated by Svelte v3.48.0 */
 
-    const { console: console_1 } = globals;
     const file$1 = "src\\components\\StyleSelector.svelte";
 
     function get_each_context(ctx, list, i) {
     	const child_ctx = ctx.slice();
-    	child_ctx[4] = list[i];
+    	child_ctx[5] = list[i];
     	return child_ctx;
     }
 
-    // (28:1) {#each mapStyleList as item}
+    // (23:1) {#each mapStyleList as item}
     function create_each_block(ctx) {
     	let div;
     	let input;
     	let input_checked_value;
     	let t0;
     	let label;
-    	let t1_value = /*item*/ ctx[4]['name'] + "";
+    	let t1_value = /*item*/ ctx[5]["name"] + "";
     	let t1;
     	let t2;
     	let mounted;
     	let dispose;
 
     	function click_handler() {
-    		return /*click_handler*/ ctx[3](/*item*/ ctx[4]);
+    		return /*click_handler*/ ctx[4](/*item*/ ctx[5]);
     	}
 
     	const block = {
@@ -4512,18 +4475,18 @@ var app = (function () {
     			label = element("label");
     			t1 = text(t1_value);
     			t2 = space();
-    			attr_dev(input, "id", /*item*/ ctx[4].name);
+    			attr_dev(input, "id", /*item*/ ctx[5].name);
     			attr_dev(input, "type", "radio");
-    			input.value = /*item*/ ctx[4].value;
-    			input.checked = input_checked_value = /*mapStyle*/ ctx[0] === /*item*/ ctx[4].value;
+    			input.value = /*item*/ ctx[5].value;
+    			input.checked = input_checked_value = /*mapStyle*/ ctx[0] === /*item*/ ctx[5].value;
     			attr_dev(input, "data-bs-toggle", "collapse");
     			attr_dev(input, "data-bs-target", "#collapseMenu");
-    			add_location(input, file$1, 31, 12, 735);
+    			add_location(input, file$1, 24, 3, 648);
     			attr_dev(label, "class", "text-sm ml-2");
-    			attr_dev(label, "for", /*item*/ ctx[4]['name']);
-    			add_location(label, file$1, 39, 12, 1055);
-    			attr_dev(div, "key", /*item*/ ctx[4].name);
-    			add_location(div, file$1, 30, 8, 700);
+    			attr_dev(label, "for", /*item*/ ctx[5]["name"]);
+    			add_location(label, file$1, 25, 3, 844);
+    			attr_dev(div, "key", /*item*/ ctx[5].name);
+    			add_location(div, file$1, 23, 2, 622);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -4541,7 +4504,7 @@ var app = (function () {
     		p: function update(new_ctx, dirty) {
     			ctx = new_ctx;
 
-    			if (dirty & /*mapStyle*/ 1 && input_checked_value !== (input_checked_value = /*mapStyle*/ ctx[0] === /*item*/ ctx[4].value)) {
+    			if (dirty & /*mapStyle*/ 1 && input_checked_value !== (input_checked_value = /*mapStyle*/ ctx[0] === /*item*/ ctx[5].value)) {
     				prop_dev(input, "checked", input_checked_value);
     			}
     		},
@@ -4556,7 +4519,7 @@ var app = (function () {
     		block,
     		id: create_each_block.name,
     		type: "each",
-    		source: "(28:1) {#each mapStyleList as item}",
+    		source: "(23:1) {#each mapStyleList as item}",
     		ctx
     	});
 
@@ -4587,9 +4550,9 @@ var app = (function () {
     			}
 
     			attr_dev(p, "class", "my-1");
-    			add_location(p, file$1, 23, 1, 616);
+    			add_location(p, file$1, 21, 1, 557);
     			attr_dev(section, "class", "h-full rounded-lg bg-white p-4 mb-4 ");
-    			add_location(section, file$1, 22, 0, 557);
+    			add_location(section, file$1, 20, 0, 500);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -4651,60 +4614,67 @@ var app = (function () {
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('StyleSelector', slots, []);
     	let { mapStyle } = $$props;
+    	let { isReadyForStyleSwitching } = $$props;
 
     	const mapStyleList = [
     		{ name: "Streets", value: "streets-v11" },
-    		//{ name: "Light", value: "light-v10" },
     		{ name: "Dark", value: "dark-v10" },
     		{ name: "Outdoors", value: "outdoors-v11" },
     		{
     			name: "Satellite",
     			value: "satellite-streets-v11"
     		},
-    		//{ name: "Navigation - Day", value: "navigation-day-v1" },
     		{
     			name: "Navigation - Night",
     			value: "navigation-night-v1"
     		}
     	];
 
-    	function toggleStyle(item) {
+    	const toggleStyle = item => {
     		try {
     			$$invalidate(0, mapStyle = item);
+    			$$invalidate(3, isReadyForStyleSwitching = true);
     		} catch(e) {
-    			console.log(e);
+    			
     		}
-    	}
+    	};
 
-    	const writable_props = ['mapStyle'];
+    	const writable_props = ['mapStyle', 'isReadyForStyleSwitching'];
 
     	Object.keys($$props).forEach(key => {
-    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console_1.warn(`<StyleSelector> was created with unknown prop '${key}'`);
+    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<StyleSelector> was created with unknown prop '${key}'`);
     	});
 
     	const click_handler = item => toggleStyle(item["value"]);
 
     	$$self.$$set = $$props => {
     		if ('mapStyle' in $$props) $$invalidate(0, mapStyle = $$props.mapStyle);
+    		if ('isReadyForStyleSwitching' in $$props) $$invalidate(3, isReadyForStyleSwitching = $$props.isReadyForStyleSwitching);
     	};
 
-    	$$self.$capture_state = () => ({ mapStyle, mapStyleList, toggleStyle });
+    	$$self.$capture_state = () => ({
+    		mapStyle,
+    		isReadyForStyleSwitching,
+    		mapStyleList,
+    		toggleStyle
+    	});
 
     	$$self.$inject_state = $$props => {
     		if ('mapStyle' in $$props) $$invalidate(0, mapStyle = $$props.mapStyle);
+    		if ('isReadyForStyleSwitching' in $$props) $$invalidate(3, isReadyForStyleSwitching = $$props.isReadyForStyleSwitching);
     	};
 
     	if ($$props && "$$inject" in $$props) {
     		$$self.$inject_state($$props.$$inject);
     	}
 
-    	return [mapStyle, mapStyleList, toggleStyle, click_handler];
+    	return [mapStyle, mapStyleList, toggleStyle, isReadyForStyleSwitching, click_handler];
     }
 
     class StyleSelector extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init(this, options, instance$2, create_fragment$2, safe_not_equal, { mapStyle: 0 });
+    		init(this, options, instance$2, create_fragment$2, safe_not_equal, { mapStyle: 0, isReadyForStyleSwitching: 3 });
 
     		dispatch_dev("SvelteRegisterComponent", {
     			component: this,
@@ -4717,7 +4687,11 @@ var app = (function () {
     		const props = options.props || {};
 
     		if (/*mapStyle*/ ctx[0] === undefined && !('mapStyle' in props)) {
-    			console_1.warn("<StyleSelector> was created without expected prop 'mapStyle'");
+    			console.warn("<StyleSelector> was created without expected prop 'mapStyle'");
+    		}
+
+    		if (/*isReadyForStyleSwitching*/ ctx[3] === undefined && !('isReadyForStyleSwitching' in props)) {
+    			console.warn("<StyleSelector> was created without expected prop 'isReadyForStyleSwitching'");
     		}
     	}
 
@@ -4726,6 +4700,14 @@ var app = (function () {
     	}
 
     	set mapStyle(value) {
+    		throw new Error("<StyleSelector>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	get isReadyForStyleSwitching() {
+    		throw new Error("<StyleSelector>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set isReadyForStyleSwitching(value) {
     		throw new Error("<StyleSelector>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
     }
@@ -4739,7 +4721,7 @@ var app = (function () {
     	let attentionbar;
     	let t1;
     	let section;
-    	let div2;
+    	let div3;
     	let div0;
     	let layers;
     	let updating_collectionList;
@@ -4747,25 +4729,30 @@ var app = (function () {
     	let div1;
     	let datetime;
     	let t3;
-    	let div4;
+    	let div2;
+    	let profile;
+    	let t4;
+    	let div5;
     	let map;
     	let updating_collectionList_1;
     	let updating_mapStyle;
-    	let t4;
-    	let div3;
+    	let updating_isReadyForStyleSwitching;
+    	let t5;
+    	let div4;
     	let styleselector;
     	let updating_mapStyle_1;
-    	let t5;
+    	let updating_isReadyForStyleSwitching_1;
+    	let t6;
     	let footer;
     	let current;
     	navbar = new Navbar({ $$inline: true });
     	attentionbar = new AttentionBar({ $$inline: true });
 
     	function layers_collectionList_binding(value) {
-    		/*layers_collectionList_binding*/ ctx[3](value);
+    		/*layers_collectionList_binding*/ ctx[4](value);
     	}
 
-    	let layers_props = { mapStyle: /*mapStyle*/ ctx[1] };
+    	let layers_props = {};
 
     	if (/*collectionList*/ ctx[0] !== void 0) {
     		layers_props.collectionList = /*collectionList*/ ctx[0];
@@ -4775,16 +4762,27 @@ var app = (function () {
     	binding_callbacks.push(() => bind$1(layers, 'collectionList', layers_collectionList_binding));
     	datetime = new DateTime({ $$inline: true });
 
+    	profile = new Profile({
+    			props: {
+    				kingstonDetails: /*kingstonDetails*/ ctx[3]
+    			},
+    			$$inline: true
+    		});
+
     	function map_collectionList_binding(value) {
-    		/*map_collectionList_binding*/ ctx[4](value);
+    		/*map_collectionList_binding*/ ctx[5](value);
     	}
 
     	function map_mapStyle_binding(value) {
-    		/*map_mapStyle_binding*/ ctx[5](value);
+    		/*map_mapStyle_binding*/ ctx[6](value);
+    	}
+
+    	function map_isReadyForStyleSwitching_binding(value) {
+    		/*map_isReadyForStyleSwitching_binding*/ ctx[7](value);
     	}
 
     	let map_props = {
-    		kingstonDetails: /*kingstonDetails*/ ctx[2]
+    		kingstonDetails: /*kingstonDetails*/ ctx[3]
     	};
 
     	if (/*collectionList*/ ctx[0] !== void 0) {
@@ -4795,12 +4793,21 @@ var app = (function () {
     		map_props.mapStyle = /*mapStyle*/ ctx[1];
     	}
 
+    	if (/*isReadyForStyleSwitching*/ ctx[2] !== void 0) {
+    		map_props.isReadyForStyleSwitching = /*isReadyForStyleSwitching*/ ctx[2];
+    	}
+
     	map = new Map$1({ props: map_props, $$inline: true });
     	binding_callbacks.push(() => bind$1(map, 'collectionList', map_collectionList_binding));
     	binding_callbacks.push(() => bind$1(map, 'mapStyle', map_mapStyle_binding));
+    	binding_callbacks.push(() => bind$1(map, 'isReadyForStyleSwitching', map_isReadyForStyleSwitching_binding));
 
     	function styleselector_mapStyle_binding(value) {
-    		/*styleselector_mapStyle_binding*/ ctx[6](value);
+    		/*styleselector_mapStyle_binding*/ ctx[8](value);
+    	}
+
+    	function styleselector_isReadyForStyleSwitching_binding(value) {
+    		/*styleselector_isReadyForStyleSwitching_binding*/ ctx[9](value);
     	}
 
     	let styleselector_props = {};
@@ -4809,12 +4816,17 @@ var app = (function () {
     		styleselector_props.mapStyle = /*mapStyle*/ ctx[1];
     	}
 
+    	if (/*isReadyForStyleSwitching*/ ctx[2] !== void 0) {
+    		styleselector_props.isReadyForStyleSwitching = /*isReadyForStyleSwitching*/ ctx[2];
+    	}
+
     	styleselector = new StyleSelector({
     			props: styleselector_props,
     			$$inline: true
     		});
 
     	binding_callbacks.push(() => bind$1(styleselector, 'mapStyle', styleselector_mapStyle_binding));
+    	binding_callbacks.push(() => bind$1(styleselector, 'isReadyForStyleSwitching', styleselector_isReadyForStyleSwitching_binding));
     	footer = new Footer({ $$inline: true });
 
     	const block = {
@@ -4824,32 +4836,37 @@ var app = (function () {
     			create_component(attentionbar.$$.fragment);
     			t1 = space();
     			section = element("section");
-    			div2 = element("div");
+    			div3 = element("div");
     			div0 = element("div");
     			create_component(layers.$$.fragment);
     			t2 = space();
     			div1 = element("div");
     			create_component(datetime.$$.fragment);
     			t3 = space();
-    			div4 = element("div");
-    			create_component(map.$$.fragment);
+    			div2 = element("div");
+    			create_component(profile.$$.fragment);
     			t4 = space();
-    			div3 = element("div");
-    			create_component(styleselector.$$.fragment);
+    			div5 = element("div");
+    			create_component(map.$$.fragment);
     			t5 = space();
+    			div4 = element("div");
+    			create_component(styleselector.$$.fragment);
+    			t6 = space();
     			create_component(footer.$$.fragment);
     			attr_dev(div0, "class", "col-span-1 md:col-span-1 row-span-1");
-    			add_location(div0, file, 28, 2, 969);
+    			add_location(div0, file, 29, 2, 979);
     			attr_dev(div1, "class", "col-span-1 md:col-span-1 row-span-1");
-    			add_location(div1, file, 32, 2, 1080);
-    			attr_dev(div2, "class", "col-span-1 md:col-span-3 grid grid-cols-1 md:grid-cols-1 gap-4 h-fit");
-    			add_location(div2, file, 27, 1, 883);
-    			attr_dev(div3, "class", "absolute top-1 left-1 ");
-    			add_location(div3, file, 40, 2, 1286);
-    			attr_dev(div4, "class", "col-span-1 md:col-span-9 relative");
-    			add_location(div4, file, 37, 1, 1170);
-    			attr_dev(section, "class", "grid grid-cols-1 md:grid-cols-12 gap-4 py-4 px-4 h-screen");
-    			add_location(section, file, 26, 0, 803);
+    			add_location(div1, file, 33, 2, 1080);
+    			attr_dev(div2, "class", "col-span-1 md:col-span-1 row-span-1");
+    			add_location(div2, file, 37, 2, 1162);
+    			attr_dev(div3, "class", "col-span-1 md:col-span-3 grid grid-cols-1 md:grid-cols-1 gap-4 h-fit");
+    			add_location(div3, file, 28, 1, 893);
+    			attr_dev(div4, "class", "absolute top-1 left-1 ");
+    			add_location(div4, file, 45, 2, 1430);
+    			attr_dev(div5, "class", "col-span-1 md:col-span-9 relative");
+    			add_location(div5, file, 42, 1, 1285);
+    			attr_dev(section, "class", "grid grid-cols-1 md:grid-cols-12 gap-4 py-4 px-4 h-fit");
+    			add_location(section, file, 27, 0, 816);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -4860,25 +4877,27 @@ var app = (function () {
     			mount_component(attentionbar, target, anchor);
     			insert_dev(target, t1, anchor);
     			insert_dev(target, section, anchor);
-    			append_dev(section, div2);
-    			append_dev(div2, div0);
+    			append_dev(section, div3);
+    			append_dev(div3, div0);
     			mount_component(layers, div0, null);
-    			append_dev(div2, t2);
-    			append_dev(div2, div1);
+    			append_dev(div3, t2);
+    			append_dev(div3, div1);
     			mount_component(datetime, div1, null);
-    			append_dev(section, t3);
-    			append_dev(section, div4);
-    			mount_component(map, div4, null);
-    			append_dev(div4, t4);
-    			append_dev(div4, div3);
-    			mount_component(styleselector, div3, null);
-    			insert_dev(target, t5, anchor);
+    			append_dev(div3, t3);
+    			append_dev(div3, div2);
+    			mount_component(profile, div2, null);
+    			append_dev(section, t4);
+    			append_dev(section, div5);
+    			mount_component(map, div5, null);
+    			append_dev(div5, t5);
+    			append_dev(div5, div4);
+    			mount_component(styleselector, div4, null);
+    			insert_dev(target, t6, anchor);
     			mount_component(footer, target, anchor);
     			current = true;
     		},
     		p: function update(ctx, [dirty]) {
     			const layers_changes = {};
-    			if (dirty & /*mapStyle*/ 2) layers_changes.mapStyle = /*mapStyle*/ ctx[1];
 
     			if (!updating_collectionList && dirty & /*collectionList*/ 1) {
     				updating_collectionList = true;
@@ -4901,6 +4920,12 @@ var app = (function () {
     				add_flush_callback(() => updating_mapStyle = false);
     			}
 
+    			if (!updating_isReadyForStyleSwitching && dirty & /*isReadyForStyleSwitching*/ 4) {
+    				updating_isReadyForStyleSwitching = true;
+    				map_changes.isReadyForStyleSwitching = /*isReadyForStyleSwitching*/ ctx[2];
+    				add_flush_callback(() => updating_isReadyForStyleSwitching = false);
+    			}
+
     			map.$set(map_changes);
     			const styleselector_changes = {};
 
@@ -4908,6 +4933,12 @@ var app = (function () {
     				updating_mapStyle_1 = true;
     				styleselector_changes.mapStyle = /*mapStyle*/ ctx[1];
     				add_flush_callback(() => updating_mapStyle_1 = false);
+    			}
+
+    			if (!updating_isReadyForStyleSwitching_1 && dirty & /*isReadyForStyleSwitching*/ 4) {
+    				updating_isReadyForStyleSwitching_1 = true;
+    				styleselector_changes.isReadyForStyleSwitching = /*isReadyForStyleSwitching*/ ctx[2];
+    				add_flush_callback(() => updating_isReadyForStyleSwitching_1 = false);
     			}
 
     			styleselector.$set(styleselector_changes);
@@ -4918,6 +4949,7 @@ var app = (function () {
     			transition_in(attentionbar.$$.fragment, local);
     			transition_in(layers.$$.fragment, local);
     			transition_in(datetime.$$.fragment, local);
+    			transition_in(profile.$$.fragment, local);
     			transition_in(map.$$.fragment, local);
     			transition_in(styleselector.$$.fragment, local);
     			transition_in(footer.$$.fragment, local);
@@ -4928,6 +4960,7 @@ var app = (function () {
     			transition_out(attentionbar.$$.fragment, local);
     			transition_out(layers.$$.fragment, local);
     			transition_out(datetime.$$.fragment, local);
+    			transition_out(profile.$$.fragment, local);
     			transition_out(map.$$.fragment, local);
     			transition_out(styleselector.$$.fragment, local);
     			transition_out(footer.$$.fragment, local);
@@ -4941,9 +4974,10 @@ var app = (function () {
     			if (detaching) detach_dev(section);
     			destroy_component(layers);
     			destroy_component(datetime);
+    			destroy_component(profile);
     			destroy_component(map);
     			destroy_component(styleselector);
-    			if (detaching) detach_dev(t5);
+    			if (detaching) detach_dev(t6);
     			destroy_component(footer, detaching);
     		}
     	};
@@ -4963,11 +4997,12 @@ var app = (function () {
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('HomePage', slots, []);
     	let collectionList = [];
-    	let mapStyle = "outdoors-v11";
+    	let mapStyle = "navigation-night-v1";
+    	let isReadyForStyleSwitching = false;
 
     	let kingstonDetails = {
     		id: 0,
-    		photoURL: "https://perspective.ca/wp-content/uploads/2018/10/city-of-kingston-ontario-perspective-globe-and-mail.jpg",
+    		photoURL: "https://www.meme-arsenal.com/memes/bd75c0339be8bbe24aeecd9c64764321.jpg",
     		displayName: "Kingston",
     		center: [-76.5, 44.233334],
     		zoom: 12,
@@ -4996,29 +5031,41 @@ var app = (function () {
     		$$invalidate(1, mapStyle);
     	}
 
+    	function map_isReadyForStyleSwitching_binding(value) {
+    		isReadyForStyleSwitching = value;
+    		$$invalidate(2, isReadyForStyleSwitching);
+    	}
+
     	function styleselector_mapStyle_binding(value) {
     		mapStyle = value;
     		$$invalidate(1, mapStyle);
+    	}
+
+    	function styleselector_isReadyForStyleSwitching_binding(value) {
+    		isReadyForStyleSwitching = value;
+    		$$invalidate(2, isReadyForStyleSwitching);
     	}
 
     	$$self.$capture_state = () => ({
     		Navbar,
     		Footer,
     		Map: Map$1,
-    		Profile,
     		AttentionBar,
+    		Profile,
     		DateTime,
     		Layers,
     		StyleSelector,
     		collectionList,
     		mapStyle,
+    		isReadyForStyleSwitching,
     		kingstonDetails
     	});
 
     	$$self.$inject_state = $$props => {
     		if ('collectionList' in $$props) $$invalidate(0, collectionList = $$props.collectionList);
     		if ('mapStyle' in $$props) $$invalidate(1, mapStyle = $$props.mapStyle);
-    		if ('kingstonDetails' in $$props) $$invalidate(2, kingstonDetails = $$props.kingstonDetails);
+    		if ('isReadyForStyleSwitching' in $$props) $$invalidate(2, isReadyForStyleSwitching = $$props.isReadyForStyleSwitching);
+    		if ('kingstonDetails' in $$props) $$invalidate(3, kingstonDetails = $$props.kingstonDetails);
     	};
 
     	if ($$props && "$$inject" in $$props) {
@@ -5028,11 +5075,14 @@ var app = (function () {
     	return [
     		collectionList,
     		mapStyle,
+    		isReadyForStyleSwitching,
     		kingstonDetails,
     		layers_collectionList_binding,
     		map_collectionList_binding,
     		map_mapStyle_binding,
-    		styleselector_mapStyle_binding
+    		map_isReadyForStyleSwitching_binding,
+    		styleselector_mapStyle_binding,
+    		styleselector_isReadyForStyleSwitching_binding
     	];
     }
 

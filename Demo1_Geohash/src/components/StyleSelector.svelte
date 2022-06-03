@@ -1,5 +1,6 @@
 <script>
 	export let mapStyle;
+	export let isReadyForStyleSwitching;
 
 	const mapStyleList = [
 		{ name: "Streets", value: "streets-v11" },
@@ -12,6 +13,7 @@
 	const toggleStyle = (item) => {
 		try {
 			mapStyle = item;
+			isReadyForStyleSwitching = true;
 		} catch (e) {}
 	};
 </script>

@@ -3,8 +3,7 @@
 	export let kingstonDetails;
 </script>
 
-<section class="rounded-lg shadow-xl">
-	<img height="100" width="auto" src={`${kingstonDetails.photoURL}`} alt={`${kingstonDetails.photoURL}`} class="card card-xsm md:card-md rounded-lg" loading="lazy" />
+<section class="rounded-lg shadow-xl text-sm">
 
 	<div class="p-4">
 		<p class="font-bold my-2">City:</p>
