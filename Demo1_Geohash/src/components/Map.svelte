@@ -11,6 +11,36 @@
 	let isDataLoaded = false;
 	let map;
 
+	const fetchInitialMapData = async () => {
+		try {
+			let tempList = [];
+
+			tempList.push({ id: 0, type: "Polygon", isShown: true, name: "Buildings", layerName: "add-3d-buildings", sourceName: "building" });
+			tempList.push({ id: 1, type: "Polygon", isShown: true, name: "Sky Box", layerName: "sky", sourceName: "sky" });
+
+			// Kingston geohash Data
+			let geohashLayerName = "Kingston_Geohash";
+			let geohashSourceName = "geohashSource";
+			let geohashData = await getDataWithAxios(Data.GEOHASH_URL);
+			tempList.push({ id: 2, type: "Polygon", isShown: true, name: geohashLayerName, layerName: geohashLayerName, sourceName: geohashSourceName });
+			tempList.push({ id: 3, type: "Polygon", isShown: true, name: geohashLayerName + " Outline", layerName: geohashLayerName + " Outline", sourceName: geohashSourceName });
+
+			// Neighbourhoods Data
+			let neighbourhoodsLayerName = "Neighbourhoods";
+			let neighbourhoodsSourceName = "neighbourhoodsSource";
+			let neighbourhoodsData = await getDataWithAxios(Data.NEIGHBOURHOODS_URL);
+			tempList.push({ id: 4, type: "Polygon", isShown: true, name: neighbourhoodsLayerName, layerName: neighbourhoodsLayerName, sourceName: neighbourhoodsSourceName });
+			tempList.push({ id: 5, type: "Polygon", isShown: true, name: neighbourhoodsLayerName + " Outline", layerName: neighbourhoodsLayerName + " Outline", sourceName: neighbourhoodsSourceName });
+
+			let treesLayerName = "Trees";
+			let treesSourceName = "tressSource";
+			let treesData = await getDataWithAxios(Data.TREES_URL);
+			tempList.push({ id: 6, type: "Point", isShown: true, name: treesLayerName, layerName: treesLayerName, sourceName: treesSourceName });
+
+			collectionList = tempList;
+		} catch (e) {}
+	};
+
 	const addDataSources = async () => {
 		try {
 			let tempList = [];
@@ -29,7 +59,6 @@
 				});
 				tempList.push({ id: 2, type: "Polygon", isShown: true, name: geohashLayerName, layerName: geohashLayerName, sourceName: geohashSourceName });
 				tempList.push({ id: 3, type: "Polygon", isShown: true, name: geohashLayerName + " Outline", layerName: geohashLayerName + " Outline", sourceName: geohashSourceName });
-		
 			} catch (e) {}
 
 			try {
@@ -44,19 +73,18 @@
 
 				tempList.push({ id: 4, type: "Polygon", isShown: true, name: neighbourhoodsLayerName, layerName: neighbourhoodsLayerName, sourceName: neighbourhoodsSourceName });
 				tempList.push({ id: 5, type: "Polygon", isShown: true, name: neighbourhoodsLayerName + " Outline", layerName: neighbourhoodsLayerName + " Outline", sourceName: neighbourhoodsSourceName });
-			
 			} catch (e) {}
 
 			try {
 				let treesLayerName = "Trees";
-				let tressSourceName = "tressSource";
-				let tressData = await getDataWithAxios(Data.TREES_URL);
-				map.addSource(tressSourceName, {
+				let treesSourceName = "tressSource";
+				let treesData = await getDataWithAxios(Data.TREES_URL);
+
+				map.addSource(treesSourceName, {
 					type: "geojson",
-					data: tressData,
+					data: treesData,
 				});
-				tempList.push({ id: 6, type: "Point", isShown: true, name: treesLayerName, layerName: treesLayerName, sourceName: tressSourceName });
-				
+				tempList.push({ id: 6, type: "Point", isShown: true, name: treesLayerName, layerName: treesLayerName, sourceName: treesSourceName });
 			} catch (e) {}
 
 			collectionList = tempList;
@@ -98,10 +126,6 @@
 	};
 
 	const addBuildingLayer = () => {
-		// Insert the layer beneath any symbol layer.
-		// The 'building' layer in the Mapbox Streets
-		// vector tileset contains building height data
-		// from OpenStreetMap.
 		map.addLayer({
 			id: "add-3d-buildings",
 			source: "composite",
@@ -111,10 +135,6 @@
 			minzoom: 15,
 			paint: {
 				"fill-extrusion-color": "#aaa",
-
-				// Use an 'interpolate' expression to
-				// add a smooth transition effect to
-				// the buildings as the user zooms in.
 				"fill-extrusion-height": ["interpolate", ["linear"], ["zoom"], 15, 0, 15.05, ["get", "height"]],
 				"fill-extrusion-base": ["interpolate", ["linear"], ["zoom"], 15, 0, 15.05, ["get", "min_height"]],
 				"fill-extrusion-opacity": 0.6,
@@ -196,7 +216,7 @@
 				type: "circle",
 				source: fillList.sourceName,
 				minzoom: 12,
-				
+
 				paint: {
 					"circle-radius": [
 						"interpolate",
@@ -256,7 +276,6 @@
 				let tempLayerIsShown = collectionList[i]["isShown"];
 
 				if (!map.getLayer(tempLayerName)) {
-					console.log("No layer found");
 					return;
 				}
 
@@ -266,18 +285,15 @@
 					map.setLayoutProperty(tempLayerName, "visibility", "none");
 				}
 			}
-		} catch (e) {
-			console.log(e);
-		}
+		} catch (e) {}
 	};
-
 	$: collectionList && isDataLoaded && addFilter();
 
 	const switchStyle = () => {
-		map.setStyle("mapbox://styles/mapbox/" + mapStyle);
-		map.resize();
+		try {
+			map.setStyle("mapbox://styles/mapbox/" + mapStyle);
+		} catch (e) {}
 	};
-
 	$: mapStyle && isDataLoaded && switchStyle();
 
 	onMount(async () => {
@@ -302,25 +318,23 @@
 		map.addControl(new mapboxgl.FullscreenControl(), "bottom-right");
 		map.addControl(new mapboxgl.NavigationControl(), "bottom-right");
 
-		map.on("load", () => {
-			addDataSources();
-		});
+		// map.on("load", () => {
+		// 	addDataSources();
+		// });
 
-		map.on("style.load", function () {
-			addDataSources();
-		});
+		// map.on("style.load", function () {
+		// 	addDataSources();
+		// });
 	});
 
 	onDestroy(() => {
-		for (let i = 0; i < collectionList.length; i++) {
-			let tempLayerName = collectionList[i]["layerName"];
-			let tempSourceName = collectionList[i]["sourceName"];
-
-			map.removeLayer(tempLayerName);
-			map.removeSource(tempSourceName);
-		}
-
-		map = null;
+		try {
+			for (let i = 0; i < collectionList.length; i++) {
+				map.removeLayer(collectionList[i]["layerName"]);
+				map.removeSource(collectionList[i]["sourceName"]);
+			}
+			map = null;
+		} catch (e) {}
 	});
 </script>
 
