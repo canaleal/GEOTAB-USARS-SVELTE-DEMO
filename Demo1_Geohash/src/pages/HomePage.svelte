@@ -8,7 +8,13 @@
 	import Layers from "components/Layers.svelte";
 	import StyleSelector from "components/StyleSelector.svelte";
 
+	import {getCurrentDateInYYYYMMDD, getCurrentTime} from 'utils/fetch-time.js';
+
+
 	let collectionList = [];
+	let selectedGeohash = null;
+	let selectedDate = getCurrentDateInYYYYMMDD();
+	let selectedTime = getCurrentTime();
 	let mapStyle = "navigation-night-v1";
 	let isReadyForStyleSwitching = false;
 	let kingstonDetails = {
@@ -32,16 +38,32 @@
 		</div>
 
 		<div class="col-span-1 md:col-span-1 row-span-1">
-			<DateTime />
+			<DateTime bind:selectedDate bind:selectedTime/>
 		</div>
 
 		<div class="col-span-1 md:col-span-1 row-span-1">
-			<Profile kingstonDetails={kingstonDetails} />
+			<Profile kingstonDetails={kingstonDetails} bind:selectedGeohash/>
 		</div>
+
+		<div class="col-span-1 md:col-span-1 row-span-1">
+			<section class="rounded-lg shadow-xl text-sm p-4">
+				<p class="font-bold my-1">Search Geohash Vehicle Data:</p>
+			
+				{#if selectedDate === "" || selectedTime === "" || selectedGeohash === null}
+					<div class="bg-red-100 rounded-lg py-4 px-6  text-red-700 my-1" role="alert">Select a Date, Time, and Geohash before Searching.</div>
+		
+				{:else}
+					
+					<button  class={`card-btn   card-btn-green  w-full block my-1 rounded-lg`}> Search Data </button>
+				{/if}
+				
+			</section>
+		</div>
+
 	</div>
 
 	<div class="col-span-1 md:col-span-9 relative">
-		<Map {kingstonDetails} bind:collectionList bind:mapStyle bind:isReadyForStyleSwitching/>
+		<Map {kingstonDetails} bind:collectionList bind:mapStyle bind:isReadyForStyleSwitching bind:selectedGeohash/>
 
 		<div class="absolute top-1 left-1 ">
 			<StyleSelector bind:mapStyle bind:isReadyForStyleSwitching/>

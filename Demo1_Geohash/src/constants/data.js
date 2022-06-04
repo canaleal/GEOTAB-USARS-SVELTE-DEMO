@@ -6,7 +6,7 @@ function getFullWindowPath() {
 }
 
 export const Data = {
-  GEOHASH_URL: `${getFullWindowPath()}/data/kingston-city-7.geojson`,
+  GEOHASH_URL: `${getFullWindowPath()}/data/kingston-neighbourhood.geojson`,
   NEIGHBOURHOODS_URL: `${getFullWindowPath()}/data/neighbourhoods.geojson`,
   TREES_URL: `${getFullWindowPath()}/data/trees.geojson`,
 

@@ -5,6 +5,14 @@ export const getCurrentDateTime = () => {
   return currentDateTime;
 };
 
+export const getCurrentDateInYYYYMMDD = () => {
+  const today = new Date();
+  const dd = String(today.getDate()).padStart(2, '0');
+  const mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+  const yyyy = today.getFullYear();
+  return `${yyyy}-${mm}-${dd}`;
+};
+
 export const getCurrentDate = () => {
   const currentDate = new Date();
   return currentDate;
@@ -12,6 +20,6 @@ export const getCurrentDate = () => {
 
 export const getCurrentTime = () => {
   const currentDate = new Date();
-  const currentTime = `${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}`;
+  const currentTime = `${currentDate.getHours()}:${currentDate.getMinutes()}`;
   return currentTime;
 };

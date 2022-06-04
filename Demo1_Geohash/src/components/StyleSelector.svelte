@@ -18,12 +18,12 @@
 	};
 </script>
 
-<section class="h-full rounded-lg bg-white p-4 mb-4 ">
-	<p class="my-1">Map Style:</p>
+<section class="h-full rounded-lg bg-white p-4 mb-4 text-sm">
+	<p class="font-bold my-1">Map Style:</p>
 	{#each mapStyleList as item}
 		<div key={item.name}>
 			<input id={item.name} type="radio" value={item.value} checked={mapStyle === item.value} on:click={() => toggleStyle(item["value"])} data-bs-toggle="collapse" data-bs-target="#collapseMenu" />
-			<label class="text-sm ml-2" for={item["name"]}>{item["name"]}</label>
+			<label class="ml-2" for={item["name"]}>{item["name"]}</label>
 		</div>
 	{/each}
 </section>

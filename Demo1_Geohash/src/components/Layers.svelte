@@ -42,7 +42,6 @@
 			console.log(e);
 		}
 	}
-
 </script>
 
 <section class="h-full rounded-lg shadow-xl p-4 text-sm">
@@ -60,11 +59,7 @@
 			</div>
 		</div>
 	{:else}
- 
-  <div class="bg-green-100 rounded-lg py-5 px-6 mb-4 text-green-700" role="alert">
-    Loading Data.
-  </div>
-
+		<div class="bg-green-100 rounded-lg py-4 px-6 text-green-700 my-1" role="alert">Loading Data.</div>
 	{/if}
 </section>
 
