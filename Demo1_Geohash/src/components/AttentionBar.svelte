@@ -11,13 +11,13 @@
 	<section class="grid grid-cols-1  md:grid-cols-12 grid-rows-1  gap-4 pb-4 px-4 h-fit">
 		<div class="col-span-1 md:col-span-3 row-span-1 " />
 		<div class="col-span-1 md:col-span-2 row-span-1 ">
-			<button class={`card-btn-sm ${selectedMenu == 0 ? "card-btn-blue" : "bg-white"} w-full block mb-1 rounded-b-lg hover:underline`} on:click={() => (selectedMenu = 0)}> Map View </button>
+			<button class={`card-btn-sm ${selectedMenu == 0 ? "card-btn-blue" : "bg-white"} w-full block mb-1 rounded-b-lg hover:underline`} on:click={() => (selectedMenu = 0)}> Layers View </button>
 		</div>
 		<div class="col-span-1 md:col-span-2 row-span-1">
-			<button class={`card-btn-sm ${selectedMenu == 1 ? "card-btn-blue" : "bg-white"} w-full block mb-1 rounded-b-lg hover:underline`} on:click={() => (selectedMenu = 1)}> Street View </button>
+			<button class={`card-btn-sm ${selectedMenu == 1 ? "card-btn-blue" : "bg-white"} w-full block mb-1 rounded-b-lg hover:underline`} on:click={() => (selectedMenu = 1)}> Chart View </button>
 		</div>
 		<div class="col-span-1 md:col-span-2 row-span-1">
-			<button class={`card-btn-sm ${selectedMenu == 2 ? "card-btn-blue" : "bg-white"} w-full block mb-1 rounded-b-lg hover:underline`} on:click={() => (selectedMenu = 2)}> Chart View </button>
+			<button class={`card-btn-sm ${selectedMenu == 2 ? "card-btn-blue" : "bg-white"} w-full block mb-1 rounded-b-lg hover:underline`} on:click={() => (selectedMenu = 2)}> Details View </button>
 		</div>
 	</section>
 </section>

@@ -3848,15 +3848,15 @@ var app = (function () {
     			t4 = space();
     			div2 = element("div");
     			button0 = element("button");
-    			t5 = text("Map View");
+    			t5 = text("Layers View");
     			t6 = space();
     			div3 = element("div");
     			button1 = element("button");
-    			t7 = text("Street View");
+    			t7 = text("Chart View");
     			t8 = space();
     			div4 = element("div");
     			button2 = element("button");
-    			t9 = text("Chart View");
+    			t9 = text("Details View");
     			attr_dev(span, "class", "font-bold");
     			add_location(span, file$6, 7, 32, 211);
     			attr_dev(p, "class", "text-white text-sm");
@@ -3878,17 +3878,17 @@ var app = (function () {
 			? "card-btn-blue"
 			: "bg-white"} w-full block mb-1 rounded-b-lg hover:underline`);
 
-    			add_location(button1, file$6, 16, 3, 766);
+    			add_location(button1, file$6, 16, 3, 769);
     			attr_dev(div3, "class", "col-span-1 md:col-span-2 row-span-1");
-    			add_location(div3, file$6, 15, 2, 712);
+    			add_location(div3, file$6, 15, 2, 715);
 
     			attr_dev(button2, "class", button2_class_value = `card-btn-sm ${/*selectedMenu*/ ctx[0] == 2
 			? "card-btn-blue"
 			: "bg-white"} w-full block mb-1 rounded-b-lg hover:underline`);
 
-    			add_location(button2, file$6, 19, 3, 1021);
+    			add_location(button2, file$6, 19, 3, 1023);
     			attr_dev(div4, "class", "col-span-1 md:col-span-2 row-span-1");
-    			add_location(div4, file$6, 18, 2, 967);
+    			add_location(div4, file$6, 18, 2, 969);
     			attr_dev(section0, "class", "grid grid-cols-1 md:grid-cols-12 grid-rows-1 gap-4 pb-4 px-4 h-fit");
     			add_location(section0, file$6, 10, 1, 313);
     			attr_dev(section1, "class", "sticky top-0 z-10");
