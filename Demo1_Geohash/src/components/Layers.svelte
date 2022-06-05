@@ -53,7 +53,7 @@
 			<div class="overflow-y-auto">
 				{#each collectionList as item}
 					<button on:click={() => toggleIsShown(item)} class={`card-btn w-full block ${item["isShown"] ? "card-btn-blue" : ""} my-1 rounded-lg `}>
-						{item["name"]}
+						<i class="fa-solid {item['icon']} " /> {item["name"]}
 					</button>
 				{/each}
 			</div>

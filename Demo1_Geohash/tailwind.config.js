@@ -1,3 +1,4 @@
+/* eslint-disable quote-props */
 /* eslint-disable global-require */
 const production = !process.env.ROLLUP_WATCH;
 module.exports = {
@@ -14,7 +15,12 @@ module.exports = {
   },
   darkMode: false, // or 'media' or 'class'
   theme: {
-    extend: {},
+    extend: {
+      gridTemplateRows: {
+        // Simple 8 row grid
+        '12': 'repeat(12, minmax(0, 1fr))',
+      },
+    },
   },
   variants: {
     extend: {},

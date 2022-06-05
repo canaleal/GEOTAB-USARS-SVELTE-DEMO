@@ -18,23 +18,42 @@
 		try {
 			let tempList = [];
 
-			tempList.push({ id: 0, type: "Polygon", isShown: true, name: "Buildings", layerName: "add-3d-buildings", sourceName: "building" });
-			tempList.push({ id: 1, type: "Polygon", isShown: true, name: "Sky Box", layerName: "sky", sourceName: "sky" });
+			tempList.push({ id: 0, icon: "fa-building", type: "Polygon", isShown: true, name: "Buildings", layerName: "add-3d-buildings", sourceName: "building" });
+			tempList.push({ id: 1, icon: "fa-cloud", type: "Polygon", isShown: true, name: "Sky Box", layerName: "sky", sourceName: "sky" });
 
 			// Kingston geohash Data
 			let geohashLayerName = "Kingston Geohash";
 			let geohashSourceName = "geohashSource";
 			let geohashData = await getDataWithAxios(Data.GEOHASH_URL);
-			tempList.push({ id: 2, type: "Polygon", isShown: true, name: geohashLayerName, layerName: geohashLayerName, sourceName: geohashSourceName, data: geohashData });
-			tempList.push({ id: 3, type: "Polygon", isShown: true, name: geohashLayerName + " Outline", layerName: geohashLayerName + " Outline", sourceName: geohashSourceName, data: geohashData });
+			tempList.push({ id: 2, icon: "fa-border-all", type: "Polygon", isShown: true, name: geohashLayerName, layerName: geohashLayerName, sourceName: geohashSourceName, data: geohashData });
+			tempList.push({
+				id: 3,
+				icon: "fa-border-all",
+				type: "Polygon",
+				isShown: true,
+				name: geohashLayerName + " Outline",
+				layerName: geohashLayerName + " Outline",
+				sourceName: geohashSourceName,
+				data: geohashData,
+			});
 
 			// // Neighbourhoods Data
 			let neighbourhoodsLayerName = "Neighbourhoods";
 			let neighbourhoodsSourceName = "neighbourhoodsSource";
 			let neighbourhoodsData = await getDataWithAxios(Data.NEIGHBOURHOODS_URL);
-			tempList.push({ id: 4, type: "Polygon", isShown: false, name: neighbourhoodsLayerName, layerName: neighbourhoodsLayerName, sourceName: neighbourhoodsSourceName, data: neighbourhoodsData });
+			tempList.push({
+				id: 4,
+				icon: "fa-border-all",
+				type: "Polygon",
+				isShown: false,
+				name: neighbourhoodsLayerName,
+				layerName: neighbourhoodsLayerName,
+				sourceName: neighbourhoodsSourceName,
+				data: neighbourhoodsData,
+			});
 			tempList.push({
 				id: 5,
+				icon: "fa-border-all",
 				type: "Polygon",
 				isShown: false,
 				name: neighbourhoodsLayerName + " Outline",
@@ -46,7 +65,7 @@
 			// let treesLayerName = "Trees";
 			// let treesSourceName = "treesSource";
 			// let treesData = await getDataWithAxios(Data.TREES_URL);
-			// tempList.push({ id: 6, type: "Point", isShown: true, name: treesLayerName, layerName: treesLayerName, sourceName: treesSourceName, data:treesData });
+			// tempList.push({ id: 6, icon: "fa-tree", type: "Point", isShown: true, name: treesLayerName, layerName: treesLayerName, sourceName: treesSourceName, data: treesData });
 
 			collectionList = tempList;
 		} catch (e) {}
@@ -66,7 +85,7 @@
 				data: neighbourhoodsList.data,
 			});
 
-			// const treesList = collectionList[6]
+			// const treesList = collectionList[6];
 			// map.addSource(treesList.sourceName, {
 			// 	type: "geojson",
 			// 	data: treesList.data,
@@ -85,7 +104,7 @@
 
 		addKingstonGeoHashLayer(collectionList[2], collectionList[3]);
 		addNeighbourhoodsLayer(collectionList[4], collectionList[5]);
-		// addTreesLayer(collectionList[6]);
+	//	addTreesLayer(collectionList[6]);
 	};
 
 	const addTerrainLayer = () => {
@@ -146,12 +165,11 @@
 
 		map.on("click", fillList.layerName, (e) => {
 			if (clickedStateId !== null) {
-				console.log("switch");
 				map.setFeatureState({ source: fillList.sourceName, id: clickedStateId }, { clicked: false });
 			}
 
 			clickedStateId = e.features[0].id;
-			map.setFeatureState({ source: fillList.sourceName, id: [clickedStateId] }, { clicked: true });
+			map.setFeatureState({ source: fillList.sourceName, id: clickedStateId }, { clicked: true });
 
 			let description = "";
 			const sliced = Object.fromEntries(Object.entries(e.features[0].properties).slice(0, 6));
@@ -265,24 +283,13 @@
 		);
 		map.setLayoutProperty(fillList.layerName, "visibility", "none");
 
-		// When a click event occurs on a feature in the places layer, open a popup at the
-		// location of the feature, with description HTML from its properties.
 		map.on("click", fillList.layerName, (e) => {
-			// Copy coordinates array.
-			const coordinates = e.features[0].geometry.coordinates.slice();
-
-			// Add features to the description
 			let description = "";
-			const sliced = Object.fromEntries(Object.entries(e.features[0].properties).slice(0, 3));
+			const sliced = Object.fromEntries(Object.entries(e.features[0].properties).slice(0, 4));
 			for (const [key, value] of Object.entries(sliced)) {
 				description += `<span class="block font-bold">${key}</span><span class="block">${value}</span>`;
 			}
-
-			while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-				coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-			}
-
-			new mapboxgl.Popup().setLngLat(coordinates).setHTML(description).addTo(map);
+			small_popup.setLngLat(e.lngLat).setHTML(description).addTo(map);
 		});
 
 		// Change the cursor to a pointer when the mouse is over the places layer.

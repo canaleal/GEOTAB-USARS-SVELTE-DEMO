@@ -200,6 +200,23 @@
   padding-right: 2rem;
 }
 
+.card-btn-sm {
+  display: inline-block;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.25rem; /* 16px */
+  padding-bottom: 0.25rem; /* 16px */
+  text-align: left;
+  -webkit-transition: all 200ms;
+  transition: all 200ms;
+
+}
+
+.card-btn-sm:hover {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
 
 .card-btn-blue {
   color: white;
@@ -310,3 +327,31 @@
     opacity: 1;
   }
 }
+
+
+
+.container {  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "Components Components Components Selections Selections Selections Selections Selections Selections Selections Selections Selections"
+    "Components Components Components Map Map Map Map Map Map Map Map Map"
+    "Components Components Components Map Map Map Map Map Map Map Map Map"
+    "Components Components Components Map Map Map Map Map Map Map Map Map"
+    "Components Components Components Map Map Map Map Map Map Map Map Map"
+    "Components Components Components Map Map Map Map Map Map Map Map Map"
+    "Components Components Components Map Map Map Map Map Map Map Map Map"
+    "Components Components Components Map Map Map Map Map Map Map Map Map"
+    "Components Components Components Map Map Map Map Map Map Map Map Map"
+    "Components Components Components Map Map Map Map Map Map Map Map Map"
+    "Components Components Components Map Map Map Map Map Map Map Map Map"
+    "Components Components Components Map Map Map Map Map Map Map Map Map";
+}
+
+.Components { grid-area: Components; }
+
+.Selections { grid-area: Selections; }
+
+.Map { grid-area: Map; }
