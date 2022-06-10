@@ -8,10 +8,12 @@
 	import Layers from "components/Layers.svelte";
 	import StyleSelector from "components/StyleSelector.svelte";
 	import FormRequest from "components/FormRequest.svelte";
+	import StreetView from "components/StreetView.svelte";
 
 	import { getCurrentDateInYYYYMMDD, getCurrentTime } from "utils/fetch-time.js";
 
-	let selectedMenu = 0;
+	let selectedMenu = 1;
+	let pointOfInterest = null;
 	let collectionList = [];
 	let selectedGeohash = null;
 	let selectedDate = getCurrentDateInYYYYMMDD();
@@ -42,9 +44,15 @@
 			<Layers bind:collectionList />
 		</div>
 
+		{#if selectedMenu == 1}
 		<div class="col-span-1 md:col-span-1 row-span-1">
 			<DateTime bind:selectedDate bind:selectedTime />
 		</div>
+		{:else if selectedMenu == 2 }
+			<div class="col-span-1 md:col-span-1 row-span-1">
+				<StreetView bind:pointOfInterest />
+			</div>
+		{/if}
 
 		<div class="col-span-1 md:col-span-1 row-span-1">
 			<Profile {kingstonDetails} bind:selectedGeohash />
@@ -53,10 +61,12 @@
 		<div class="col-span-1 md:col-span-1 row-span-1">
 			<FormRequest bind:selectedDate bind:selectedTime bind:selectedGeohash {fetchData} />
 		</div>
+
+	
 	</div>
 
 	<div class="col-span-1 md:col-span-9  row-span-6 relative">
-		<Map {kingstonDetails} bind:collectionList bind:mapStyle bind:isReadyForStyleSwitching bind:selectedGeohash />
+		<Map {kingstonDetails} bind:collectionList bind:mapStyle bind:isReadyForStyleSwitching bind:selectedGeohash bind:pointOfInterest />
 		<div class="absolute top-1 left-1 ">
 			<StyleSelector bind:mapStyle bind:isReadyForStyleSwitching />
 		</div>

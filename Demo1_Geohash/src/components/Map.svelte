@@ -3,6 +3,7 @@
 	import { onDestroy } from "svelte";
 	import { getDataWithAxios } from "utils/fetch-data.js";
 	import { Data } from "constants/index.js";
+	import { getListOfObjectWhereKeyContainsString } from "utils/filter-data.js";
 
 	// User ID passed from parent
 	export let collectionList;
@@ -10,6 +11,7 @@
 	export let mapStyle;
 	export let isReadyForStyleSwitching;
 	export let kingstonDetails;
+	export let pointOfInterest;
 	let isDataLoaded = false;
 	let map;
 	const small_popup = new mapboxgl.Popup();
@@ -18,19 +20,20 @@
 		try {
 			let tempList = [];
 
-			tempList.push({ id: 0, icon: "fa-building", type: "Polygon", isShown: true, name: "Buildings", layerName: "add-3d-buildings", sourceName: "building" });
-			tempList.push({ id: 1, icon: "fa-cloud", type: "Polygon", isShown: true, name: "Sky Box", layerName: "sky", sourceName: "sky" });
+			tempList.push({ id: 0, menu: 1, icon: "fa-building", type: "Polygon", isShown: true, name: "Buildings", layerName: "add-3d-buildings", sourceName: "building" });
+			tempList.push({ id: 1, menu: 1, icon: "fa-cloud", type: "Polygon", isShown: true, name: "Sky Box", layerName: "sky", sourceName: "sky" });
 
 			// Kingston geohash Data
 			let geohashLayerName = "Kingston Geohash";
 			let geohashSourceName = "geohashSource";
 			let geohashData = await getDataWithAxios(Data.GEOHASH_URL);
-			tempList.push({ id: 2, icon: "fa-border-all", type: "Polygon", isShown: true, name: geohashLayerName, layerName: geohashLayerName, sourceName: geohashSourceName, data: geohashData });
+			tempList.push({ id: 2, menu: 1, icon: "fa-border-all", type: "Polygon", isShown: true, name: geohashLayerName, layerName: geohashLayerName, sourceName: geohashSourceName, data: geohashData });
 			tempList.push({
 				id: 3,
+				menu: 1,
 				icon: "fa-border-all",
 				type: "Polygon",
-				isShown: true,
+				isShown: false,
 				name: geohashLayerName + " Outline",
 				layerName: geohashLayerName + " Outline",
 				sourceName: geohashSourceName,
@@ -43,6 +46,7 @@
 			let neighbourhoodsData = await getDataWithAxios(Data.NEIGHBOURHOODS_URL);
 			tempList.push({
 				id: 4,
+				menu: 1,
 				icon: "fa-border-all",
 				type: "Polygon",
 				isShown: false,
@@ -53,6 +57,7 @@
 			});
 			tempList.push({
 				id: 5,
+				menu: 1,
 				icon: "fa-border-all",
 				type: "Polygon",
 				isShown: false,
@@ -62,10 +67,20 @@
 				data: neighbourhoodsData,
 			});
 
-			// let treesLayerName = "Trees";
-			// let treesSourceName = "treesSource";
-			// let treesData = await getDataWithAxios(Data.TREES_URL);
-			// tempList.push({ id: 6, icon: "fa-tree", type: "Point", isShown: true, name: treesLayerName, layerName: treesLayerName, sourceName: treesSourceName, data: treesData });
+			let treesLayerName = "Trees";
+			let treesSourceName = "treesSource";
+			let treesData = await getDataWithAxios(Data.TREES_URL);
+			tempList.push({ id: 6, icon: "fa-tree", type: "Point", isShown: true, name: treesLayerName, layerName: treesLayerName, sourceName: treesSourceName, data: treesData });
+
+			// let sidewalkLayerName = "Sidewalk";
+			// let sidewalkSourceName = "sidewalkSource";
+			// let sidewalkData = await getDataWithAxios(Data.SIDEWALK_URL);
+			// tempList.push({ id: 7, menu:2, icon: "fa-person-walking", type: "Point", isShown: false, name: sidewalkLayerName, layerName: sidewalkLayerName, sourceName: sidewalkSourceName, data: sidewalkData });
+
+			// let roadworkLayerName = "Roadwork";
+			// let roadworkSourceName = "RoadworkkSource";
+			// let roadworkData = await getDataWithAxios(Data.ROADWORK_URL);
+			// tempList.push({ id: 8,menu:2, icon: "fa-road", type: "Point", isShown: false, name: roadworkLayerName, layerName: roadworkLayerName, sourceName: roadworkSourceName, data: roadworkData });
 
 			collectionList = tempList;
 		} catch (e) {}
@@ -85,10 +100,22 @@
 				data: neighbourhoodsList.data,
 			});
 
-			// const treesList = collectionList[6];
-			// map.addSource(treesList.sourceName, {
+			const treesList = getListOfObjectWhereKeyContainsString(collectionList, "layerName", "Trees")[0];
+			map.addSource(treesList.sourceName, {
+				type: "geojson",
+				data: treesList.data,
+			});
+
+			// const sidewalkList = getListOfObjectWhereKeyContainsString(collectionList, "layerName", "Sidewalk")[0];
+			// map.addSource(sidewalkList.sourceName, {
 			// 	type: "geojson",
-			// 	data: treesList.data,
+			// 	data: sidewalkList.data,
+			// });
+
+			// const roadworkList = getListOfObjectWhereKeyContainsString(collectionList, "layerName", "Roadwork")[0];
+			// map.addSource(roadworkList.sourceName, {
+			// 	type: "geojson",
+			// 	data: roadworkList.data,
 			// });
 
 			isDataLoaded = true;
@@ -102,9 +129,18 @@
 		addTerrainLayer(collectionList[0]);
 		addBuildingLayer(collectionList[1]);
 
-		addKingstonGeoHashLayer(collectionList[2], collectionList[3]);
+		addKingstonGeohashLayer(collectionList[2], collectionList[3]);
 		addNeighbourhoodsLayer(collectionList[4], collectionList[5]);
-	//	addTreesLayer(collectionList[6]);
+
+		const treesList = getListOfObjectWhereKeyContainsString(collectionList, "layerName", "Trees")[0];
+		addTreesLayer(treesList);
+
+		//Add Sidewalk
+		// const sidewalkList = getListOfObjectWhereKeyContainsString(collectionList, "layerName", "Sidewalk")[0];
+		// addLineLayer(sidewalkList, "#258383");
+
+		// const roadworkList = getListOfObjectWhereKeyContainsString(collectionList, "layerName", "Roadwork")[0];
+		// addLineLayer(roadworkList, "#ed5e5e");
 	};
 
 	const addTerrainLayer = () => {
@@ -146,7 +182,7 @@
 		});
 	};
 
-	const addKingstonGeoHashLayer = (fillList, outlineList) => {
+	const addKingstonGeohashLayer = (fillList, outlineList) => {
 		map.addLayer({
 			id: fillList.layerName,
 			type: "fill",
@@ -176,8 +212,7 @@
 			for (const [key, value] of Object.entries(sliced)) {
 				description += `<span class="block font-bold">${key}</span><span class="block">${value}</span>`;
 			}
-			small_popup.setLngLat(e.lngLat).setHTML(description).addTo(map);
-
+			
 			selectedGeohash = e.features[0].properties.geohash_list;
 		});
 
@@ -282,6 +317,43 @@
 			"waterway-label"
 		);
 		map.setLayoutProperty(fillList.layerName, "visibility", "none");
+		map.moveLayer(fillList.layerName);
+
+		map.on("click", fillList.layerName, (e) => {
+			let description = "";
+			const sliced = Object.fromEntries(Object.entries(e.features[0].properties).slice(0, 4));
+			for (const [key, value] of Object.entries(sliced)) {
+				description += `<span class="block font-bold">${key}</span><span class="block">${value}</span>`;
+			}
+			small_popup.setLngLat(e.lngLat).setHTML(description).addTo(map);
+			pointOfInterest = { lat:  e.lngLat['lat'], lng: e.lngLat['lng']};
+		});
+
+		// Change the cursor to a pointer when the mouse is over the places layer.
+		map.on("mouseenter", fillList.layerName, (e) => {
+			map.getCanvas().style.cursor = "pointer";
+		});
+
+		// Change it back to a pointer when it leaves.
+		map.on("mouseleave", fillList.layerName, () => {
+			map.getCanvas().style.cursor = "";
+		});
+	};
+
+	const addLineLayer = (fillList, color) => {
+		map.addLayer({
+			id: fillList.layerName,
+			type: "line",
+			source: fillList.sourceName,
+			layout: {
+				"line-join": "round",
+				"line-cap": "round",
+			},
+			paint: {
+				"line-color": color,
+				"line-width": 4,
+			},
+		});
 
 		map.on("click", fillList.layerName, (e) => {
 			let description = "";
@@ -322,7 +394,13 @@
 				} else {
 					map.setLayoutProperty(tempLayerName, "visibility", "none");
 				}
+
+				if(tempLayerName.includes("Trees") && tempLayerIsShown === false){
+					small_popup.remove();
+				}
 			}
+
+			
 		} catch (e) {}
 	};
 	$: collectionList && isDataLoaded && addFilter();

@@ -9,6 +9,8 @@ export const Data = {
   GEOHASH_URL: `${getFullWindowPath()}/data/kingston-neighbourhood.geojson`,
   NEIGHBOURHOODS_URL: `${getFullWindowPath()}/data/neighbourhoods.geojson`,
   TREES_URL: `${getFullWindowPath()}/data/trees.geojson`,
+  SIDEWALK_URL: `${getFullWindowPath()}/data/sidewalk.geojson`,
+  ROADWORK_URL: `${getFullWindowPath()}/data/roadwork.geojson`,
 
 };
 
