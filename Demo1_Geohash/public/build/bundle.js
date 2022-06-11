@@ -3145,7 +3145,7 @@ var app = (function () {
     			div = element("div");
     			attr_dev(div, "id", "map");
     			attr_dev(div, "class", "h-96 md:h-full card");
-    			add_location(div, file$9, 461, 0, 14589);
+    			add_location(div, file$9, 431, 0, 12924);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -3198,17 +3198,6 @@ var app = (function () {
     				name: "Buildings",
     				layerName: "add-3d-buildings",
     				sourceName: "building"
-    			});
-
-    			tempList.push({
-    				id: 1,
-    				menu: 1,
-    				icon: "fa-cloud",
-    				type: "Polygon",
-    				isShown: true,
-    				name: "Sky Box",
-    				layerName: "sky",
-    				sourceName: "sky"
     			});
 
     			// Kingston geohash Data
@@ -3286,14 +3275,6 @@ var app = (function () {
     				data: treesData
     			});
 
-    			// let sidewalkLayerName = "Sidewalk";
-    			// let sidewalkSourceName = "sidewalkSource";
-    			// let sidewalkData = await getDataWithAxios(Data.SIDEWALK_URL);
-    			// tempList.push({ id: 7, menu:2, icon: "fa-person-walking", type: "Point", isShown: false, name: sidewalkLayerName, layerName: sidewalkLayerName, sourceName: sidewalkSourceName, data: sidewalkData });
-    			// let roadworkLayerName = "Roadwork";
-    			// let roadworkSourceName = "RoadworkkSource";
-    			// let roadworkData = await getDataWithAxios(Data.ROADWORK_URL);
-    			// tempList.push({ id: 8,menu:2, icon: "fa-road", type: "Point", isShown: false, name: roadworkLayerName, layerName: roadworkLayerName, sourceName: roadworkSourceName, data: roadworkData });
     			$$invalidate(0, collectionList = tempList);
     		} catch(e) {
     			
@@ -3313,19 +3294,7 @@ var app = (function () {
 
     			const treesList = getListOfObjectWhereKeyContainsString(collectionList, "layerName", "Trees")[0];
     			map.addSource(treesList.sourceName, { type: "geojson", data: treesList.data });
-
-    			// const sidewalkList = getListOfObjectWhereKeyContainsString(collectionList, "layerName", "Sidewalk")[0];
-    			// map.addSource(sidewalkList.sourceName, {
-    			// 	type: "geojson",
-    			// 	data: sidewalkList.data,
-    			// });
-    			// const roadworkList = getListOfObjectWhereKeyContainsString(collectionList, "layerName", "Roadwork")[0];
-    			// map.addSource(roadworkList.sourceName, {
-    			// 	type: "geojson",
-    			// 	data: roadworkList.data,
-    			// });
     			$$invalidate(6, isDataLoaded = true);
-
     			addLayers();
     		} catch(e) {
     			console.error(e);
@@ -3339,12 +3308,8 @@ var app = (function () {
     		addNeighbourhoodsLayer(collectionList[4], collectionList[5]);
     		const treesList = getListOfObjectWhereKeyContainsString(collectionList, "layerName", "Trees")[0];
     		addTreesLayer(treesList);
-    	}; //Add Sidewalk
-    	// const sidewalkList = getListOfObjectWhereKeyContainsString(collectionList, "layerName", "Sidewalk")[0];
-    	// addLineLayer(sidewalkList, "#258383");
-    	// const roadworkList = getListOfObjectWhereKeyContainsString(collectionList, "layerName", "Roadwork")[0];
+    	};
 
-    	// addLineLayer(roadworkList, "#ed5e5e");
     	const addTerrainLayer = () => {
     		map.addSource("mapbox-dem", {
     			type: "raster-dem",

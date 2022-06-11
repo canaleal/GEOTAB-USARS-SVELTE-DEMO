@@ -21,8 +21,6 @@
 			let tempList = [];
 
 			tempList.push({ id: 0, menu: 1, icon: "fa-building", type: "Polygon", isShown: true, name: "Buildings", layerName: "add-3d-buildings", sourceName: "building" });
-			tempList.push({ id: 1, menu: 1, icon: "fa-cloud", type: "Polygon", isShown: true, name: "Sky Box", layerName: "sky", sourceName: "sky" });
-
 			// Kingston geohash Data
 			let geohashLayerName = "Kingston Geohash";
 			let geohashSourceName = "geohashSource";
@@ -72,16 +70,6 @@
 			let treesData = await getDataWithAxios(Data.TREES_URL);
 			tempList.push({ id: 6, icon: "fa-tree", type: "Point", isShown: true, name: treesLayerName, layerName: treesLayerName, sourceName: treesSourceName, data: treesData });
 
-			// let sidewalkLayerName = "Sidewalk";
-			// let sidewalkSourceName = "sidewalkSource";
-			// let sidewalkData = await getDataWithAxios(Data.SIDEWALK_URL);
-			// tempList.push({ id: 7, menu:2, icon: "fa-person-walking", type: "Point", isShown: false, name: sidewalkLayerName, layerName: sidewalkLayerName, sourceName: sidewalkSourceName, data: sidewalkData });
-
-			// let roadworkLayerName = "Roadwork";
-			// let roadworkSourceName = "RoadworkkSource";
-			// let roadworkData = await getDataWithAxios(Data.ROADWORK_URL);
-			// tempList.push({ id: 8,menu:2, icon: "fa-road", type: "Point", isShown: false, name: roadworkLayerName, layerName: roadworkLayerName, sourceName: roadworkSourceName, data: roadworkData });
-
 			collectionList = tempList;
 		} catch (e) {}
 	};
@@ -106,18 +94,6 @@
 				data: treesList.data,
 			});
 
-			// const sidewalkList = getListOfObjectWhereKeyContainsString(collectionList, "layerName", "Sidewalk")[0];
-			// map.addSource(sidewalkList.sourceName, {
-			// 	type: "geojson",
-			// 	data: sidewalkList.data,
-			// });
-
-			// const roadworkList = getListOfObjectWhereKeyContainsString(collectionList, "layerName", "Roadwork")[0];
-			// map.addSource(roadworkList.sourceName, {
-			// 	type: "geojson",
-			// 	data: roadworkList.data,
-			// });
-
 			isDataLoaded = true;
 			addLayers();
 		} catch (e) {
@@ -135,12 +111,6 @@
 		const treesList = getListOfObjectWhereKeyContainsString(collectionList, "layerName", "Trees")[0];
 		addTreesLayer(treesList);
 
-		//Add Sidewalk
-		// const sidewalkList = getListOfObjectWhereKeyContainsString(collectionList, "layerName", "Sidewalk")[0];
-		// addLineLayer(sidewalkList, "#258383");
-
-		// const roadworkList = getListOfObjectWhereKeyContainsString(collectionList, "layerName", "Roadwork")[0];
-		// addLineLayer(roadworkList, "#ed5e5e");
 	};
 
 	const addTerrainLayer = () => {
