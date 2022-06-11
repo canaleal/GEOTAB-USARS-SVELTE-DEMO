@@ -448,6 +448,8 @@
 
 	onDestroy(() => {
 		try {
+
+			// Remove all the layers and data sources as they are cached and take up a lot of memory
 			for (let i = 0; i < collectionList.length; i++) {
 				map.removeLayer(collectionList[i]["layerName"]);
 				map.removeSource(collectionList[i]["sourceName"]);

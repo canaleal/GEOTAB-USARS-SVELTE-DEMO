@@ -38,16 +38,14 @@ h6 {
   font-family: 'Source Serif Pro', serif;
 }
 
-.bg-green {
-  background-color: #007a3e;
-}
 
 .bg-blue {
-  background-color: #277273;
+  background-color: #3B5B91;
+  color: white;
 }
 
 .bg-red {
-  background-color: #ec5e5e;
+  background-color: #ff5a5f;
 }
 
 .bg-smoke {
@@ -55,13 +53,10 @@ h6 {
 }
 
 .bg-dark {
-  background-color: #424d5c;
+  background-color: #1A1E23;
+  color: white;
 }
 
-
-.bg-dark-blue {
-  background-color: #00355a;
-}
 
 
 hr {
@@ -207,29 +202,29 @@ hr {
 
 .card-btn-blue {
   color: white;
-  background-color: #277273;
+  background-color: #3B5B91;
 }
 
 .card-btn-blue:hover {
-  background-color: #215f60;
+  background-color: #314a76;
 }
 
 .card-btn-red {
   color: white;
-  background-color: #ec5e5e;
+  background-color: #F97068;
 }
 
 .card-btn-red:hover {
-  background-color: #d85757;
+  background-color: #e1635c;
 }
 
 .card-btn-green {
   color: white;
-  background-color: #6c9565;
+  background-color: #53a548;
 }
 
 .card-btn-green:hover {
-  background-color: #43605b;
+  background-color: #45903b;
 }
 
 

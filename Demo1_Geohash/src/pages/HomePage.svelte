@@ -9,6 +9,7 @@
 	import StyleSelector from "components/StyleSelector.svelte";
 	import FormRequest from "components/FormRequest.svelte";
 	import StreetView from "components/StreetView.svelte";
+	import Chart from "components/Chart.svelte";
 
 	import { getCurrentDateInYYYYMMDD, getCurrentTime } from "utils/fetch-time.js";
 
@@ -18,7 +19,7 @@
 	let selectedGeohash = null;
 	let selectedDate = getCurrentDateInYYYYMMDD();
 	let selectedTime = getCurrentTime();
-	let mapStyle = "navigation-night-v1";
+	let mapStyle = "outdoors-v11";
 	let isReadyForStyleSwitching = false;
 	let kingstonDetails = {
 		id: 0,
@@ -44,7 +45,7 @@
 			<Layers bind:collectionList />
 		</div>
 
-		{#if selectedMenu == 1}
+		{#if selectedMenu === 1}
 			<div class="col-span-1 md:col-span-1 row-span-1">
 				<DateTime bind:selectedDate bind:selectedTime />
 			</div>
@@ -56,11 +57,16 @@
 			<div class="col-span-1 md:col-span-1 row-span-1">
 				<FormRequest bind:selectedDate bind:selectedTime bind:selectedGeohash {fetchData} />
 			</div>
-		{:else if selectedMenu == 2}
+		{:else if selectedMenu === 2}
 			<div class="col-span-1 md:col-span-1 row-span-1">
 				<StreetView bind:pointOfInterest />
 			</div>
+		{:else if selectedMenu === 3}
+			 <Chart />
 		{/if}
+
+
+
 	</div>
 
 	<div class="col-span-1 md:col-span-9  row-span-6 relative">
