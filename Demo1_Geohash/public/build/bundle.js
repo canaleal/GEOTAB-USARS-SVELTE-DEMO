@@ -3145,7 +3145,7 @@ var app = (function () {
     			div = element("div");
     			attr_dev(div, "id", "map");
     			attr_dev(div, "class", "h-96 md:h-full card");
-    			add_location(div, file$9, 461, 0, 14594);
+    			add_location(div, file$9, 461, 0, 14589);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -3333,8 +3333,8 @@ var app = (function () {
     	};
 
     	const addLayers = () => {
-    		addTerrainLayer(collectionList[0]);
-    		addBuildingLayer(collectionList[1]);
+    		addTerrainLayer();
+    		addBuildingLayer(collectionList[0]);
     		addKingstonGeohashLayer(collectionList[2], collectionList[3]);
     		addNeighbourhoodsLayer(collectionList[4], collectionList[5]);
     		const treesList = getListOfObjectWhereKeyContainsString(collectionList, "layerName", "Trees")[0];
@@ -3368,9 +3368,9 @@ var app = (function () {
     		});
     	};
 
-    	const addBuildingLayer = () => {
+    	const addBuildingLayer = fillList => {
     		map.addLayer({
-    			id: "add-3d-buildings",
+    			id: fillList.layerName,
     			source: "composite",
     			"source-layer": "building",
     			filter: ["==", "extrude", "true"],
@@ -3641,8 +3641,8 @@ var app = (function () {
     		try {
     			// If any of the layers are not loaded, abort
     			for (let i = 0; i < collectionList.length; i++) {
-    				let tempLayerName = collectionList[i]["layerName"];
-    				let tempLayerIsShown = collectionList[i]["isShown"];
+    				const tempLayerName = collectionList[i]["layerName"];
+    				const tempLayerIsShown = collectionList[i]["isShown"];
 
     				if (!map.getLayer(tempLayerName)) {
     					return;
@@ -3987,18 +3987,18 @@ var app = (function () {
     			add_location(div0, file$8, 6, 1, 146);
     			attr_dev(div1, "class", "col-span-1 md:col-span-3 row-span-1 ");
     			add_location(div1, file$8, 11, 2, 398);
-    			attr_dev(button0, "class", button0_class_value = `card-btn ${/*selectedMenu*/ ctx[0] == 1 ? "card-btn-blue" : ""} my-1 `);
+    			attr_dev(button0, "class", button0_class_value = `card-btn ${/*selectedMenu*/ ctx[0] == 1 ? "card-btn-green" : ""} my-1 `);
     			add_location(button0, file$8, 13, 3, 509);
     			attr_dev(div2, "class", "col-span-1 md:col-span-3 row-span-1 ");
     			add_location(div2, file$8, 12, 2, 454);
-    			attr_dev(button1, "class", button1_class_value = `card-btn ${/*selectedMenu*/ ctx[0] == 2 ? "card-btn-blue" : ""} my-1 `);
-    			add_location(button1, file$8, 16, 3, 715);
+    			attr_dev(button1, "class", button1_class_value = `card-btn ${/*selectedMenu*/ ctx[0] == 2 ? "card-btn-green" : ""} my-1 `);
+    			add_location(button1, file$8, 16, 3, 716);
     			attr_dev(div3, "class", "col-span-1 md:col-span-3 row-span-1");
-    			add_location(div3, file$8, 15, 2, 661);
-    			attr_dev(button2, "class", button2_class_value = `card-btn ${/*selectedMenu*/ ctx[0] == 3 ? "card-btn-blue" : ""} my-1 `);
-    			add_location(button2, file$8, 19, 3, 918);
+    			add_location(div3, file$8, 15, 2, 662);
+    			attr_dev(button2, "class", button2_class_value = `card-btn ${/*selectedMenu*/ ctx[0] == 3 ? "card-btn-green" : ""} my-1 `);
+    			add_location(button2, file$8, 19, 3, 920);
     			attr_dev(div4, "class", "col-span-1 md:col-span-3 row-span-1");
-    			add_location(div4, file$8, 18, 2, 864);
+    			add_location(div4, file$8, 18, 2, 866);
     			attr_dev(section0, "class", "grid grid-cols-1 md:grid-cols-12 grid-rows-1 gap-4 px-4 h-fit");
     			add_location(section0, file$8, 10, 1, 313);
     			attr_dev(section1, "class", "sticky top-0 z-10");
@@ -4041,15 +4041,15 @@ var app = (function () {
     			}
     		},
     		p: function update(ctx, [dirty]) {
-    			if (dirty & /*selectedMenu*/ 1 && button0_class_value !== (button0_class_value = `card-btn ${/*selectedMenu*/ ctx[0] == 1 ? "card-btn-blue" : ""} my-1 `)) {
+    			if (dirty & /*selectedMenu*/ 1 && button0_class_value !== (button0_class_value = `card-btn ${/*selectedMenu*/ ctx[0] == 1 ? "card-btn-green" : ""} my-1 `)) {
     				attr_dev(button0, "class", button0_class_value);
     			}
 
-    			if (dirty & /*selectedMenu*/ 1 && button1_class_value !== (button1_class_value = `card-btn ${/*selectedMenu*/ ctx[0] == 2 ? "card-btn-blue" : ""} my-1 `)) {
+    			if (dirty & /*selectedMenu*/ 1 && button1_class_value !== (button1_class_value = `card-btn ${/*selectedMenu*/ ctx[0] == 2 ? "card-btn-green" : ""} my-1 `)) {
     				attr_dev(button1, "class", button1_class_value);
     			}
 
-    			if (dirty & /*selectedMenu*/ 1 && button2_class_value !== (button2_class_value = `card-btn ${/*selectedMenu*/ ctx[0] == 3 ? "card-btn-blue" : ""} my-1 `)) {
+    			if (dirty & /*selectedMenu*/ 1 && button2_class_value !== (button2_class_value = `card-btn ${/*selectedMenu*/ ctx[0] == 3 ? "card-btn-green" : ""} my-1 `)) {
     				attr_dev(button2, "class", button2_class_value);
     			}
     		},

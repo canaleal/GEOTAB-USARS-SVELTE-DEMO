@@ -126,8 +126,8 @@
 	};
 
 	const addLayers = () => {
-		addTerrainLayer(collectionList[0]);
-		addBuildingLayer(collectionList[1]);
+		addTerrainLayer();
+		addBuildingLayer(collectionList[0]);
 
 		addKingstonGeohashLayer(collectionList[2], collectionList[3]);
 		addNeighbourhoodsLayer(collectionList[4], collectionList[5]);
@@ -165,9 +165,9 @@
 		});
 	};
 
-	const addBuildingLayer = () => {
+	const addBuildingLayer = (fillList) => {
 		map.addLayer({
-			id: "add-3d-buildings",
+			id: fillList.layerName,
 			source: "composite",
 			"source-layer": "building",
 			filter: ["==", "extrude", "true"],
@@ -382,8 +382,8 @@
 		try {
 			// If any of the layers are not loaded, abort
 			for (let i = 0; i < collectionList.length; i++) {
-				let tempLayerName = collectionList[i]["layerName"];
-				let tempLayerIsShown = collectionList[i]["isShown"];
+				const tempLayerName = collectionList[i]["layerName"];
+				const tempLayerIsShown = collectionList[i]["isShown"];
 
 				if (!map.getLayer(tempLayerName)) {
 					return;
