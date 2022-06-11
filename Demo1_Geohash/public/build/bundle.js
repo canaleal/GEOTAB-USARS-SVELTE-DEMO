@@ -3145,7 +3145,7 @@ var app = (function () {
     			div = element("div");
     			attr_dev(div, "id", "map");
     			attr_dev(div, "class", "h-96 md:h-full card");
-    			add_location(div, file$9, 431, 0, 12924);
+    			add_location(div, file$9, 448, 0, 13620);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -3181,6 +3181,7 @@ var app = (function () {
     	let { isReadyForStyleSwitching } = $$props;
     	let { kingstonDetails } = $$props;
     	let { pointOfInterest } = $$props;
+    	let layerDictionary;
     	let isDataLoaded = false;
     	let map;
     	const small_popup = new mapboxgl.Popup();
@@ -3188,6 +3189,7 @@ var app = (function () {
     	const fetchInitialMapData = async () => {
     		try {
     			let tempList = [];
+    			let tempDictionary = {};
 
     			tempList.push({
     				id: 0,
@@ -3199,6 +3201,21 @@ var app = (function () {
     				layerName: "add-3d-buildings",
     				sourceName: "building"
     			});
+
+    			tempDictionary['Buildings'] = 0;
+
+    			tempList.push({
+    				id: 1,
+    				menu: 1,
+    				icon: "fa-cloud",
+    				type: "Polygon",
+    				isShown: true,
+    				name: "sky",
+    				layerName: "sky",
+    				sourceName: "sky"
+    			});
+
+    			tempDictionary['Sky'] = 1;
 
     			// Kingston geohash Data
     			let geohashLayerName = "Kingston Geohash";
@@ -3230,6 +3247,9 @@ var app = (function () {
     				data: geohashData
     			});
 
+    			tempDictionary['Geohash'] = 2;
+    			tempDictionary['Geohash_Outline'] = 3;
+
     			// // Neighbourhoods Data
     			let neighbourhoodsLayerName = "Neighbourhoods";
 
@@ -3260,6 +3280,8 @@ var app = (function () {
     				data: neighbourhoodsData
     			});
 
+    			tempDictionary['Neighbourhoods'] = 4;
+    			tempDictionary['Neighbourhoods_Outline'] = 5;
     			let treesLayerName = "Trees";
     			let treesSourceName = "treesSource";
     			let treesData = await getDataWithAxios(Data.TREES_URL);
@@ -3275,7 +3297,10 @@ var app = (function () {
     				data: treesData
     			});
 
+    			tempDictionary['Trees'] = 6;
     			$$invalidate(0, collectionList = tempList);
+    			layerDictionary = tempDictionary;
+    			console.log(layerDictionary);
     		} catch(e) {
     			
     		}
@@ -3283,16 +3308,16 @@ var app = (function () {
 
     	const addDataSources = () => {
     		try {
-    			const geohashList = collectionList[2];
+    			const geohashList = collectionList[layerDictionary['Geohash']];
     			map.addSource(geohashList.sourceName, { type: "geojson", data: geohashList.data });
-    			const neighbourhoodsList = collectionList[4];
+    			const neighbourhoodsList = collectionList[layerDictionary['Neighbourhoods']];
 
     			map.addSource(neighbourhoodsList.sourceName, {
     				type: "geojson",
     				data: neighbourhoodsList.data
     			});
 
-    			const treesList = getListOfObjectWhereKeyContainsString(collectionList, "layerName", "Trees")[0];
+    			const treesList = collectionList[layerDictionary['Trees']];
     			map.addSource(treesList.sourceName, { type: "geojson", data: treesList.data });
     			$$invalidate(6, isDataLoaded = true);
     			addLayers();
@@ -3303,10 +3328,10 @@ var app = (function () {
 
     	const addLayers = () => {
     		addTerrainLayer();
-    		addBuildingLayer(collectionList[0]);
-    		addKingstonGeohashLayer(collectionList[2], collectionList[3]);
-    		addNeighbourhoodsLayer(collectionList[4], collectionList[5]);
-    		const treesList = getListOfObjectWhereKeyContainsString(collectionList, "layerName", "Trees")[0];
+    		addBuildingLayer(collectionList[layerDictionary['Buildings']]);
+    		addKingstonGeohashLayer(collectionList[layerDictionary['Geohash']], collectionList[layerDictionary['Geohash_Outline']]);
+    		addNeighbourhoodsLayer(collectionList[layerDictionary['Neighbourhoods']], collectionList[layerDictionary['Neighbourhoods_Outline']]);
+    		const treesList = collectionList[layerDictionary['Trees']];
     		addTreesLayer(treesList);
     	};
 
@@ -3718,6 +3743,7 @@ var app = (function () {
     		isReadyForStyleSwitching,
     		kingstonDetails,
     		pointOfInterest,
+    		layerDictionary,
     		isDataLoaded,
     		map,
     		small_popup,
@@ -3741,6 +3767,7 @@ var app = (function () {
     		if ('isReadyForStyleSwitching' in $$props) $$invalidate(4, isReadyForStyleSwitching = $$props.isReadyForStyleSwitching);
     		if ('kingstonDetails' in $$props) $$invalidate(5, kingstonDetails = $$props.kingstonDetails);
     		if ('pointOfInterest' in $$props) $$invalidate(2, pointOfInterest = $$props.pointOfInterest);
+    		if ('layerDictionary' in $$props) layerDictionary = $$props.layerDictionary;
     		if ('isDataLoaded' in $$props) $$invalidate(6, isDataLoaded = $$props.isDataLoaded);
     		if ('map' in $$props) map = $$props.map;
     	};

@@ -12,6 +12,8 @@
 	export let isReadyForStyleSwitching;
 	export let kingstonDetails;
 	export let pointOfInterest;
+
+	let layerDictionary;
 	let isDataLoaded = false;
 	let map;
 	const small_popup = new mapboxgl.Popup();
@@ -19,8 +21,14 @@
 	const fetchInitialMapData = async () => {
 		try {
 			let tempList = [];
+			let tempDictionary = {}
 
 			tempList.push({ id: 0, menu: 1, icon: "fa-building", type: "Polygon", isShown: true, name: "Buildings", layerName: "add-3d-buildings", sourceName: "building" });
+			tempDictionary['Buildings'] = 0;
+			
+			tempList.push({ id: 1, menu: 1, icon: "fa-cloud", type: "Polygon", isShown: true, name: "sky", layerName: "sky", sourceName: "sky" });
+			tempDictionary['Sky'] = 1;
+
 			// Kingston geohash Data
 			let geohashLayerName = "Kingston Geohash";
 			let geohashSourceName = "geohashSource";
@@ -37,6 +45,9 @@
 				sourceName: geohashSourceName,
 				data: geohashData,
 			});
+
+			tempDictionary['Geohash'] = 2
+			tempDictionary['Geohash_Outline'] = 3
 
 			// // Neighbourhoods Data
 			let neighbourhoodsLayerName = "Neighbourhoods";
@@ -65,30 +76,36 @@
 				data: neighbourhoodsData,
 			});
 
+			tempDictionary['Neighbourhoods'] = 4
+			tempDictionary['Neighbourhoods_Outline'] = 5
+
 			let treesLayerName = "Trees";
 			let treesSourceName = "treesSource";
 			let treesData = await getDataWithAxios(Data.TREES_URL);
 			tempList.push({ id: 6, icon: "fa-tree", type: "Point", isShown: true, name: treesLayerName, layerName: treesLayerName, sourceName: treesSourceName, data: treesData });
+			tempDictionary['Trees'] = 6
 
 			collectionList = tempList;
+			layerDictionary = tempDictionary;
+			console.log(layerDictionary)
 		} catch (e) {}
 	};
 
 	const addDataSources = () => {
 		try {
-			const geohashList = collectionList[2];
+			const geohashList = collectionList[(layerDictionary['Geohash'])];
 			map.addSource(geohashList.sourceName, {
 				type: "geojson",
 				data: geohashList.data,
 			});
 
-			const neighbourhoodsList = collectionList[4];
+			const neighbourhoodsList = collectionList[(layerDictionary['Neighbourhoods'])];
 			map.addSource(neighbourhoodsList.sourceName, {
 				type: "geojson",
 				data: neighbourhoodsList.data,
 			});
 
-			const treesList = getListOfObjectWhereKeyContainsString(collectionList, "layerName", "Trees")[0];
+			const treesList =  collectionList[(layerDictionary['Trees'])];
 			map.addSource(treesList.sourceName, {
 				type: "geojson",
 				data: treesList.data,
@@ -103,12 +120,12 @@
 
 	const addLayers = () => {
 		addTerrainLayer();
-		addBuildingLayer(collectionList[0]);
+		addBuildingLayer(collectionList[(layerDictionary['Buildings'])]);
 
-		addKingstonGeohashLayer(collectionList[2], collectionList[3]);
-		addNeighbourhoodsLayer(collectionList[4], collectionList[5]);
+		addKingstonGeohashLayer(collectionList[(layerDictionary['Geohash'])], collectionList[(layerDictionary['Geohash_Outline'])]);
+		addNeighbourhoodsLayer(collectionList[(layerDictionary['Neighbourhoods'])],collectionList[(layerDictionary['Neighbourhoods_Outline'])]);
 
-		const treesList = getListOfObjectWhereKeyContainsString(collectionList, "layerName", "Trees")[0];
+		const treesList = collectionList[(layerDictionary['Trees'])];
 		addTreesLayer(treesList);
 
 	};
