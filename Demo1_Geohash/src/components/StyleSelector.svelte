@@ -18,7 +18,7 @@
 	};
 </script>
 
-<section class="h-full rounded-lg bg-white p-4 mb-4 text-sm">
+<section class="card h-fit mb-4">
 	<p class="font-bold my-1">Map Style:</p>
 	{#each mapStyleList as item}
 		<div key={item.name}>

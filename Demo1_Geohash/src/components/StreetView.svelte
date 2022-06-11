@@ -1,12 +1,11 @@
 <script>
-	/*global google*/
 	import { onMount } from "svelte/internal";
+	
 	export let pointOfInterest;
-	let container = null;
+	let mapContainer = null;
 
 	onMount(() => {
-		console.log("New Map");
-		container = new google.maps.StreetViewPanorama(container, {
+		mapContainer = new google.maps.StreetViewPanorama(mapContainer, {
 			position: pointOfInterest,
 			pov: {
 				heading: 34,
@@ -15,15 +14,15 @@
 		});
 	});
 
+	// When the location changes, set the new lat long to the map
 	const onLocationChange = () => {
-		console.log("Map Refresh");
 		try {
-			container.setPosition(pointOfInterest);
+			mapContainer.setPosition(pointOfInterest);
 		} catch (e) {}
 	};
-	$: pointOfInterest && container != null && onLocationChange();
+	$: pointOfInterest && mapContainer != null && onLocationChange();
 </script>
 
-<section class="rounded-lg shadow-xl text-sm p-4 h-72">
-	<div bind:this={container} class="h-full w-full rounded-lg" />
+<section class="card card-2xl">
+	<div bind:this={mapContainer} class="h-full w-full rounded-lg" />
 </section>

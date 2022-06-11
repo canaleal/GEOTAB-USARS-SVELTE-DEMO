@@ -45,24 +45,22 @@
 		</div>
 
 		{#if selectedMenu == 1}
-		<div class="col-span-1 md:col-span-1 row-span-1">
-			<DateTime bind:selectedDate bind:selectedTime />
-		</div>
-		{:else if selectedMenu == 2 }
+			<div class="col-span-1 md:col-span-1 row-span-1">
+				<DateTime bind:selectedDate bind:selectedTime />
+			</div>
+
+			<div class="col-span-1 md:col-span-1 row-span-1">
+				<Profile {kingstonDetails} bind:selectedGeohash />
+			</div>
+
+			<div class="col-span-1 md:col-span-1 row-span-1">
+				<FormRequest bind:selectedDate bind:selectedTime bind:selectedGeohash {fetchData} />
+			</div>
+		{:else if selectedMenu == 2}
 			<div class="col-span-1 md:col-span-1 row-span-1">
 				<StreetView bind:pointOfInterest />
 			</div>
 		{/if}
-
-		<div class="col-span-1 md:col-span-1 row-span-1">
-			<Profile {kingstonDetails} bind:selectedGeohash />
-		</div>
-
-		<div class="col-span-1 md:col-span-1 row-span-1">
-			<FormRequest bind:selectedDate bind:selectedTime bind:selectedGeohash {fetchData} />
-		</div>
-
-	
 	</div>
 
 	<div class="col-span-1 md:col-span-9  row-span-6 relative">

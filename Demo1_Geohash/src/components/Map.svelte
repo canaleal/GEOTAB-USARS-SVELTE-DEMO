@@ -457,7 +457,5 @@
 	});
 </script>
 
-<div id="map" class="h-96 md:h-full rounded-lg shadow-xl" />
+<div id="map" class="h-96 md:h-full card" />
 
-<style>
-</style>

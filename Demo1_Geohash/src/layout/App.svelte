@@ -3,7 +3,6 @@
   import HomePage from 'pages/HomePage.svelte';
 </script>
 
-
 <HomePage/>
 
 <style global lang="postcss">

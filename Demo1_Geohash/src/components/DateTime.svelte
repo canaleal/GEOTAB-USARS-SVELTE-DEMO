@@ -2,14 +2,13 @@
 	export let selectedDate;
 	export let selectedTime;
 
-	const clearDateTime = () =>{
-		selectedDate = '';
-		selectedTime = '';
-	}
-
+	const clearDateTime = () => {
+		selectedDate = "";
+		selectedTime = "";
+	};
 </script>
 
-<section class="h-full rounded-lg shadow-xl  p-4 text-sm">
+<section class="h-fit rounded-lg shadow-xl p-4 text-sm">
 	<p class="font-bold my-1">Date Time Selection:</p>
 
 	<div class="flex items-center justify-center">
@@ -43,11 +42,12 @@
 	</div>
 
 	{#if selectedDate === "" || selectedTime === ""}
-		<div class="bg-red-100 rounded-lg py-5 px-6 mb-4 text-red-700 my-1" role="alert">Select a Date and Time before Searching.</div>
-		{:else}
-		<div class="bg-green-100 rounded-lg py-5 px-6 mb-4 text-green-700 my-1" role="alert">{selectedDate} at {selectedTime}  <button class="float-right fa-lg" on:click={clearDateTime}><i class="fa-solid fa-xmark " /></button></div>
-   {/if}
-
+		<div class="alert alert-red my-1" role="alert">Select a Date and Time before Searching.</div>
+	{:else}
+		<div class="alert alert-green my-1" role="alert">
+			{selectedDate} at {selectedTime} <button class="float-right fa-lg" on:click={clearDateTime}><i class="fa-solid fa-xmark " /></button>
+		</div>
+	{/if}
 </section>
 
 <style>

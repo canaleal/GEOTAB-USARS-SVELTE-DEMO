@@ -1,88 +1,96 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Source+Serif+Pro:wght@300&display=swap');
 
 :root {
-	font-family: 'Poppins', sans-serif;
-  }
-  
-  html {
-	scroll-behavior: smooth;
-  }
-  
-  body {
-	color: black;
-	margin: 0;
-	padding: 0;
-  }
-  
+  font-family: 'Poppins', sans-serif;
+}
 
-  main{
-	padding-left: 1rem; /* 16px */
-	padding-right: 1rem; /* 16px */
+html {
+  scroll-behavior: smooth;
+}
 
-	margin-top: 2.5rem; /* 40px */
-	margin-bottom: 2.5rem; /* 40px */
-  }
- 
-  
-  h1, h2, h3, h4, h5, h6 {
-	font-family: 'Source Serif Pro', serif;
-  }
-  
-  .bg-green {
-	background-color: #007a3e;
-  }
-  
-  .bg-blue {
-	background-color: #277273;
-  }
-  
-  .bg-red {
-	background-color: #ec5e5e;
-  }
-  
-  .bg-smoke {
-	background-color: #f8f9f2;
-  }
-
-  .bg-dark{
-    background-color: #424d5c;
-  }
+body {
+  color: black;
+  margin: 0;
+  padding: 0;
+}
 
 
-.bg-dark-blue{
+main {
+  padding-left: 1rem;
+  /* 16px */
+  padding-right: 1rem;
+  /* 16px */
+
+  margin-top: 2.5rem;
+  /* 40px */
+  margin-bottom: 2.5rem;
+  /* 40px */
+}
+
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Source Serif Pro', serif;
+}
+
+.bg-green {
+  background-color: #007a3e;
+}
+
+.bg-blue {
+  background-color: #277273;
+}
+
+.bg-red {
+  background-color: #ec5e5e;
+}
+
+.bg-smoke {
+  background-color: #f8f9f2;
+}
+
+.bg-dark {
+  background-color: #424d5c;
+}
+
+
+.bg-dark-blue {
   background-color: #00355a;
 }
 
-  
-  hr {
-	border: none;
-	height: 1px;
-	/* Set the hr color */
-	background-color: #E6E8DE;
-  }
-  
-  .ellipsis {
-	overflow: hidden;
-	text-overflow: ellipsis;
-	display: -webkit-box;
-	-webkit-line-clamp: 3;
-	-webkit-box-orient: vertical;
-  }
+
+hr {
+  border: none;
+  height: 1px;
+  /* Set the hr color */
+  background-color: #E6E8DE;
+}
+
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
 
 
 
 
 
-  
+
 
 
 /* Since the new tip is absolutely-positioned, it doesn't force the rectangle up on its own */
 .mapboxgl-popup {
   max-width: 400px;
   font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
-  }
+}
 
 
 
@@ -92,47 +100,18 @@
 
 
 .card {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  font-size: 3rem;
-  color: #fff;
-  height: 15rem;
-  width: 100%;
-  -webkit-transition: all 1s;
-  transition: all 1s;
-  overflow: hidden;
-  background-size: cover;
-  -o-object-fit: cover;
-     object-fit: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-
+  padding: 1rem;
+  /* 16px */
+  border-radius: 0.5rem;
+  /* 8px */
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  font-size: 0.875rem;
+  /* 14px */
+  line-height: 1.25rem;
+  /* 20px */
+  background-color: white;
 }
 
-.card-noHover {
-  pointer-events: none;
-}
-
-.card:hover {
-  -webkit-box-shadow: rgba(2, 8, 20, 0.1) 0px 0.35em 1.175em, rgba(2, 8, 20, 0.08) 0px 0.175em 0.5em;
-          box-shadow: rgba(2, 8, 20, 0.1) 0px 0.35em 1.175em, rgba(2, 8, 20, 0.08) 0px 0.175em 0.5em;
-  -webkit-transform: scale(1.03);
-          transform: scale(1.03);
-  cursor: pointer;
-  -webkit-filter: opacity(1) saturate(150%);
-          filter: opacity(1) saturate(150%);
-}
 
 .card-xs {
   height: 10rem;
@@ -168,31 +147,37 @@
 
 .blur {
   -webkit-filter: blur(8px);
-          filter: blur(8px);
+  filter: blur(8px);
   -webkit-transition: all 1s;
   transition: all 1s;
 }
 
 .blur:hover {
   -webkit-filter: none;
-          filter: none;
+  filter: none;
 }
 
 .blur-none {
   -webkit-filter: none;
-          filter: none;
+  filter: none;
 }
 
 .card-btn {
   display: inline-block;
   padding-left: 1rem;
   padding-right: 1rem;
-  padding-top: 1rem; /* 16px */
-  padding-bottom: 1rem; /* 16px */
+  padding-top: 1rem;
+  /* 16px */
+  padding-bottom: 1rem;
+  /* 16px */
   text-align: left;
   -webkit-transition: all 200ms;
   transition: all 200ms;
   border: 0.1em solid #000;
+  border-radius: 0.5rem;
+  /* 8px */
+  background-color: white;
+  width: 100%;
 }
 
 .card-btn:hover {
@@ -204,8 +189,10 @@
   display: inline-block;
   padding-left: 1rem;
   padding-right: 1rem;
-  padding-top: 0.25rem; /* 16px */
-  padding-bottom: 0.25rem; /* 16px */
+  padding-top: 0.25rem;
+  /* 16px */
+  padding-bottom: 0.25rem;
+  /* 16px */
   text-align: left;
   -webkit-transition: all 200ms;
   transition: all 200ms;
@@ -227,12 +214,12 @@
   background-color: #215f60;
 }
 
-.card-btn-red{
+.card-btn-red {
   color: white;
   background-color: #ec5e5e;
 }
 
-.card-btn-red:hover{
+.card-btn-red:hover {
   background-color: #d85757;
 }
 
@@ -270,6 +257,7 @@
     transform: translateX(-1000px);
     opacity: 0;
   }
+
   100% {
     -webkit-transform: translateX(0);
     transform: translateX(0);
@@ -283,6 +271,7 @@
     transform: translateX(-1000px);
     opacity: 0;
   }
+
   100% {
     -webkit-transform: translateX(0);
     transform: translateX(0);
@@ -308,6 +297,7 @@
     transform: translateX(1000px);
     opacity: 0;
   }
+
   100% {
     -webkit-transform: translateX(0);
     transform: translateX(0);
@@ -321,6 +311,7 @@
     transform: translateX(1000px);
     opacity: 0;
   }
+
   100% {
     -webkit-transform: translateX(0);
     transform: translateX(0);
@@ -328,30 +319,26 @@
   }
 }
 
-
-
-.container {  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-  gap: 0px 0px;
-  grid-auto-flow: row;
-  grid-template-areas:
-    "Components Components Components Selections Selections Selections Selections Selections Selections Selections Selections Selections"
-    "Components Components Components Map Map Map Map Map Map Map Map Map"
-    "Components Components Components Map Map Map Map Map Map Map Map Map"
-    "Components Components Components Map Map Map Map Map Map Map Map Map"
-    "Components Components Components Map Map Map Map Map Map Map Map Map"
-    "Components Components Components Map Map Map Map Map Map Map Map Map"
-    "Components Components Components Map Map Map Map Map Map Map Map Map"
-    "Components Components Components Map Map Map Map Map Map Map Map Map"
-    "Components Components Components Map Map Map Map Map Map Map Map Map"
-    "Components Components Components Map Map Map Map Map Map Map Map Map"
-    "Components Components Components Map Map Map Map Map Map Map Map Map"
-    "Components Components Components Map Map Map Map Map Map Map Map Map";
+.alert {
+  padding-top: 1rem;
+  /* 16px */
+  padding-bottom: 1rem;
+  /* 16px */
+  padding-left: 1rem;
+  padding-right: 1rem;
+  text-align: left;
+  border-radius: 0.5rem;
+  /* 8px */
 }
 
-.Components { grid-area: Components; }
+.alert-red {
+  color: rgb(185, 28, 28);
+  background-color: rgb(254, 226, 226)
+}
 
-.Selections { grid-area: Selections; }
+.alert-green {
 
-.Map { grid-area: Map; }
+  color: rgb(123, 162, 144);
+  background-color: rgb(220, 252, 231);
+
+}
