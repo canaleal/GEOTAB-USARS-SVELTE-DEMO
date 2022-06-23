@@ -4,6 +4,10 @@
 	import { getDataWithAxios } from "utils/fetch-data.js";
 	import { Data } from "constants/index.js";
 	import { getListOfObjectWhereKeyContainsString } from "utils/filter-data.js";
+	import MapboxDraw from "@mapbox/mapbox-gl-draw";
+	import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
+	import shape2geohash from "shape2geohash";
+	import { geohashToPolygonFeature } from "geohash-to-geojson";
 
 	// User ID passed from parent
 	export let collectionList;
@@ -21,13 +25,13 @@
 	const fetchInitialMapData = async () => {
 		try {
 			let tempList = [];
-			let tempDictionary = {}
+			let tempDictionary = {};
 
 			tempList.push({ id: 0, menu: 1, icon: "fa-building", type: "Polygon", isShown: true, name: "Buildings", layerName: "add-3d-buildings", sourceName: "building" });
-			tempDictionary['Buildings'] = 0;
-			
+			tempDictionary["Buildings"] = 0;
+
 			tempList.push({ id: 1, menu: 1, icon: "fa-cloud", type: "Polygon", isShown: true, name: "sky", layerName: "sky", sourceName: "sky" });
-			tempDictionary['Sky'] = 1;
+			tempDictionary["Sky"] = 1;
 
 			// Kingston geohash Data
 			let geohashLayerName = "Kingston Geohash";
@@ -46,8 +50,8 @@
 				data: geohashData,
 			});
 
-			tempDictionary['Geohash'] = 2
-			tempDictionary['Geohash_Outline'] = 3
+			tempDictionary["Geohash"] = 2;
+			tempDictionary["Geohash_Outline"] = 3;
 
 			// // Neighbourhoods Data
 			let neighbourhoodsLayerName = "Neighbourhoods";
@@ -76,36 +80,36 @@
 				data: neighbourhoodsData,
 			});
 
-			tempDictionary['Neighbourhoods'] = 4
-			tempDictionary['Neighbourhoods_Outline'] = 5
+			tempDictionary["Neighbourhoods"] = 4;
+			tempDictionary["Neighbourhoods_Outline"] = 5;
 
 			let treesLayerName = "Trees";
 			let treesSourceName = "treesSource";
 			let treesData = await getDataWithAxios(Data.TREES_URL);
 			tempList.push({ id: 6, icon: "fa-tree", type: "Point", isShown: true, name: treesLayerName, layerName: treesLayerName, sourceName: treesSourceName, data: treesData });
-			tempDictionary['Trees'] = 6
+			tempDictionary["Trees"] = 6;
 
 			collectionList = tempList;
 			layerDictionary = tempDictionary;
-			console.log(layerDictionary)
+			console.log(layerDictionary);
 		} catch (e) {}
 	};
 
 	const addDataSources = () => {
 		try {
-			const geohashList = collectionList[(layerDictionary['Geohash'])];
+			const geohashList = collectionList[layerDictionary["Geohash"]];
 			map.addSource(geohashList.sourceName, {
 				type: "geojson",
 				data: geohashList.data,
 			});
 
-			const neighbourhoodsList = collectionList[(layerDictionary['Neighbourhoods'])];
+			const neighbourhoodsList = collectionList[layerDictionary["Neighbourhoods"]];
 			map.addSource(neighbourhoodsList.sourceName, {
 				type: "geojson",
 				data: neighbourhoodsList.data,
 			});
 
-			const treesList =  collectionList[(layerDictionary['Trees'])];
+			const treesList = collectionList[layerDictionary["Trees"]];
 			map.addSource(treesList.sourceName, {
 				type: "geojson",
 				data: treesList.data,
@@ -120,14 +124,13 @@
 
 	const addLayers = () => {
 		addTerrainLayer();
-		addBuildingLayer(collectionList[(layerDictionary['Buildings'])]);
+		addBuildingLayer(collectionList[layerDictionary["Buildings"]]);
 
-		addKingstonGeohashLayer(collectionList[(layerDictionary['Geohash'])], collectionList[(layerDictionary['Geohash_Outline'])]);
-		addNeighbourhoodsLayer(collectionList[(layerDictionary['Neighbourhoods'])],collectionList[(layerDictionary['Neighbourhoods_Outline'])]);
+		addKingstonGeohashLayer(collectionList[layerDictionary["Geohash"]], collectionList[layerDictionary["Geohash_Outline"]]);
+		addNeighbourhoodsLayer(collectionList[layerDictionary["Neighbourhoods"]], collectionList[layerDictionary["Neighbourhoods_Outline"]]);
 
-		const treesList = collectionList[(layerDictionary['Trees'])];
+		const treesList = collectionList[layerDictionary["Trees"]];
 		addTreesLayer(treesList);
-
 	};
 
 	const addTerrainLayer = () => {
@@ -199,7 +202,7 @@
 			for (const [key, value] of Object.entries(sliced)) {
 				description += `<span class="block font-bold">${key}</span><span class="block">${value}</span>`;
 			}
-			
+
 			selectedGeohash = e.features[0].properties.geohash_list;
 		});
 
@@ -313,7 +316,7 @@
 				description += `<span class="block font-bold">${key}</span><span class="block">${value}</span>`;
 			}
 			small_popup.setLngLat(e.lngLat).setHTML(description).addTo(map);
-			pointOfInterest = { lat:  e.lngLat['lat'], lng: e.lngLat['lng']};
+			pointOfInterest = { lat: e.lngLat["lat"], lng: e.lngLat["lng"] };
 		});
 
 		// Change the cursor to a pointer when the mouse is over the places layer.
@@ -382,12 +385,10 @@
 					map.setLayoutProperty(tempLayerName, "visibility", "none");
 				}
 
-				if(tempLayerName.includes("Trees") && tempLayerIsShown === false){
+				if (tempLayerName.includes("Trees") && tempLayerIsShown === false) {
 					small_popup.remove();
 				}
 			}
-
-			
 		} catch (e) {}
 	};
 	$: collectionList && isDataLoaded && addFilter();
@@ -402,6 +403,12 @@
 	};
 	$: mapStyle && isDataLoaded && switchStyle();
 
+	const createGeohashes = async ({ features }) => {
+		console.log(features[0]);
+		geohashpoly({ coords: polygon, precision: 7 }, function (err, hashes) {
+			console.log(hashes);
+		});
+	};
 	onMount(async () => {
 		// Get the initial Data
 		await fetchInitialMapData();
@@ -417,6 +424,19 @@
 			style: "mapbox://styles/mapbox/" + mapStyle,
 		});
 
+		const draw = new MapboxDraw({
+			displayControlsDefault: false,
+			// Select which mapbox-gl-draw control buttons to add to the map.
+			controls: {
+				polygon: true,
+				trash: true,
+			},
+			// Set mapbox-gl-draw to draw by default.
+			// The user does not have to click the polygon control button first.
+			defaultMode: "draw_polygon",
+		});
+		map.addControl(draw, "bottom-left");
+
 		map.addControl(
 			new MapboxGeocoder({
 				accessToken: mapboxgl.accessToken,
@@ -431,11 +451,11 @@
 			addDataSources();
 			addFilter();
 		});
+		map.on("draw.create", createGeohashes);
 	});
 
 	onDestroy(() => {
 		try {
-
 			// Remove all the layers and data sources as they are cached and take up a lot of memory
 			for (let i = 0; i < collectionList.length; i++) {
 				map.removeLayer(collectionList[i]["layerName"]);
@@ -447,4 +467,3 @@
 </script>
 
 <div id="map" class="h-96 md:h-full card" />
-
