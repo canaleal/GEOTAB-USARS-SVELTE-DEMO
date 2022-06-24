@@ -16,7 +16,7 @@
 	let selectedMenu = 1;
 	let pointOfInterest = null;
 	let collectionList = [];
-	let selectedGeohash = null;
+	let selectedPolygon = null;
 	let selectedDate = getCurrentDateInYYYYMMDD();
 	let selectedTime = getCurrentTime();
 	let mapStyle = "outdoors-v11";
@@ -32,7 +32,7 @@
 	};
 
 	const fetchData = () => {
-		alert(`Fetching data for: ${selectedDate} at ${selectedTime} => Geohash : ${selectedGeohash}`);
+		alert(`Fetching data for: ${selectedDate} at ${selectedTime} => Polygon : ${selectedPolygon}`);
 	};
 </script>
 
@@ -51,11 +51,11 @@
 			</div>
 
 			<div class="col-span-1 md:col-span-1 row-span-1">
-				<Profile {kingstonDetails} bind:selectedGeohash />
+				<Profile {kingstonDetails} bind:selectedPolygon />
 			</div>
 
 			<div class="col-span-1 md:col-span-1 row-span-1">
-				<FormRequest bind:selectedDate bind:selectedTime bind:selectedGeohash {fetchData} />
+				<FormRequest bind:selectedDate bind:selectedTime bind:selectedPolygon {fetchData} />
 			</div>
 		{:else if selectedMenu === 2}
 			<div class="col-span-1 md:col-span-1 row-span-1">
@@ -70,7 +70,7 @@
 	</div>
 
 	<div class="col-span-1 md:col-span-9  row-span-6 relative">
-		<Map {kingstonDetails} bind:collectionList bind:mapStyle bind:isReadyForStyleSwitching bind:selectedGeohash bind:pointOfInterest />
+		<Map {kingstonDetails} bind:collectionList bind:mapStyle bind:isReadyForStyleSwitching bind:selectedPolygon bind:pointOfInterest />
 		<div class="absolute top-1 left-1 ">
 			<StyleSelector bind:mapStyle bind:isReadyForStyleSwitching />
 		</div>

@@ -6,12 +6,10 @@
 	import { getListOfObjectWhereKeyContainsString } from "utils/filter-data.js";
 	import MapboxDraw from "@mapbox/mapbox-gl-draw";
 	import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
-	import shape2geohash from "shape2geohash";
-	import { geohashToPolygonFeature } from "geohash-to-geojson";
 
 	// User ID passed from parent
 	export let collectionList;
-	export let selectedGeohash;
+	export let selectedPolygon;
 	export let mapStyle;
 	export let isReadyForStyleSwitching;
 	export let kingstonDetails;
@@ -33,25 +31,8 @@
 			tempList.push({ id: 1, menu: 1, icon: "fa-cloud", type: "Polygon", isShown: true, name: "sky", layerName: "sky", sourceName: "sky" });
 			tempDictionary["Sky"] = 1;
 
-			// Kingston geohash Data
-			let geohashLayerName = "Kingston Geohash";
-			let geohashSourceName = "geohashSource";
-			let geohashData = await getDataWithAxios(Data.GEOHASH_URL);
-			tempList.push({ id: 2, menu: 1, icon: "fa-border-all", type: "Polygon", isShown: true, name: geohashLayerName, layerName: geohashLayerName, sourceName: geohashSourceName, data: geohashData });
-			tempList.push({
-				id: 3,
-				menu: 1,
-				icon: "fa-border-all",
-				type: "Polygon",
-				isShown: false,
-				name: geohashLayerName + " Outline",
-				layerName: geohashLayerName + " Outline",
-				sourceName: geohashSourceName,
-				data: geohashData,
-			});
+			
 
-			tempDictionary["Geohash"] = 2;
-			tempDictionary["Geohash_Outline"] = 3;
 
 			// // Neighbourhoods Data
 			let neighbourhoodsLayerName = "Neighbourhoods";
@@ -97,12 +78,6 @@
 
 	const addDataSources = () => {
 		try {
-			const geohashList = collectionList[layerDictionary["Geohash"]];
-			map.addSource(geohashList.sourceName, {
-				type: "geojson",
-				data: geohashList.data,
-			});
-
 			const neighbourhoodsList = collectionList[layerDictionary["Neighbourhoods"]];
 			map.addSource(neighbourhoodsList.sourceName, {
 				type: "geojson",
@@ -125,8 +100,6 @@
 	const addLayers = () => {
 		addTerrainLayer();
 		addBuildingLayer(collectionList[layerDictionary["Buildings"]]);
-
-		addKingstonGeohashLayer(collectionList[layerDictionary["Geohash"]], collectionList[layerDictionary["Geohash_Outline"]]);
 		addNeighbourhoodsLayer(collectionList[layerDictionary["Neighbourhoods"]], collectionList[layerDictionary["Neighbourhoods_Outline"]]);
 
 		const treesList = collectionList[layerDictionary["Trees"]];
@@ -170,72 +143,7 @@
 				"fill-extrusion-opacity": 1,
 			},
 		});
-	};
-
-	const addKingstonGeohashLayer = (fillList, outlineList) => {
-		map.addLayer({
-			id: fillList.layerName,
-			type: "fill",
-			source: fillList.sourceName,
-			layout: {},
-			paint: {
-				"fill-color": ["get", "fill"], // blue color fill
-
-				"fill-opacity": ["case", ["boolean", ["feature-state", "clicked"], false], 0.5, ["case", ["boolean", ["feature-state", "hover"], false], 0.5, 0.0]],
-			},
-		});
-		map.setLayoutProperty(fillList.layerName, "visibility", "none");
-
-		let clickedStateId = null;
-		let hoveredStateId = null;
-
-		map.on("click", fillList.layerName, (e) => {
-			if (clickedStateId !== null) {
-				map.setFeatureState({ source: fillList.sourceName, id: clickedStateId }, { clicked: false });
-			}
-
-			clickedStateId = e.features[0].id;
-			map.setFeatureState({ source: fillList.sourceName, id: clickedStateId }, { clicked: true });
-
-			let description = "";
-			const sliced = Object.fromEntries(Object.entries(e.features[0].properties).slice(0, 6));
-			for (const [key, value] of Object.entries(sliced)) {
-				description += `<span class="block font-bold">${key}</span><span class="block">${value}</span>`;
-			}
-
-			selectedGeohash = e.features[0].properties.geohash_list;
-		});
-
-		map.on("mousemove", fillList.layerName, (e) => {
-			if (e.features.length > 0) {
-				if (hoveredStateId !== null) {
-					map.setFeatureState({ source: fillList.sourceName, id: hoveredStateId }, { hover: false });
-				}
-
-				hoveredStateId = e.features[0].id;
-				map.setFeatureState({ source: fillList.sourceName, id: hoveredStateId }, { hover: true });
-			}
-		});
-
-		map.on("mouseleave", fillList.layerName, () => {
-			if (hoveredStateId !== null) {
-				map.setFeatureState({ source: fillList.sourceName, id: hoveredStateId }, { hover: false });
-			}
-			hoveredStateId = null;
-		});
-
-		map.addLayer({
-			id: outlineList.layerName,
-			type: "line",
-			source: outlineList.sourceName,
-			layout: {},
-			paint: {
-				"line-color": "#0083b7",
-				"line-width": 1,
-			},
-		});
-		map.setLayoutProperty(outlineList.layerName, "visibility", "none");
-	};
+	};	
 
 	const addNeighbourhoodsLayer = (fillList, outlineList) => {
 		map.addLayer({
@@ -330,40 +238,40 @@
 		});
 	};
 
-	const addLineLayer = (fillList, color) => {
-		map.addLayer({
-			id: fillList.layerName,
-			type: "line",
-			source: fillList.sourceName,
-			layout: {
-				"line-join": "round",
-				"line-cap": "round",
-			},
-			paint: {
-				"line-color": color,
-				"line-width": 4,
-			},
-		});
+	// const addLineLayer = (fillList, color) => {
+	// 	map.addLayer({
+	// 		id: fillList.layerName,
+	// 		type: "line",
+	// 		source: fillList.sourceName,
+	// 		layout: {
+	// 			"line-join": "round",
+	// 			"line-cap": "round",
+	// 		},
+	// 		paint: {
+	// 			"line-color": color,
+	// 			"line-width": 4,
+	// 		},
+	// 	});
 
-		map.on("click", fillList.layerName, (e) => {
-			let description = "";
-			const sliced = Object.fromEntries(Object.entries(e.features[0].properties).slice(0, 4));
-			for (const [key, value] of Object.entries(sliced)) {
-				description += `<span class="block font-bold">${key}</span><span class="block">${value}</span>`;
-			}
-			small_popup.setLngLat(e.lngLat).setHTML(description).addTo(map);
-		});
+	// 	map.on("click", fillList.layerName, (e) => {
+	// 		let description = "";
+	// 		const sliced = Object.fromEntries(Object.entries(e.features[0].properties).slice(0, 4));
+	// 		for (const [key, value] of Object.entries(sliced)) {
+	// 			description += `<span class="block font-bold">${key}</span><span class="block">${value}</span>`;
+	// 		}
+	// 		small_popup.setLngLat(e.lngLat).setHTML(description).addTo(map);
+	// 	});
 
-		// Change the cursor to a pointer when the mouse is over the places layer.
-		map.on("mouseenter", fillList.layerName, (e) => {
-			map.getCanvas().style.cursor = "pointer";
-		});
+	// 	// Change the cursor to a pointer when the mouse is over the places layer.
+	// 	map.on("mouseenter", fillList.layerName, (e) => {
+	// 		map.getCanvas().style.cursor = "pointer";
+	// 	});
 
-		// Change it back to a pointer when it leaves.
-		map.on("mouseleave", fillList.layerName, () => {
-			map.getCanvas().style.cursor = "";
-		});
-	};
+	// 	// Change it back to a pointer when it leaves.
+	// 	map.on("mouseleave", fillList.layerName, () => {
+	// 		map.getCanvas().style.cursor = "";
+	// 	});
+	// };
 
 	const addFilter = () => {
 		// If map not loaded, abort
@@ -398,17 +306,12 @@
 		try {
 			map.setStyle("mapbox://styles/mapbox/" + mapStyle);
 			small_popup.remove();
-			selectedGeohash = null;
+			selectedPolygon = null;
 		} catch (e) {}
 	};
 	$: mapStyle && isDataLoaded && switchStyle();
 
-	const createGeohashes = async ({ features }) => {
-		console.log(features[0]);
-		geohashpoly({ coords: polygon, precision: 7 }, function (err, hashes) {
-			console.log(hashes);
-		});
-	};
+	
 	onMount(async () => {
 		// Get the initial Data
 		await fetchInitialMapData();
