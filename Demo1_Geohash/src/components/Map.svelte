@@ -31,9 +31,6 @@
 			tempList.push({ id: 1, menu: 1, icon: "fa-cloud", type: "Polygon", isShown: true, name: "sky", layerName: "sky", sourceName: "sky" });
 			tempDictionary["Sky"] = 1;
 
-			
-
-
 			// // Neighbourhoods Data
 			let neighbourhoodsLayerName = "Neighbourhoods";
 			let neighbourhoodsSourceName = "neighbourhoodsSource";
@@ -143,7 +140,7 @@
 				"fill-extrusion-opacity": 1,
 			},
 		});
-	};	
+	};
 
 	const addNeighbourhoodsLayer = (fillList, outlineList) => {
 		map.addLayer({
@@ -273,6 +270,14 @@
 	// 	});
 	// };
 
+	const updatePolygon = ({ features }) => {
+		selectedPolygon = features[0];
+	};
+
+	const clearPolygon = () => {
+		selectedPolygon = null
+	}
+
 	const addFilter = () => {
 		// If map not loaded, abort
 		if (map === null) return;
@@ -311,7 +316,6 @@
 	};
 	$: mapStyle && isDataLoaded && switchStyle();
 
-	
 	onMount(async () => {
 		// Get the initial Data
 		await fetchInitialMapData();
@@ -354,7 +358,9 @@
 			addDataSources();
 			addFilter();
 		});
-		map.on("draw.create", createGeohashes);
+		map.on("draw.create", updatePolygon);
+		map.on("draw.delete", clearPolygon);
+		map.on("draw.update", updatePolygon);
 	});
 
 	onDestroy(() => {

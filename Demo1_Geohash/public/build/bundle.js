@@ -3155,7 +3155,7 @@ var app = (function () {
     			div = element("div");
     			attr_dev(div, "id", "map");
     			attr_dev(div, "class", "h-96 md:h-full card");
-    			add_location(div, file$9, 371, 0, 11105);
+    			add_location(div, file$9, 377, 0, 11319);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -3497,6 +3497,14 @@ var app = (function () {
     	// 		map.getCanvas().style.cursor = "";
     	// 	});
     	// };
+    	const updatePolygon = ({ features }) => {
+    		$$invalidate(1, selectedPolygon = features[0]);
+    	};
+
+    	const clearPolygon = () => {
+    		$$invalidate(1, selectedPolygon = null);
+    	};
+
     	const addFilter = () => {
     		// If map not loaded, abort
     		if (map === null) return;
@@ -3578,7 +3586,9 @@ var app = (function () {
     			addFilter();
     		});
 
-    		map.on("draw.create", createGeohashes);
+    		map.on("draw.create", updatePolygon);
+    		map.on("draw.delete", clearPolygon);
+    		map.on("draw.update", updatePolygon);
     	});
 
     	onDestroy(() => {
@@ -3641,6 +3651,8 @@ var app = (function () {
     		addBuildingLayer,
     		addNeighbourhoodsLayer,
     		addTreesLayer,
+    		updatePolygon,
+    		clearPolygon,
     		addFilter,
     		switchStyle
     	});
