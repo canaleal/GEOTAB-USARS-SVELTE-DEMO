@@ -4027,28 +4027,376 @@ var app = (function () {
     	}
     }
 
+    /**
+     * Callback for geomEach
+     *
+     * @callback geomEachCallback
+     * @param {Geometry} currentGeometry The current Geometry being processed.
+     * @param {number} featureIndex The current index of the Feature being processed.
+     * @param {Object} featureProperties The current Feature Properties being processed.
+     * @param {Array<number>} featureBBox The current Feature BBox being processed.
+     * @param {number|string} featureId The current Feature Id being processed.
+     */
+
+    /**
+     * Iterate over each geometry in any GeoJSON object, similar to Array.forEach()
+     *
+     * @name geomEach
+     * @param {FeatureCollection|Feature|Geometry} geojson any GeoJSON object
+     * @param {Function} callback a method that takes (currentGeometry, featureIndex, featureProperties, featureBBox, featureId)
+     * @returns {void}
+     * @example
+     * var features = turf.featureCollection([
+     *     turf.point([26, 37], {foo: 'bar'}),
+     *     turf.point([36, 53], {hello: 'world'})
+     * ]);
+     *
+     * turf.geomEach(features, function (currentGeometry, featureIndex, featureProperties, featureBBox, featureId) {
+     *   //=currentGeometry
+     *   //=featureIndex
+     *   //=featureProperties
+     *   //=featureBBox
+     *   //=featureId
+     * });
+     */
+    function geomEach(geojson, callback) {
+      var i,
+        j,
+        g,
+        geometry,
+        stopG,
+        geometryMaybeCollection,
+        isGeometryCollection,
+        featureProperties,
+        featureBBox,
+        featureId,
+        featureIndex = 0,
+        isFeatureCollection = geojson.type === "FeatureCollection",
+        isFeature = geojson.type === "Feature",
+        stop = isFeatureCollection ? geojson.features.length : 1;
+
+      // This logic may look a little weird. The reason why it is that way
+      // is because it's trying to be fast. GeoJSON supports multiple kinds
+      // of objects at its root: FeatureCollection, Features, Geometries.
+      // This function has the responsibility of handling all of them, and that
+      // means that some of the `for` loops you see below actually just don't apply
+      // to certain inputs. For instance, if you give this just a
+      // Point geometry, then both loops are short-circuited and all we do
+      // is gradually rename the input until it's called 'geometry'.
+      //
+      // This also aims to allocate as few resources as possible: just a
+      // few numbers and booleans, rather than any temporary arrays as would
+      // be required with the normalization approach.
+      for (i = 0; i < stop; i++) {
+        geometryMaybeCollection = isFeatureCollection
+          ? geojson.features[i].geometry
+          : isFeature
+          ? geojson.geometry
+          : geojson;
+        featureProperties = isFeatureCollection
+          ? geojson.features[i].properties
+          : isFeature
+          ? geojson.properties
+          : {};
+        featureBBox = isFeatureCollection
+          ? geojson.features[i].bbox
+          : isFeature
+          ? geojson.bbox
+          : undefined;
+        featureId = isFeatureCollection
+          ? geojson.features[i].id
+          : isFeature
+          ? geojson.id
+          : undefined;
+        isGeometryCollection = geometryMaybeCollection
+          ? geometryMaybeCollection.type === "GeometryCollection"
+          : false;
+        stopG = isGeometryCollection
+          ? geometryMaybeCollection.geometries.length
+          : 1;
+
+        for (g = 0; g < stopG; g++) {
+          geometry = isGeometryCollection
+            ? geometryMaybeCollection.geometries[g]
+            : geometryMaybeCollection;
+
+          // Handle null Geometry
+          if (geometry === null) {
+            if (
+              callback(
+                null,
+                featureIndex,
+                featureProperties,
+                featureBBox,
+                featureId
+              ) === false
+            )
+              return false;
+            continue;
+          }
+          switch (geometry.type) {
+            case "Point":
+            case "LineString":
+            case "MultiPoint":
+            case "Polygon":
+            case "MultiLineString":
+            case "MultiPolygon": {
+              if (
+                callback(
+                  geometry,
+                  featureIndex,
+                  featureProperties,
+                  featureBBox,
+                  featureId
+                ) === false
+              )
+                return false;
+              break;
+            }
+            case "GeometryCollection": {
+              for (j = 0; j < geometry.geometries.length; j++) {
+                if (
+                  callback(
+                    geometry.geometries[j],
+                    featureIndex,
+                    featureProperties,
+                    featureBBox,
+                    featureId
+                  ) === false
+                )
+                  return false;
+              }
+              break;
+            }
+            default:
+              throw new Error("Unknown Geometry Type");
+          }
+        }
+        // Only increase `featureIndex` per each feature
+        featureIndex++;
+      }
+    }
+
+    /**
+     * Callback for geomReduce
+     *
+     * The first time the callback function is called, the values provided as arguments depend
+     * on whether the reduce method has an initialValue argument.
+     *
+     * If an initialValue is provided to the reduce method:
+     *  - The previousValue argument is initialValue.
+     *  - The currentValue argument is the value of the first element present in the array.
+     *
+     * If an initialValue is not provided:
+     *  - The previousValue argument is the value of the first element present in the array.
+     *  - The currentValue argument is the value of the second element present in the array.
+     *
+     * @callback geomReduceCallback
+     * @param {*} previousValue The accumulated value previously returned in the last invocation
+     * of the callback, or initialValue, if supplied.
+     * @param {Geometry} currentGeometry The current Geometry being processed.
+     * @param {number} featureIndex The current index of the Feature being processed.
+     * @param {Object} featureProperties The current Feature Properties being processed.
+     * @param {Array<number>} featureBBox The current Feature BBox being processed.
+     * @param {number|string} featureId The current Feature Id being processed.
+     */
+
+    /**
+     * Reduce geometry in any GeoJSON object, similar to Array.reduce().
+     *
+     * @name geomReduce
+     * @param {FeatureCollection|Feature|Geometry} geojson any GeoJSON object
+     * @param {Function} callback a method that takes (previousValue, currentGeometry, featureIndex, featureProperties, featureBBox, featureId)
+     * @param {*} [initialValue] Value to use as the first argument to the first call of the callback.
+     * @returns {*} The value that results from the reduction.
+     * @example
+     * var features = turf.featureCollection([
+     *     turf.point([26, 37], {foo: 'bar'}),
+     *     turf.point([36, 53], {hello: 'world'})
+     * ]);
+     *
+     * turf.geomReduce(features, function (previousValue, currentGeometry, featureIndex, featureProperties, featureBBox, featureId) {
+     *   //=previousValue
+     *   //=currentGeometry
+     *   //=featureIndex
+     *   //=featureProperties
+     *   //=featureBBox
+     *   //=featureId
+     *   return currentGeometry
+     * });
+     */
+    function geomReduce(geojson, callback, initialValue) {
+      var previousValue = initialValue;
+      geomEach(
+        geojson,
+        function (
+          currentGeometry,
+          featureIndex,
+          featureProperties,
+          featureBBox,
+          featureId
+        ) {
+          if (featureIndex === 0 && initialValue === undefined)
+            previousValue = currentGeometry;
+          else
+            previousValue = callback(
+              previousValue,
+              currentGeometry,
+              featureIndex,
+              featureProperties,
+              featureBBox,
+              featureId
+            );
+        }
+      );
+      return previousValue;
+    }
+
+    // Note: change RADIUS => earthRadius
+    var RADIUS = 6378137;
+    /**
+     * Takes one or more features and returns their area in square meters.
+     *
+     * @name area
+     * @param {GeoJSON} geojson input GeoJSON feature(s)
+     * @returns {number} area in square meters
+     * @example
+     * var polygon = turf.polygon([[[125, -15], [113, -22], [154, -27], [144, -15], [125, -15]]]);
+     *
+     * var area = turf.area(polygon);
+     *
+     * //addToMap
+     * var addToMap = [polygon]
+     * polygon.properties.area = area
+     */
+    function area(geojson) {
+        return geomReduce(geojson, function (value, geom) {
+            return value + calculateArea(geom);
+        }, 0);
+    }
+    /**
+     * Calculate Area
+     *
+     * @private
+     * @param {Geometry} geom GeoJSON Geometries
+     * @returns {number} area
+     */
+    function calculateArea(geom) {
+        var total = 0;
+        var i;
+        switch (geom.type) {
+            case "Polygon":
+                return polygonArea(geom.coordinates);
+            case "MultiPolygon":
+                for (i = 0; i < geom.coordinates.length; i++) {
+                    total += polygonArea(geom.coordinates[i]);
+                }
+                return total;
+            case "Point":
+            case "MultiPoint":
+            case "LineString":
+            case "MultiLineString":
+                return 0;
+        }
+        return 0;
+    }
+    function polygonArea(coords) {
+        var total = 0;
+        if (coords && coords.length > 0) {
+            total += Math.abs(ringArea(coords[0]));
+            for (var i = 1; i < coords.length; i++) {
+                total -= Math.abs(ringArea(coords[i]));
+            }
+        }
+        return total;
+    }
+    /**
+     * @private
+     * Calculate the approximate area of the polygon were it projected onto the earth.
+     * Note that this area will be positive if ring is oriented clockwise, otherwise it will be negative.
+     *
+     * Reference:
+     * Robert. G. Chamberlain and William H. Duquette, "Some Algorithms for Polygons on a Sphere",
+     * JPL Publication 07-03, Jet Propulsion
+     * Laboratory, Pasadena, CA, June 2007 https://trs.jpl.nasa.gov/handle/2014/40409
+     *
+     * @param {Array<Array<number>>} coords Ring Coordinates
+     * @returns {number} The approximate signed geodesic area of the polygon in square meters.
+     */
+    function ringArea(coords) {
+        var p1;
+        var p2;
+        var p3;
+        var lowerIndex;
+        var middleIndex;
+        var upperIndex;
+        var i;
+        var total = 0;
+        var coordsLength = coords.length;
+        if (coordsLength > 2) {
+            for (i = 0; i < coordsLength; i++) {
+                if (i === coordsLength - 2) {
+                    // i = N-2
+                    lowerIndex = coordsLength - 2;
+                    middleIndex = coordsLength - 1;
+                    upperIndex = 0;
+                }
+                else if (i === coordsLength - 1) {
+                    // i = N-1
+                    lowerIndex = coordsLength - 1;
+                    middleIndex = 0;
+                    upperIndex = 1;
+                }
+                else {
+                    // i = 0 to N-3
+                    lowerIndex = i;
+                    middleIndex = i + 1;
+                    upperIndex = i + 2;
+                }
+                p1 = coords[lowerIndex];
+                p2 = coords[middleIndex];
+                p3 = coords[upperIndex];
+                total += (rad(p3[0]) - rad(p1[0])) * Math.sin(rad(p2[1]));
+            }
+            total = (total * RADIUS * RADIUS) / 2;
+        }
+        return total;
+    }
+    function rad(num) {
+        return (num * Math.PI) / 180;
+    }
+
     /* src\components\Profile.svelte generated by Svelte v3.48.0 */
     const file$7 = "src\\components\\Profile.svelte";
 
-    // (14:1) {:else}
+    // (16:1) {:else}
     function create_else_block$3(ctx) {
     	let div;
-    	let t;
+    	let t0_value = Math.round(/*polygonArea*/ ctx[2] * 100) / 100 + "";
+    	let t0;
+    	let t1;
+    	let sup;
 
     	const block = {
     		c: function create() {
     			div = element("div");
-    			t = text(/*selectedPolygon*/ ctx[1]);
+    			t0 = text(t0_value);
+    			t1 = text(" m");
+    			sup = element("sup");
+    			sup.textContent = "2";
+    			add_location(sup, file$7, 17, 42, 552);
     			attr_dev(div, "class", "alert alert-green my-1");
     			attr_dev(div, "role", "alert");
-    			add_location(div, file$7, 14, 2, 361);
+    			add_location(div, file$7, 16, 2, 459);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
-    			append_dev(div, t);
+    			append_dev(div, t0);
+    			append_dev(div, t1);
+    			append_dev(div, sup);
     		},
     		p: function update(ctx, dirty) {
-    			if (dirty & /*selectedPolygon*/ 2) set_data_dev(t, /*selectedPolygon*/ ctx[1]);
+    			if (dirty & /*polygonArea*/ 4 && t0_value !== (t0_value = Math.round(/*polygonArea*/ ctx[2] * 100) / 100 + "")) set_data_dev(t0, t0_value);
     		},
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(div);
@@ -4059,14 +4407,14 @@ var app = (function () {
     		block,
     		id: create_else_block$3.name,
     		type: "else",
-    		source: "(14:1) {:else}",
+    		source: "(16:1) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (12:1) {#if selectedPolygon === null}
+    // (14:1) {#if selectedPolygon === null}
     function create_if_block$4(ctx) {
     	let div;
 
@@ -4076,7 +4424,7 @@ var app = (function () {
     			div.textContent = "Draw a polygon before searching.";
     			attr_dev(div, "class", "alert alert-red my-1");
     			attr_dev(div, "role", "alert");
-    			add_location(div, file$7, 12, 2, 262);
+    			add_location(div, file$7, 14, 2, 360);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -4091,7 +4439,7 @@ var app = (function () {
     		block,
     		id: create_if_block$4.name,
     		type: "if",
-    		source: "(12:1) {#if selectedPolygon === null}",
+    		source: "(14:1) {#if selectedPolygon === null}",
     		ctx
     	});
 
@@ -4141,15 +4489,15 @@ var app = (function () {
     			p4 = element("p");
     			p4.textContent = `Data taken from API on ${getCurrentDateTime()}`;
     			attr_dev(p0, "class", "font-bold my-1");
-    			add_location(p0, file$7, 9, 1, 176);
+    			add_location(p0, file$7, 11, 1, 274);
     			attr_dev(p1, "class", "font-bold my-1");
-    			add_location(p1, file$7, 19, 1, 456);
-    			add_location(p2, file$7, 20, 1, 494);
+    			add_location(p1, file$7, 21, 1, 587);
+    			add_location(p2, file$7, 22, 1, 625);
     			attr_dev(p3, "class", "font-bold my-1");
-    			add_location(p3, file$7, 22, 1, 535);
-    			add_location(p4, file$7, 23, 1, 577);
+    			add_location(p3, file$7, 24, 1, 666);
+    			add_location(p4, file$7, 25, 1, 708);
     			attr_dev(section, "class", "card h-fit");
-    			add_location(section, file$7, 8, 0, 145);
+    			add_location(section, file$7, 10, 0, 243);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -4204,6 +4552,7 @@ var app = (function () {
     }
 
     function instance$8($$self, $$props, $$invalidate) {
+    	let polygonArea;
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('Profile', slots, []);
     	let { kingstonDetails } = $$props;
@@ -4221,20 +4570,29 @@ var app = (function () {
 
     	$$self.$capture_state = () => ({
     		getCurrentDateTime,
+    		area,
     		kingstonDetails,
-    		selectedPolygon
+    		selectedPolygon,
+    		polygonArea
     	});
 
     	$$self.$inject_state = $$props => {
     		if ('kingstonDetails' in $$props) $$invalidate(0, kingstonDetails = $$props.kingstonDetails);
     		if ('selectedPolygon' in $$props) $$invalidate(1, selectedPolygon = $$props.selectedPolygon);
+    		if ('polygonArea' in $$props) $$invalidate(2, polygonArea = $$props.polygonArea);
     	};
 
     	if ($$props && "$$inject" in $$props) {
     		$$self.$inject_state($$props.$$inject);
     	}
 
-    	return [kingstonDetails, selectedPolygon];
+    	$$self.$$.update = () => {
+    		if ($$self.$$.dirty & /*selectedPolygon*/ 2) {
+    			$$invalidate(2, polygonArea = selectedPolygon ? area(selectedPolygon) : null);
+    		}
+    	};
+
+    	return [kingstonDetails, selectedPolygon, polygonArea];
     }
 
     class Profile extends SvelteComponentDev {
@@ -5870,7 +6228,7 @@ var app = (function () {
     			div = element("div");
     			create_component(streetview.$$.fragment);
     			attr_dev(div, "class", "col-span-1 md:col-span-1 row-span-1");
-    			add_location(div, file, 60, 3, 2127);
+    			add_location(div, file, 60, 3, 2164);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -6011,11 +6369,11 @@ var app = (function () {
     			div2 = element("div");
     			create_component(formrequest.$$.fragment);
     			attr_dev(div0, "class", "col-span-1 md:col-span-1 row-span-1");
-    			add_location(div0, file, 48, 3, 1695);
+    			add_location(div0, file, 48, 3, 1732);
     			attr_dev(div1, "class", "col-span-1 md:col-span-1 row-span-1");
-    			add_location(div1, file, 52, 3, 1816);
+    			add_location(div1, file, 52, 3, 1853);
     			attr_dev(div2, "class", "col-span-1 md:col-span-1 row-span-1");
-    			add_location(div2, file, 56, 3, 1939);
+    			add_location(div2, file, 56, 3, 1976);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div0, anchor);
@@ -6285,15 +6643,15 @@ var app = (function () {
     			t5 = space();
     			create_component(footer.$$.fragment);
     			attr_dev(div0, "class", "col-span-1 md:col-span-1 row-span-1");
-    			add_location(div0, file, 43, 2, 1566);
+    			add_location(div0, file, 43, 2, 1603);
     			attr_dev(div1, "class", "col-span-1 md:col-span-3 row-span-6 grid grid-cols-1 md:grid-cols-1 gap-4 h-fit");
-    			add_location(div1, file, 42, 1, 1469);
+    			add_location(div1, file, 42, 1, 1506);
     			attr_dev(div2, "class", "absolute top-1 left-1 ");
-    			add_location(div2, file, 73, 2, 2503);
+    			add_location(div2, file, 73, 2, 2540);
     			attr_dev(div3, "class", "col-span-1 md:col-span-9 row-span-6 relative");
-    			add_location(div3, file, 71, 1, 2305);
+    			add_location(div3, file, 71, 1, 2342);
     			attr_dev(section, "class", "grid grid-cols-1 md:grid-cols-12 grid-rows-6 gap-4 pb-4 px-4 h-fit");
-    			add_location(section, file, 41, 0, 1380);
+    			add_location(section, file, 41, 0, 1417);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -6500,7 +6858,7 @@ var app = (function () {
     	};
 
     	const fetchData = () => {
-    		alert(`Fetching data for: ${selectedDate} at ${selectedTime} => Polygon : ${selectedPolygon}`);
+    		alert(`Fetching data for: ${selectedDate} at ${selectedTime} => Polygon : ${JSON.stringify(selectedPolygon.geometry.coordinates)}`);
     	};
 
     	const writable_props = [];
