@@ -3148,26 +3148,31 @@ var app = (function () {
     const file$9 = "src\\components\\Map.svelte";
 
     function create_fragment$a(ctx) {
-    	let div;
+    	let div1;
+    	let div0;
 
     	const block = {
     		c: function create() {
-    			div = element("div");
-    			attr_dev(div, "id", "map");
-    			attr_dev(div, "class", "h-96 md:h-full card");
-    			add_location(div, file$9, 377, 0, 11319);
+    			div1 = element("div");
+    			div0 = element("div");
+    			attr_dev(div0, "class", "h-full rounded-lg");
+    			attr_dev(div0, "id", "map");
+    			add_location(div0, file$9, 377, 28, 11347);
+    			attr_dev(div1, "class", "h-96 md:h-full");
+    			add_location(div1, file$9, 377, 0, 11319);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
     		m: function mount(target, anchor) {
-    			insert_dev(target, div, anchor);
+    			insert_dev(target, div1, anchor);
+    			append_dev(div1, div0);
     		},
     		p: noop,
     		i: noop,
     		o: noop,
     		d: function destroy(detaching) {
-    			if (detaching) detach_dev(div);
+    			if (detaching) detach_dev(div1);
     		}
     	};
 
@@ -3234,7 +3239,7 @@ var app = (function () {
     			let neighbourhoodsData = await getDataWithAxios(Data.NEIGHBOURHOODS_URL);
 
     			tempList.push({
-    				id: 4,
+    				id: 2,
     				menu: 1,
     				icon: "fa-border-all",
     				type: "Polygon",
@@ -3246,7 +3251,7 @@ var app = (function () {
     			});
 
     			tempList.push({
-    				id: 5,
+    				id: 3,
     				menu: 1,
     				icon: "fa-border-all",
     				type: "Polygon",
@@ -3257,14 +3262,14 @@ var app = (function () {
     				data: neighbourhoodsData
     			});
 
-    			tempDictionary["Neighbourhoods"] = 4;
-    			tempDictionary["Neighbourhoods_Outline"] = 5;
+    			tempDictionary["Neighbourhoods"] = 2;
+    			tempDictionary["Neighbourhoods_Outline"] = 3;
     			let treesLayerName = "Trees";
     			let treesSourceName = "treesSource";
     			let treesData = await getDataWithAxios(Data.TREES_URL);
 
     			tempList.push({
-    				id: 6,
+    				id: 4,
     				icon: "fa-tree",
     				type: "Point",
     				isShown: true,
@@ -3274,7 +3279,7 @@ var app = (function () {
     				data: treesData
     			});
 
-    			tempDictionary["Trees"] = 6;
+    			tempDictionary["Trees"] = 4;
     			$$invalidate(0, collectionList = tempList);
     			layerDictionary = tempDictionary;
     			console.log(layerDictionary);

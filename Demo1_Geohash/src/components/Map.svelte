@@ -36,7 +36,7 @@
 			let neighbourhoodsSourceName = "neighbourhoodsSource";
 			let neighbourhoodsData = await getDataWithAxios(Data.NEIGHBOURHOODS_URL);
 			tempList.push({
-				id: 4,
+				id: 2,
 				menu: 1,
 				icon: "fa-border-all",
 				type: "Polygon",
@@ -47,7 +47,7 @@
 				data: neighbourhoodsData,
 			});
 			tempList.push({
-				id: 5,
+				id: 3,
 				menu: 1,
 				icon: "fa-border-all",
 				type: "Polygon",
@@ -58,14 +58,14 @@
 				data: neighbourhoodsData,
 			});
 
-			tempDictionary["Neighbourhoods"] = 4;
-			tempDictionary["Neighbourhoods_Outline"] = 5;
+			tempDictionary["Neighbourhoods"] = 2;
+			tempDictionary["Neighbourhoods_Outline"] = 3;
 
 			let treesLayerName = "Trees";
 			let treesSourceName = "treesSource";
 			let treesData = await getDataWithAxios(Data.TREES_URL);
-			tempList.push({ id: 6, icon: "fa-tree", type: "Point", isShown: true, name: treesLayerName, layerName: treesLayerName, sourceName: treesSourceName, data: treesData });
-			tempDictionary["Trees"] = 6;
+			tempList.push({ id: 4, icon: "fa-tree", type: "Point", isShown: true, name: treesLayerName, layerName: treesLayerName, sourceName: treesSourceName, data: treesData });
+			tempDictionary["Trees"] = 4;
 
 			collectionList = tempList;
 			layerDictionary = tempDictionary;
@@ -375,4 +375,4 @@
 	});
 </script>
 
-<div id="map" class="h-96 md:h-full card" />
+<div class="h-96 md:h-full"><div class="h-full rounded-lg" id="map"></div></div>
