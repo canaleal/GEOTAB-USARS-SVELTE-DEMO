@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "Simple Node API for testing the polygon search feature for the svelte app",
   "main": "index.js",
+  "type": "module",
   "scripts": {
+    "start": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Alex Canales",
@@ -11,6 +13,11 @@
   "dependencies": {
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
-    "nodemon": "^2.0.18"
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.18",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.18.0"
   }
 }
