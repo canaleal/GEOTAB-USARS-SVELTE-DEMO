@@ -3167,9 +3167,9 @@ var app = (function () {
     			div0 = element("div");
     			attr_dev(div0, "class", "h-full rounded-lg");
     			attr_dev(div0, "id", "map");
-    			add_location(div0, file$9, 396, 28, 11602);
+    			add_location(div0, file$9, 397, 28, 11621);
     			attr_dev(div1, "class", "h-96 md:h-full");
-    			add_location(div1, file$9, 396, 0, 11574);
+    			add_location(div1, file$9, 397, 0, 11593);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -3503,6 +3503,7 @@ var app = (function () {
 
     	const addDynamicTrees = () => {
     		let tempList = collectionList;
+    		tempList.pop();
     		let treesLayerName = "Trees";
     		let treesSourceName = "treesSource";
 

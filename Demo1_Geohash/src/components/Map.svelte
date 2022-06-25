@@ -268,6 +268,7 @@
 	const addDynamicTrees = () =>{
 
 		let tempList = collectionList;
+		tempList.pop();
 		let treesLayerName = "Trees";
 		let treesSourceName = "treesSource";
 
