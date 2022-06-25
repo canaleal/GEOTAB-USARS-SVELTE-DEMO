@@ -1,8 +1,6 @@
 /* eslint-disable no-undef */
 import express from "express";
 import morgan from "morgan";
-import dotenv from 'dotenv/config';
-dotenv.config()
 const app = express();  //Create new instance
 
 import treesRouter from './source/routes/trees.js';
