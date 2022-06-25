@@ -32,7 +32,7 @@
 	};
 
 	const fetchData = () => {
-		alert(`Fetching data for: ${selectedDate} at ${selectedTime} => Polygon : ${selectedPolygon}`);
+		alert(`Fetching data for: ${selectedDate} at ${selectedTime} => Polygon : ${JSON.stringify(selectedPolygon.geometry.coordinates)}`);
 	};
 </script>
 
