@@ -14,6 +14,7 @@
 	export let isReadyForStyleSwitching;
 	export let kingstonDetails;
 	export let pointOfInterest;
+	export let treesData;
 
 	let layerDictionary;
 	let isDataLoaded = false;
@@ -61,12 +62,7 @@
 			tempDictionary["Neighbourhoods"] = 2;
 			tempDictionary["Neighbourhoods_Outline"] = 3;
 
-			let treesLayerName = "Trees";
-			let treesSourceName = "treesSource";
-			let treesData = await getDataWithAxios(Data.TREES_URL);
-			tempList.push({ id: 4, icon: "fa-tree", type: "Point", isShown: true, name: treesLayerName, layerName: treesLayerName, sourceName: treesSourceName, data: treesData });
-			tempDictionary["Trees"] = 4;
-
+			
 			collectionList = tempList;
 			layerDictionary = tempDictionary;
 			console.log(layerDictionary);
@@ -81,12 +77,6 @@
 				data: neighbourhoodsList.data,
 			});
 
-			const treesList = collectionList[layerDictionary["Trees"]];
-			map.addSource(treesList.sourceName, {
-				type: "geojson",
-				data: treesList.data,
-			});
-
 			isDataLoaded = true;
 			addLayers();
 		} catch (e) {
@@ -98,9 +88,6 @@
 		addTerrainLayer();
 		addBuildingLayer(collectionList[layerDictionary["Buildings"]]);
 		addNeighbourhoodsLayer(collectionList[layerDictionary["Neighbourhoods"]], collectionList[layerDictionary["Neighbourhoods_Outline"]]);
-
-		const treesList = collectionList[layerDictionary["Trees"]];
-		addTreesLayer(treesList);
 	};
 
 	const addTerrainLayer = () => {
@@ -277,6 +264,38 @@
 	const clearPolygon = () => {
 		selectedPolygon = null
 	}
+
+	const addDynamicTrees = () =>{
+
+		let tempList = collectionList;
+		let treesLayerName = "Trees";
+		let treesSourceName = "treesSource";
+
+		try{
+			// Remove the old layer and source if they exist
+			if(map.getLayer(treesLayerName)){
+				map.removeLayer(treesLayerName);
+				map.removeSource(treesSourceName);
+			}
+		
+			let treesList = { id: 4, icon: "fa-tree", type: "Point", isShown: true, name: treesLayerName, layerName: treesLayerName, sourceName: treesSourceName, data: treesData };
+			tempList.push(treesList);
+			collectionList = tempList;
+
+			map.addSource(treesList.sourceName, {
+				type: "geojson",
+				data: treesList.data,
+			});
+
+			addTreesLayer(treesList);
+			map.resize();
+		}
+		catch(err){
+			console.log(err);
+		}
+	}
+
+	$: treesData && treesData!=null && addDynamicTrees();
 
 	const addFilter = () => {
 		// If map not loaded, abort

@@ -3167,9 +3167,9 @@ var app = (function () {
     			div0 = element("div");
     			attr_dev(div0, "class", "h-full rounded-lg");
     			attr_dev(div0, "id", "map");
-    			add_location(div0, file$9, 377, 28, 11347);
+    			add_location(div0, file$9, 396, 28, 11602);
     			attr_dev(div1, "class", "h-96 md:h-full");
-    			add_location(div1, file$9, 377, 0, 11319);
+    			add_location(div1, file$9, 396, 0, 11574);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -3206,6 +3206,7 @@ var app = (function () {
     	let { isReadyForStyleSwitching } = $$props;
     	let { kingstonDetails } = $$props;
     	let { pointOfInterest } = $$props;
+    	let { treesData } = $$props;
     	let layerDictionary;
     	let isDataLoaded = false;
     	let map;
@@ -3274,22 +3275,6 @@ var app = (function () {
 
     			tempDictionary["Neighbourhoods"] = 2;
     			tempDictionary["Neighbourhoods_Outline"] = 3;
-    			let treesLayerName = "Trees";
-    			let treesSourceName = "treesSource";
-    			let treesData = await getDataWithAxios(Data.TREES_URL);
-
-    			tempList.push({
-    				id: 4,
-    				icon: "fa-tree",
-    				type: "Point",
-    				isShown: true,
-    				name: treesLayerName,
-    				layerName: treesLayerName,
-    				sourceName: treesSourceName,
-    				data: treesData
-    			});
-
-    			tempDictionary["Trees"] = 4;
     			$$invalidate(0, collectionList = tempList);
     			layerDictionary = tempDictionary;
     			console.log(layerDictionary);
@@ -3307,9 +3292,7 @@ var app = (function () {
     				data: neighbourhoodsList.data
     			});
 
-    			const treesList = collectionList[layerDictionary["Trees"]];
-    			map.addSource(treesList.sourceName, { type: "geojson", data: treesList.data });
-    			$$invalidate(6, isDataLoaded = true);
+    			$$invalidate(7, isDataLoaded = true);
     			addLayers();
     		} catch(e) {
     			console.error(e);
@@ -3320,8 +3303,6 @@ var app = (function () {
     		addTerrainLayer();
     		addBuildingLayer(collectionList[layerDictionary["Buildings"]]);
     		addNeighbourhoodsLayer(collectionList[layerDictionary["Neighbourhoods"]], collectionList[layerDictionary["Neighbourhoods_Outline"]]);
-    		const treesList = collectionList[layerDictionary["Trees"]];
-    		addTreesLayer(treesList);
     	};
 
     	const addTerrainLayer = () => {
@@ -3520,6 +3501,39 @@ var app = (function () {
     		$$invalidate(1, selectedPolygon = null);
     	};
 
+    	const addDynamicTrees = () => {
+    		let tempList = collectionList;
+    		let treesLayerName = "Trees";
+    		let treesSourceName = "treesSource";
+
+    		try {
+    			// Remove the old layer and source if they exist
+    			if (map.getLayer(treesLayerName)) {
+    				map.removeLayer(treesLayerName);
+    				map.removeSource(treesSourceName);
+    			}
+
+    			let treesList = {
+    				id: 4,
+    				icon: "fa-tree",
+    				type: "Point",
+    				isShown: true,
+    				name: treesLayerName,
+    				layerName: treesLayerName,
+    				sourceName: treesSourceName,
+    				data: treesData
+    			};
+
+    			tempList.push(treesList);
+    			$$invalidate(0, collectionList = tempList);
+    			map.addSource(treesList.sourceName, { type: "geojson", data: treesList.data });
+    			addTreesLayer(treesList);
+    			map.resize();
+    		} catch(err) {
+    			console.log(err);
+    		}
+    	};
+
     	const addFilter = () => {
     		// If map not loaded, abort
     		if (map === null) return;
@@ -3626,7 +3640,8 @@ var app = (function () {
     		'mapStyle',
     		'isReadyForStyleSwitching',
     		'kingstonDetails',
-    		'pointOfInterest'
+    		'pointOfInterest',
+    		'treesData'
     	];
 
     	Object_1.keys($$props).forEach(key => {
@@ -3640,6 +3655,7 @@ var app = (function () {
     		if ('isReadyForStyleSwitching' in $$props) $$invalidate(4, isReadyForStyleSwitching = $$props.isReadyForStyleSwitching);
     		if ('kingstonDetails' in $$props) $$invalidate(5, kingstonDetails = $$props.kingstonDetails);
     		if ('pointOfInterest' in $$props) $$invalidate(2, pointOfInterest = $$props.pointOfInterest);
+    		if ('treesData' in $$props) $$invalidate(6, treesData = $$props.treesData);
     	};
 
     	$$self.$capture_state = () => ({
@@ -3655,6 +3671,7 @@ var app = (function () {
     		isReadyForStyleSwitching,
     		kingstonDetails,
     		pointOfInterest,
+    		treesData,
     		layerDictionary,
     		isDataLoaded,
     		map,
@@ -3668,6 +3685,7 @@ var app = (function () {
     		addTreesLayer,
     		updatePolygon,
     		clearPolygon,
+    		addDynamicTrees,
     		addFilter,
     		switchStyle
     	});
@@ -3679,8 +3697,9 @@ var app = (function () {
     		if ('isReadyForStyleSwitching' in $$props) $$invalidate(4, isReadyForStyleSwitching = $$props.isReadyForStyleSwitching);
     		if ('kingstonDetails' in $$props) $$invalidate(5, kingstonDetails = $$props.kingstonDetails);
     		if ('pointOfInterest' in $$props) $$invalidate(2, pointOfInterest = $$props.pointOfInterest);
+    		if ('treesData' in $$props) $$invalidate(6, treesData = $$props.treesData);
     		if ('layerDictionary' in $$props) layerDictionary = $$props.layerDictionary;
-    		if ('isDataLoaded' in $$props) $$invalidate(6, isDataLoaded = $$props.isDataLoaded);
+    		if ('isDataLoaded' in $$props) $$invalidate(7, isDataLoaded = $$props.isDataLoaded);
     		if ('map' in $$props) map = $$props.map;
     	};
 
@@ -3689,11 +3708,15 @@ var app = (function () {
     	}
 
     	$$self.$$.update = () => {
-    		if ($$self.$$.dirty & /*collectionList, isDataLoaded*/ 65) {
+    		if ($$self.$$.dirty & /*treesData*/ 64) {
+    			treesData && treesData != null && addDynamicTrees();
+    		}
+
+    		if ($$self.$$.dirty & /*collectionList, isDataLoaded*/ 129) {
     			collectionList && isDataLoaded && addFilter();
     		}
 
-    		if ($$self.$$.dirty & /*mapStyle, isDataLoaded*/ 72) {
+    		if ($$self.$$.dirty & /*mapStyle, isDataLoaded*/ 136) {
     			mapStyle && isDataLoaded && switchStyle();
     		}
     	};
@@ -3705,6 +3728,7 @@ var app = (function () {
     		mapStyle,
     		isReadyForStyleSwitching,
     		kingstonDetails,
+    		treesData,
     		isDataLoaded
     	];
     }
@@ -3719,7 +3743,8 @@ var app = (function () {
     			mapStyle: 3,
     			isReadyForStyleSwitching: 4,
     			kingstonDetails: 5,
-    			pointOfInterest: 2
+    			pointOfInterest: 2,
+    			treesData: 6
     		});
 
     		dispatch_dev("SvelteRegisterComponent", {
@@ -3754,6 +3779,10 @@ var app = (function () {
 
     		if (/*pointOfInterest*/ ctx[2] === undefined && !('pointOfInterest' in props)) {
     			console_1$1.warn("<Map> was created without expected prop 'pointOfInterest'");
+    		}
+
+    		if (/*treesData*/ ctx[6] === undefined && !('treesData' in props)) {
+    			console_1$1.warn("<Map> was created without expected prop 'treesData'");
     		}
     	}
 
@@ -3802,6 +3831,14 @@ var app = (function () {
     	}
 
     	set pointOfInterest(value) {
+    		throw new Error("<Map>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	get treesData() {
+    		throw new Error("<Map>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set treesData(value) {
     		throw new Error("<Map>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
     }
@@ -6175,7 +6212,7 @@ var app = (function () {
     const { console: console_1 } = globals;
     const file = "src\\pages\\HomePage.svelte";
 
-    // (73:31) 
+    // (75:31) 
     function create_if_block_2(ctx) {
     	let chart;
     	let current;
@@ -6208,14 +6245,14 @@ var app = (function () {
     		block,
     		id: create_if_block_2.name,
     		type: "if",
-    		source: "(73:31) ",
+    		source: "(75:31) ",
     		ctx
     	});
 
     	return block;
     }
 
-    // (69:31) 
+    // (71:31) 
     function create_if_block_1(ctx) {
     	let div;
     	let streetview;
@@ -6223,7 +6260,7 @@ var app = (function () {
     	let current;
 
     	function streetview_pointOfInterest_binding(value) {
-    		/*streetview_pointOfInterest_binding*/ ctx[18](value);
+    		/*streetview_pointOfInterest_binding*/ ctx[19](value);
     	}
 
     	let streetview_props = {};
@@ -6240,7 +6277,7 @@ var app = (function () {
     			div = element("div");
     			create_component(streetview.$$.fragment);
     			attr_dev(div, "class", "col-span-1 md:col-span-1 row-span-1");
-    			add_location(div, file, 69, 3, 2517);
+    			add_location(div, file, 71, 3, 2574);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -6277,14 +6314,14 @@ var app = (function () {
     		block,
     		id: create_if_block_1.name,
     		type: "if",
-    		source: "(69:31) ",
+    		source: "(71:31) ",
     		ctx
     	});
 
     	return block;
     }
 
-    // (57:2) {#if selectedMenu === 1}
+    // (59:2) {#if selectedMenu === 1}
     function create_if_block(ctx) {
     	let div0;
     	let datetime;
@@ -6303,11 +6340,11 @@ var app = (function () {
     	let current;
 
     	function datetime_selectedDate_binding(value) {
-    		/*datetime_selectedDate_binding*/ ctx[12](value);
+    		/*datetime_selectedDate_binding*/ ctx[13](value);
     	}
 
     	function datetime_selectedTime_binding(value) {
-    		/*datetime_selectedTime_binding*/ ctx[13](value);
+    		/*datetime_selectedTime_binding*/ ctx[14](value);
     	}
 
     	let datetime_props = {};
@@ -6325,11 +6362,11 @@ var app = (function () {
     	binding_callbacks.push(() => bind$1(datetime, 'selectedTime', datetime_selectedTime_binding));
 
     	function profile_selectedPolygon_binding(value) {
-    		/*profile_selectedPolygon_binding*/ ctx[14](value);
+    		/*profile_selectedPolygon_binding*/ ctx[15](value);
     	}
 
     	let profile_props = {
-    		kingstonDetails: /*kingstonDetails*/ ctx[8]
+    		kingstonDetails: /*kingstonDetails*/ ctx[9]
     	};
 
     	if (/*selectedPolygon*/ ctx[3] !== void 0) {
@@ -6340,18 +6377,18 @@ var app = (function () {
     	binding_callbacks.push(() => bind$1(profile, 'selectedPolygon', profile_selectedPolygon_binding));
 
     	function formrequest_selectedDate_binding(value) {
-    		/*formrequest_selectedDate_binding*/ ctx[15](value);
+    		/*formrequest_selectedDate_binding*/ ctx[16](value);
     	}
 
     	function formrequest_selectedTime_binding(value) {
-    		/*formrequest_selectedTime_binding*/ ctx[16](value);
+    		/*formrequest_selectedTime_binding*/ ctx[17](value);
     	}
 
     	function formrequest_selectedPolygon_binding(value) {
-    		/*formrequest_selectedPolygon_binding*/ ctx[17](value);
+    		/*formrequest_selectedPolygon_binding*/ ctx[18](value);
     	}
 
-    	let formrequest_props = { fetchData: /*fetchData*/ ctx[9] };
+    	let formrequest_props = { fetchData: /*fetchData*/ ctx[10] };
 
     	if (/*selectedDate*/ ctx[4] !== void 0) {
     		formrequest_props.selectedDate = /*selectedDate*/ ctx[4];
@@ -6381,11 +6418,11 @@ var app = (function () {
     			div2 = element("div");
     			create_component(formrequest.$$.fragment);
     			attr_dev(div0, "class", "col-span-1 md:col-span-1 row-span-1");
-    			add_location(div0, file, 57, 3, 2085);
+    			add_location(div0, file, 59, 3, 2142);
     			attr_dev(div1, "class", "col-span-1 md:col-span-1 row-span-1");
-    			add_location(div1, file, 61, 3, 2206);
+    			add_location(div1, file, 63, 3, 2263);
     			attr_dev(div2, "class", "col-span-1 md:col-span-1 row-span-1");
-    			add_location(div2, file, 65, 3, 2329);
+    			add_location(div2, file, 67, 3, 2386);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div0, anchor);
@@ -6474,7 +6511,7 @@ var app = (function () {
     		block,
     		id: create_if_block.name,
     		type: "if",
-    		source: "(57:2) {#if selectedMenu === 1}",
+    		source: "(59:2) {#if selectedMenu === 1}",
     		ctx
     	});
 
@@ -6498,6 +6535,7 @@ var app = (function () {
     	let t3;
     	let div3;
     	let map;
+    	let updating_treesData;
     	let updating_collectionList_1;
     	let updating_mapStyle;
     	let updating_isReadyForStyleSwitching;
@@ -6514,7 +6552,7 @@ var app = (function () {
     	navbar = new Navbar({ $$inline: true });
 
     	function attentionbar_selectedMenu_binding(value) {
-    		/*attentionbar_selectedMenu_binding*/ ctx[10](value);
+    		/*attentionbar_selectedMenu_binding*/ ctx[11](value);
     	}
 
     	let attentionbar_props = {};
@@ -6531,7 +6569,7 @@ var app = (function () {
     	binding_callbacks.push(() => bind$1(attentionbar, 'selectedMenu', attentionbar_selectedMenu_binding));
 
     	function layers_collectionList_binding(value) {
-    		/*layers_collectionList_binding*/ ctx[11](value);
+    		/*layers_collectionList_binding*/ ctx[12](value);
     	}
 
     	let layers_props = {};
@@ -6556,29 +6594,37 @@ var app = (function () {
     		if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
     	}
 
+    	function map_treesData_binding(value) {
+    		/*map_treesData_binding*/ ctx[20](value);
+    	}
+
     	function map_collectionList_binding(value) {
-    		/*map_collectionList_binding*/ ctx[19](value);
+    		/*map_collectionList_binding*/ ctx[21](value);
     	}
 
     	function map_mapStyle_binding(value) {
-    		/*map_mapStyle_binding*/ ctx[20](value);
+    		/*map_mapStyle_binding*/ ctx[22](value);
     	}
 
     	function map_isReadyForStyleSwitching_binding(value) {
-    		/*map_isReadyForStyleSwitching_binding*/ ctx[21](value);
+    		/*map_isReadyForStyleSwitching_binding*/ ctx[23](value);
     	}
 
     	function map_selectedPolygon_binding(value) {
-    		/*map_selectedPolygon_binding*/ ctx[22](value);
+    		/*map_selectedPolygon_binding*/ ctx[24](value);
     	}
 
     	function map_pointOfInterest_binding(value) {
-    		/*map_pointOfInterest_binding*/ ctx[23](value);
+    		/*map_pointOfInterest_binding*/ ctx[25](value);
     	}
 
     	let map_props = {
-    		kingstonDetails: /*kingstonDetails*/ ctx[8]
+    		kingstonDetails: /*kingstonDetails*/ ctx[9]
     	};
+
+    	if (/*treesData*/ ctx[8] !== void 0) {
+    		map_props.treesData = /*treesData*/ ctx[8];
+    	}
 
     	if (/*collectionList*/ ctx[2] !== void 0) {
     		map_props.collectionList = /*collectionList*/ ctx[2];
@@ -6601,6 +6647,7 @@ var app = (function () {
     	}
 
     	map = new Map$1({ props: map_props, $$inline: true });
+    	binding_callbacks.push(() => bind$1(map, 'treesData', map_treesData_binding));
     	binding_callbacks.push(() => bind$1(map, 'collectionList', map_collectionList_binding));
     	binding_callbacks.push(() => bind$1(map, 'mapStyle', map_mapStyle_binding));
     	binding_callbacks.push(() => bind$1(map, 'isReadyForStyleSwitching', map_isReadyForStyleSwitching_binding));
@@ -6608,11 +6655,11 @@ var app = (function () {
     	binding_callbacks.push(() => bind$1(map, 'pointOfInterest', map_pointOfInterest_binding));
 
     	function styleselector_mapStyle_binding(value) {
-    		/*styleselector_mapStyle_binding*/ ctx[24](value);
+    		/*styleselector_mapStyle_binding*/ ctx[26](value);
     	}
 
     	function styleselector_isReadyForStyleSwitching_binding(value) {
-    		/*styleselector_isReadyForStyleSwitching_binding*/ ctx[25](value);
+    		/*styleselector_isReadyForStyleSwitching_binding*/ ctx[27](value);
     	}
 
     	let styleselector_props = {};
@@ -6655,15 +6702,15 @@ var app = (function () {
     			t5 = space();
     			create_component(footer.$$.fragment);
     			attr_dev(div0, "class", "col-span-1 md:col-span-1 row-span-1");
-    			add_location(div0, file, 52, 2, 1956);
+    			add_location(div0, file, 54, 2, 2013);
     			attr_dev(div1, "class", "col-span-1 md:col-span-3 row-span-6 grid grid-cols-1 md:grid-cols-1 gap-4 h-fit");
-    			add_location(div1, file, 51, 1, 1859);
+    			add_location(div1, file, 53, 1, 1916);
     			attr_dev(div2, "class", "absolute top-1 left-1 ");
-    			add_location(div2, file, 82, 2, 2893);
+    			add_location(div2, file, 84, 2, 2965);
     			attr_dev(div3, "class", "col-span-1 md:col-span-9 row-span-6 relative");
-    			add_location(div3, file, 80, 1, 2695);
+    			add_location(div3, file, 82, 1, 2752);
     			attr_dev(section, "class", "grid grid-cols-1 md:grid-cols-12 grid-rows-6 gap-4 pb-4 px-4 h-fit");
-    			add_location(section, file, 50, 0, 1770);
+    			add_location(section, file, 52, 0, 1827);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -6748,6 +6795,12 @@ var app = (function () {
     			}
 
     			const map_changes = {};
+
+    			if (!updating_treesData && dirty & /*treesData*/ 256) {
+    				updating_treesData = true;
+    				map_changes.treesData = /*treesData*/ ctx[8];
+    				add_flush_callback(() => updating_treesData = false);
+    			}
 
     			if (!updating_collectionList_1 && dirty & /*collectionList*/ 4) {
     				updating_collectionList_1 = true;
@@ -6869,8 +6922,10 @@ var app = (function () {
     		bearing: -17.6
     	};
 
+    	let treesData = null;
+
     	const fetchData = async () => {
-    		alert(`Fetching data for: ${selectedDate} at ${selectedTime} => Polygon : ${JSON.stringify(selectedPolygon.geometry.coordinates)}`);
+    		console.log(`Fetching data for: ${selectedDate} at ${selectedTime} => Polygon : ${JSON.stringify(selectedPolygon.geometry.coordinates)}`);
 
     		let payload = {
     			date: selectedDate,
@@ -6878,8 +6933,9 @@ var app = (function () {
     			polygon: JSON.stringify(selectedPolygon.geometry.coordinates)
     		};
 
-    		const data = getDataWithAxiosAndParams(Data.TREES_SEARCH_URL, payload);
+    		const data = await getDataWithAxiosAndParams(Data.TREES_SEARCH_URL, payload);
     		console.log(data);
+    		$$invalidate(8, treesData = data);
     	};
 
     	const writable_props = [];
@@ -6931,6 +6987,11 @@ var app = (function () {
     	function streetview_pointOfInterest_binding(value) {
     		pointOfInterest = value;
     		$$invalidate(1, pointOfInterest);
+    	}
+
+    	function map_treesData_binding(value) {
+    		treesData = value;
+    		$$invalidate(8, treesData);
     	}
 
     	function map_collectionList_binding(value) {
@@ -6993,6 +7054,7 @@ var app = (function () {
     		mapStyle,
     		isReadyForStyleSwitching,
     		kingstonDetails,
+    		treesData,
     		fetchData
     	});
 
@@ -7005,7 +7067,8 @@ var app = (function () {
     		if ('selectedTime' in $$props) $$invalidate(5, selectedTime = $$props.selectedTime);
     		if ('mapStyle' in $$props) $$invalidate(6, mapStyle = $$props.mapStyle);
     		if ('isReadyForStyleSwitching' in $$props) $$invalidate(7, isReadyForStyleSwitching = $$props.isReadyForStyleSwitching);
-    		if ('kingstonDetails' in $$props) $$invalidate(8, kingstonDetails = $$props.kingstonDetails);
+    		if ('kingstonDetails' in $$props) $$invalidate(9, kingstonDetails = $$props.kingstonDetails);
+    		if ('treesData' in $$props) $$invalidate(8, treesData = $$props.treesData);
     	};
 
     	if ($$props && "$$inject" in $$props) {
@@ -7021,6 +7084,7 @@ var app = (function () {
     		selectedTime,
     		mapStyle,
     		isReadyForStyleSwitching,
+    		treesData,
     		kingstonDetails,
     		fetchData,
     		attentionbar_selectedMenu_binding,
@@ -7032,6 +7096,7 @@ var app = (function () {
     		formrequest_selectedTime_binding,
     		formrequest_selectedPolygon_binding,
     		streetview_pointOfInterest_binding,
+    		map_treesData_binding,
     		map_collectionList_binding,
     		map_mapStyle_binding,
     		map_isReadyForStyleSwitching_binding,

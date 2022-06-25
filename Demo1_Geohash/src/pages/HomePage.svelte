@@ -31,17 +31,19 @@
 		pitch: 45,
 		bearing: -17.6,
 	};
+	let treesData = null;
 
 	const fetchData = async() => {
-		alert(`Fetching data for: ${selectedDate} at ${selectedTime} => Polygon : ${JSON.stringify(selectedPolygon.geometry.coordinates)}`);
+		console.log(`Fetching data for: ${selectedDate} at ${selectedTime} => Polygon : ${JSON.stringify(selectedPolygon.geometry.coordinates)}`);
 
 		let payload = {
 			date: selectedDate,
 			time: selectedTime,
 			polygon: JSON.stringify(selectedPolygon.geometry.coordinates),
 		};
-		const data = getDataWithAxiosAndParams(Data.TREES_SEARCH_URL, payload)
+		const data = await getDataWithAxiosAndParams(Data.TREES_SEARCH_URL, payload)
 		console.log(data);
+		treesData = data;
 	};
 </script>
 
@@ -79,7 +81,7 @@
 	</div>
 
 	<div class="col-span-1 md:col-span-9  row-span-6 relative">
-		<Map {kingstonDetails} bind:collectionList bind:mapStyle bind:isReadyForStyleSwitching bind:selectedPolygon bind:pointOfInterest />
+		<Map {kingstonDetails} bind:treesData bind:collectionList bind:mapStyle bind:isReadyForStyleSwitching bind:selectedPolygon bind:pointOfInterest />
 		<div class="absolute top-1 left-1 ">
 			<StyleSelector bind:mapStyle bind:isReadyForStyleSwitching />
 		</div>
