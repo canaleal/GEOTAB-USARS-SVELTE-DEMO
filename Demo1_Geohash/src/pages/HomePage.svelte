@@ -10,7 +10,8 @@
 	import FormRequest from "components/FormRequest.svelte";
 	import StreetView from "components/StreetView.svelte";
 	import Chart from "components/Chart.svelte";
-
+	import { Data } from "constants/index.js";
+	import { getDataWithAxiosAndParams } from "utils/fetch-data.js";
 	import { getCurrentDateInYYYYMMDD, getCurrentTime } from "utils/fetch-time.js";
 
 	let selectedMenu = 1;
@@ -31,8 +32,16 @@
 		bearing: -17.6,
 	};
 
-	const fetchData = () => {
+	const fetchData = async() => {
 		alert(`Fetching data for: ${selectedDate} at ${selectedTime} => Polygon : ${JSON.stringify(selectedPolygon.geometry.coordinates)}`);
+
+		let payload = {
+			date: selectedDate,
+			time: selectedTime,
+			polygon: JSON.stringify(selectedPolygon.geometry.coordinates),
+		};
+		const data = getDataWithAxiosAndParams(Data.TREES_SEARCH_URL, payload)
+		console.log(data);
 	};
 </script>
 

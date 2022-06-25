@@ -20,15 +20,18 @@ const filterTrees = (search_polygon) =>{
 
 
 export const getTrees = (req, res) => {
-    const { raw_polygon } = req.params;
-    if(raw_polygon){
-        const search_polygon = JSON.parse(raw_polygon);
+
+    const { polygon } = req.query;
+    if(polygon){
+        const search_polygon = JSON.parse(polygon);
         const filteredTrees = filterTrees(search_polygon);
-        res.send(filteredTrees);
+        let data = {type: "FeatureCollection", features: filteredTrees};
+        res.send(data);
     }
     else{
         const search_polygon = [[[-76.54860136610944,44.23781656965602],[-76.54346754418007,44.23904628801034],[-76.54304981355291,44.23707114151949],[-76.54854327075333,44.23687163655123],[-76.54860136610944,44.23781656965602]]];
         const filteredTrees = filterTrees(search_polygon);
-        res.send(filteredTrees);
+        let data = {type: "FeatureCollection", features: filteredTrees};
+        res.send(data);
     }
 }

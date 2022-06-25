@@ -1,11 +1,12 @@
 /* eslint-disable no-undef */
 import express from "express";
 import morgan from "morgan";
-const app = express();  //Create new instance
-
+import cors from "cors";
 import treesRouter from './source/routes/trees.js';
 
+const app = express();  //Create new instance
 const PORT = process.env.PORT || 5000; //Declare the port number
+app.use(cors({origin: ['https://www.section.io', 'https://www.google.com/', 'http://localhost:8080']}));
 app.use(express.json()); //allows us to access request body as req.body
 app.use(morgan("dev"));  //enable incoming request logging in dev mode
  
