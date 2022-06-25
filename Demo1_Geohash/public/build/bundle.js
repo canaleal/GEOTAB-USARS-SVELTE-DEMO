@@ -3140,6 +3140,14 @@ var app = (function () {
       return filteredList;
     };
 
+    const removeObjectWhereValueEqualsString = (listOfObjects, key, value) => {
+      const filteredList = listOfObjects.filter((object) => {
+        const objectKey = object[key];
+        return objectKey !== value;
+      });
+      return filteredList;
+    };
+
     var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
     function createCommonjsModule(fn) {
@@ -3167,9 +3175,9 @@ var app = (function () {
     			div0 = element("div");
     			attr_dev(div0, "class", "h-full rounded-lg");
     			attr_dev(div0, "id", "map");
-    			add_location(div0, file$9, 397, 28, 11621);
+    			add_location(div0, file$9, 399, 28, 11774);
     			attr_dev(div1, "class", "h-96 md:h-full");
-    			add_location(div1, file$9, 397, 0, 11593);
+    			add_location(div1, file$9, 399, 0, 11746);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -3502,13 +3510,16 @@ var app = (function () {
     	};
 
     	const addDynamicTrees = () => {
-    		let tempList = collectionList;
-    		tempList.pop();
-    		let treesLayerName = "Trees";
-    		let treesSourceName = "treesSource";
+    		if (map === null || treesData === null) return;
 
     		try {
     			// Remove the old layer and source if they exist
+    			let tempList = collectionList;
+
+    			let treesLayerName = "Trees";
+    			let treesSourceName = "treesSource";
+    			tempList = removeObjectWhereValueEqualsString(tempList, "layerName", "Trees");
+
     			if (map.getLayer(treesLayerName)) {
     				map.removeLayer(treesLayerName);
     				map.removeSource(treesSourceName);
@@ -3570,7 +3581,6 @@ var app = (function () {
     		try {
     			map.setStyle("mapbox://styles/mapbox/" + mapStyle);
     			small_popup.remove();
-    			$$invalidate(1, selectedPolygon = null);
     		} catch(e) {
     			
     		}
@@ -3613,6 +3623,7 @@ var app = (function () {
 
     		map.on("style.load", function () {
     			addDataSources();
+    			addDynamicTrees();
     			addFilter();
     		});
 
@@ -3665,6 +3676,7 @@ var app = (function () {
     		getDataWithAxios,
     		Data,
     		getListOfObjectWhereKeyContainsString,
+    		removeObjectWhereValueEqualsString,
     		MapboxDraw: mapboxGlDraw,
     		collectionList,
     		selectedPolygon,

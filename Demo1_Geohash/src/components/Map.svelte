@@ -3,7 +3,7 @@
 	import { onDestroy } from "svelte";
 	import { getDataWithAxios } from "utils/fetch-data.js";
 	import { Data } from "constants/index.js";
-	import { getListOfObjectWhereKeyContainsString } from "utils/filter-data.js";
+	import { getListOfObjectWhereKeyContainsString, removeObjectWhereValueEqualsString } from "utils/filter-data.js";
 	import MapboxDraw from "@mapbox/mapbox-gl-draw";
 	import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
 
@@ -265,20 +265,21 @@
 		selectedPolygon = null
 	}
 
+
 	const addDynamicTrees = () =>{
 
-		let tempList = collectionList;
-		tempList.pop();
-		let treesLayerName = "Trees";
-		let treesSourceName = "treesSource";
-
+		if (map === null || treesData === null) return;
 		try{
 			// Remove the old layer and source if they exist
+			let tempList = collectionList;	
+			let treesLayerName = "Trees";
+			let treesSourceName = "treesSource";
+			tempList = removeObjectWhereValueEqualsString(tempList, "layerName", "Trees");
 			if(map.getLayer(treesLayerName)){
 				map.removeLayer(treesLayerName);
 				map.removeSource(treesSourceName);
 			}
-		
+
 			let treesList = { id: 4, icon: "fa-tree", type: "Point", isShown: true, name: treesLayerName, layerName: treesLayerName, sourceName: treesSourceName, data: treesData };
 			tempList.push(treesList);
 			collectionList = tempList;
@@ -331,7 +332,7 @@
 		try {
 			map.setStyle("mapbox://styles/mapbox/" + mapStyle);
 			small_popup.remove();
-			selectedPolygon = null;
+			
 		} catch (e) {}
 	};
 	$: mapStyle && isDataLoaded && switchStyle();
@@ -376,6 +377,7 @@
 
 		map.on("style.load", function () {
 			addDataSources();
+			addDynamicTrees();
 			addFilter();
 		});
 		map.on("draw.create", updatePolygon);
