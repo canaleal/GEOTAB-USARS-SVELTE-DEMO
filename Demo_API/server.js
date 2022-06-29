@@ -6,7 +6,7 @@ import treesRouter from './source/routes/trees.js';
 
 const app = express();  //Create new instance
 const PORT = process.env.PORT || 5000; //Declare the port number
-app.use(cors({origin: ['https://www.section.io', 'https://www.google.com/', 'http://localhost:8080', 'https://geotab-demo-2.netlify.app/']}));
+app.use(cors({origin: ['https://www.section.io', 'https://www.google.com/', 'http://localhost:8080', 'https://geotab-demo-2.netlify.app']}));
 app.use(express.json()); //allows us to access request body as req.body
 app.use(morgan("dev"));  //enable incoming request logging in dev mode
  
