@@ -3129,7 +3129,7 @@ var app = (function () {
       TREES_URL: `${getFullWindowPath()}/data/trees.geojson`,
       SIDEWALK_URL: `${getFullWindowPath()}/data/sidewalk.geojson`,
       ROADWORK_URL: `${getFullWindowPath()}/data/roadwork.geojson`,
-      TREES_SEARCH_URL: 'http://localhost:5000/trees',
+      TREES_SEARCH_URL: 'https://mapboxdemoapi.ue.r.appspot.com/trees',
     };
 
     const getListOfObjectWhereKeyContainsString = (listOfObjects, key, stringToSearchFor) => {
