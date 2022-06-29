@@ -3,7 +3,7 @@
 	import { onDestroy } from "svelte";
 	import { getDataWithAxios } from "utils/fetch-data.js";
 	import { Data } from "constants/index.js";
-	import { getListOfObjectWhereKeyContainsString } from "utils/filter-data.js";
+	import { getListOfObjectWhereKeyContainsString, removeObjectWhereValueEqualsString } from "utils/filter-data.js";
 	import MapboxDraw from "@mapbox/mapbox-gl-draw";
 	import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
 
@@ -14,6 +14,7 @@
 	export let isReadyForStyleSwitching;
 	export let kingstonDetails;
 	export let pointOfInterest;
+	export let treesData;
 
 	let layerDictionary;
 	let isDataLoaded = false;
@@ -61,12 +62,7 @@
 			tempDictionary["Neighbourhoods"] = 2;
 			tempDictionary["Neighbourhoods_Outline"] = 3;
 
-			let treesLayerName = "Trees";
-			let treesSourceName = "treesSource";
-			let treesData = await getDataWithAxios(Data.TREES_URL);
-			tempList.push({ id: 4, icon: "fa-tree", type: "Point", isShown: true, name: treesLayerName, layerName: treesLayerName, sourceName: treesSourceName, data: treesData });
-			tempDictionary["Trees"] = 4;
-
+			
 			collectionList = tempList;
 			layerDictionary = tempDictionary;
 			console.log(layerDictionary);
@@ -81,12 +77,6 @@
 				data: neighbourhoodsList.data,
 			});
 
-			const treesList = collectionList[layerDictionary["Trees"]];
-			map.addSource(treesList.sourceName, {
-				type: "geojson",
-				data: treesList.data,
-			});
-
 			isDataLoaded = true;
 			addLayers();
 		} catch (e) {
@@ -98,9 +88,6 @@
 		addTerrainLayer();
 		addBuildingLayer(collectionList[layerDictionary["Buildings"]]);
 		addNeighbourhoodsLayer(collectionList[layerDictionary["Neighbourhoods"]], collectionList[layerDictionary["Neighbourhoods_Outline"]]);
-
-		const treesList = collectionList[layerDictionary["Trees"]];
-		addTreesLayer(treesList);
 	};
 
 	const addTerrainLayer = () => {
@@ -278,6 +265,40 @@
 		selectedPolygon = null
 	}
 
+
+	const addDynamicTrees = () =>{
+
+		if (map === null || treesData === null) return;
+		try{
+			// Remove the old layer and source if they exist
+			let tempList = collectionList;	
+			let treesLayerName = "Trees";
+			let treesSourceName = "treesSource";
+			tempList = removeObjectWhereValueEqualsString(tempList, "layerName", "Trees");
+			if(map.getLayer(treesLayerName)){
+				map.removeLayer(treesLayerName);
+				map.removeSource(treesSourceName);
+			}
+
+			let treesList = { id: 4, icon: "fa-tree", type: "Point", isShown: true, name: treesLayerName, layerName: treesLayerName, sourceName: treesSourceName, data: treesData };
+			tempList.push(treesList);
+			collectionList = tempList;
+
+			map.addSource(treesList.sourceName, {
+				type: "geojson",
+				data: treesList.data,
+			});
+
+			addTreesLayer(treesList);
+			map.resize();
+		}
+		catch(err){
+			console.log(err);
+		}
+	}
+
+	$: treesData && treesData!=null && addDynamicTrees();
+
 	const addFilter = () => {
 		// If map not loaded, abort
 		if (map === null) return;
@@ -311,7 +332,7 @@
 		try {
 			map.setStyle("mapbox://styles/mapbox/" + mapStyle);
 			small_popup.remove();
-			selectedPolygon = null;
+			
 		} catch (e) {}
 	};
 	$: mapStyle && isDataLoaded && switchStyle();
@@ -356,6 +377,7 @@
 
 		map.on("style.load", function () {
 			addDataSources();
+			addDynamicTrees();
 			addFilter();
 		});
 		map.on("draw.create", updatePolygon);
