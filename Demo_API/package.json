@@ -2,10 +2,10 @@
   "name": "demo_api",
   "version": "1.0.0",
   "description": "Simple Node API for testing the polygon search feature for the svelte app",
-  "main": "index.js",
+  "main": "server.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon index.js",
+    "start": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Alex Canales",
