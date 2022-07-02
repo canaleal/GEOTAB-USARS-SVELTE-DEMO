@@ -1,4 +1,4 @@
-export const pedestrian_data = {
+export const pedestrians_data = {
     type: "FeatureCollection",
     features: [
       {

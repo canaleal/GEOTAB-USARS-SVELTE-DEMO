@@ -1,6 +1,6 @@
 import express from "express";
 
-import {getPedestrians} from "../controllers/pedestrians";
+import {getPedestrians} from "../controllers/pedestrians.js";
 
 const router = express.Router();
 

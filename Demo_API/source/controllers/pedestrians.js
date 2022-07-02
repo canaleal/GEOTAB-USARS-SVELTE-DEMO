@@ -7,8 +7,8 @@ const filterPedestrians = (search_polygon) =>{
 
     const polygon = turfPolygon(search_polygon);
     const pedestrians = pedestrians_data.features;
-    const filteredPedestrians = pedestrians.filter(tree => {
-        const point = turfPoint([pedestrians.geometry.coordinates[0], pedestrians.geometry.coordinates[1]]);
+    const filteredPedestrians = pedestrians.filter(pedestrian => {
+        const point = turfPoint([pedestrian.geometry.coordinates[0], pedestrian.geometry.coordinates[1]]);
         const isInside = booleanPointInPolygon(point, polygon);
         if(isInside){
             return true;
