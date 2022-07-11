@@ -49246,7 +49246,22 @@ var app = (function () {
     	let section;
     	let p;
     	let t1;
-    	let div;
+    	let div0;
+    	let t2;
+    	let div1;
+    	let button0;
+    	let t3;
+    	let button0_class_value;
+    	let t4;
+    	let button1;
+    	let t5;
+    	let button1_class_value;
+    	let t6;
+    	let button2;
+    	let t7;
+    	let button2_class_value;
+    	let mounted;
+    	let dispose;
 
     	const block = {
     		c: function create() {
@@ -49254,13 +49269,43 @@ var app = (function () {
     			p = element("p");
     			p.textContent = "Chart:";
     			t1 = space();
-    			div = element("div");
+    			div0 = element("div");
+    			t2 = space();
+    			div1 = element("div");
+    			button0 = element("button");
+    			t3 = text("Year");
+    			t4 = space();
+    			button1 = element("button");
+    			t5 = text("Month");
+    			t6 = space();
+    			button2 = element("button");
+    			t7 = text("Day");
     			attr_dev(p, "class", "font-bold my-1");
-    			add_location(p, file$1, 88, 1, 1950);
-    			attr_dev(div, "class", "h-72 w-full");
-    			add_location(div, file$1, 89, 1, 1989);
+    			add_location(p, file$1, 96, 1, 2691);
+    			attr_dev(div0, "class", "h-72 w-full");
+    			add_location(div0, file$1, 97, 1, 2730);
+
+    			attr_dev(button0, "class", button0_class_value = `card-btn mx-1 text-center ${/*selectedChartButton*/ ctx[1] == "y"
+			? "card-btn-blue"
+			: ""}`);
+
+    			add_location(button0, file$1, 99, 2, 2803);
+
+    			attr_dev(button1, "class", button1_class_value = `card-btn mx-1 text-center ${/*selectedChartButton*/ ctx[1] == "m"
+			? "card-btn-blue"
+			: ""}`);
+
+    			add_location(button1, file$1, 107, 2, 3002);
+
+    			attr_dev(button2, "class", button2_class_value = `card-btn mx-1 text-center ${/*selectedChartButton*/ ctx[1] == "d"
+			? "card-btn-blue"
+			: ""}`);
+
+    			add_location(button2, file$1, 115, 2, 3202);
+    			attr_dev(div1, "class", "flex");
+    			add_location(div1, file$1, 98, 1, 2781);
     			attr_dev(section, "class", "card h-fit");
-    			add_location(section, file$1, 87, 0, 1919);
+    			add_location(section, file$1, 95, 0, 2660);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -49269,15 +49314,55 @@ var app = (function () {
     			insert_dev(target, section, anchor);
     			append_dev(section, p);
     			append_dev(section, t1);
-    			append_dev(section, div);
-    			/*div_binding*/ ctx[1](div);
+    			append_dev(section, div0);
+    			/*div0_binding*/ ctx[3](div0);
+    			append_dev(section, t2);
+    			append_dev(section, div1);
+    			append_dev(div1, button0);
+    			append_dev(button0, t3);
+    			append_dev(div1, t4);
+    			append_dev(div1, button1);
+    			append_dev(button1, t5);
+    			append_dev(div1, t6);
+    			append_dev(div1, button2);
+    			append_dev(button2, t7);
+
+    			if (!mounted) {
+    				dispose = [
+    					listen_dev(button0, "click", /*click_handler*/ ctx[4], false, false, false),
+    					listen_dev(button1, "click", /*click_handler_1*/ ctx[5], false, false, false),
+    					listen_dev(button2, "click", /*click_handler_2*/ ctx[6], false, false, false)
+    				];
+
+    				mounted = true;
+    			}
     		},
-    		p: noop,
+    		p: function update(ctx, [dirty]) {
+    			if (dirty & /*selectedChartButton*/ 2 && button0_class_value !== (button0_class_value = `card-btn mx-1 text-center ${/*selectedChartButton*/ ctx[1] == "y"
+			? "card-btn-blue"
+			: ""}`)) {
+    				attr_dev(button0, "class", button0_class_value);
+    			}
+
+    			if (dirty & /*selectedChartButton*/ 2 && button1_class_value !== (button1_class_value = `card-btn mx-1 text-center ${/*selectedChartButton*/ ctx[1] == "m"
+			? "card-btn-blue"
+			: ""}`)) {
+    				attr_dev(button1, "class", button1_class_value);
+    			}
+
+    			if (dirty & /*selectedChartButton*/ 2 && button2_class_value !== (button2_class_value = `card-btn mx-1 text-center ${/*selectedChartButton*/ ctx[1] == "d"
+			? "card-btn-blue"
+			: ""}`)) {
+    				attr_dev(button2, "class", button2_class_value);
+    			}
+    		},
     		i: noop,
     		o: noop,
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(section);
-    			/*div_binding*/ ctx[1](null);
+    			/*div0_binding*/ ctx[3](null);
+    			mounted = false;
+    			run_all(dispose);
     		}
     	};
 
@@ -49296,6 +49381,59 @@ var app = (function () {
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('Chart', slots, []);
     	let chartDiv;
+    	let selectedChartButton = "y"; // year default
+    	let chartData = [];
+    	let xAxis;
+    	let series;
+
+    	const changeSelectedButtonOnclick = buttonType => {
+    		$$invalidate(1, selectedChartButton = buttonType);
+    		chartData = [];
+
+    		switch (buttonType) {
+    			case "y":
+    				for (let i = 0; i < 5; i++) {
+    					chartData.push({
+    						time: 2021 - i,
+    						value: Math.floor(Math.random() * 200) + 1000
+    					});
+    				}
+    				break;
+    			case "m":
+    				var month = [
+    					"Jan",
+    					"Feb",
+    					"Mar",
+    					"Apr",
+    					"May",
+    					"Jun",
+    					"Jul",
+    					"Aug",
+    					"Sep",
+    					"Oct",
+    					"Nov",
+    					"Dec"
+    				];
+    				for (let i = 0; i < month.length; i++) {
+    					chartData.push({
+    						time: month[i],
+    						value: Math.floor(Math.random() * 200) + 1000
+    					});
+    				}
+    				break;
+    			case "d":
+    				for (let i = 0; i < 30; i++) {
+    					chartData.push({
+    						time: i + 1,
+    						value: Math.floor(Math.random() * 20) + 10
+    					});
+    				}
+    				break;
+    		}
+
+    		xAxis.data.setAll(chartData);
+    		series.data.setAll(chartData);
+    	};
 
     	onMount(() => {
     		let root = Root.new(chartDiv);
@@ -49309,9 +49447,9 @@ var app = (function () {
     			paddingRight: 15
     		});
 
-    		let xAxis = chart.xAxes.push(CategoryAxis.new(root, {
+    		xAxis = chart.xAxes.push(CategoryAxis.new(root, {
     			maxDeviation: 0.3,
-    			categoryField: "year",
+    			categoryField: "time",
     			renderer: xRenderer,
     			tooltip: Tooltip.new(root, {})
     		}));
@@ -49321,13 +49459,13 @@ var app = (function () {
     			renderer: AxisRendererY.new(root, {})
     		}));
 
-    		let series = chart.series.push(ColumnSeries.new(root, {
+    		series = chart.series.push(ColumnSeries.new(root, {
     			name: "Series 1",
     			xAxis,
     			yAxis,
     			valueYField: "value",
     			sequencedInterpolation: true,
-    			categoryXField: "year",
+    			categoryXField: "time",
     			tooltip: Tooltip.new(root, { labelText: "{valueY}" })
     		}));
 
@@ -49341,16 +49479,15 @@ var app = (function () {
     			return chart.get("colors").getIndex(series.columns.indexOf(target));
     		});
 
-    		let data = [
-    			{ year: "2014", value: 200 },
-    			{ year: "2015", value: 250 },
-    			{ year: "2016", value: 100 },
-    			{ year: "2017", value: 50 },
-    			{ year: "2018", value: 20 }
-    		];
+    		for (let i = 0; i < 5; i++) {
+    			chartData.push({
+    				time: 2021 - i,
+    				value: Math.floor(Math.random() * 200) + 1000
+    			});
+    		}
 
-    		xAxis.data.setAll(data);
-    		series.data.setAll(data);
+    		xAxis.data.setAll(chartData);
+    		series.data.setAll(chartData);
     	});
 
     	const writable_props = [];
@@ -49359,24 +49496,58 @@ var app = (function () {
     		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<Chart> was created with unknown prop '${key}'`);
     	});
 
-    	function div_binding($$value) {
+    	function div0_binding($$value) {
     		binding_callbacks[$$value ? 'unshift' : 'push'](() => {
     			chartDiv = $$value;
     			$$invalidate(0, chartDiv);
     		});
     	}
 
-    	$$self.$capture_state = () => ({ am5, am5xy, onMount, chartDiv });
+    	const click_handler = () => {
+    		changeSelectedButtonOnclick("y");
+    	};
+
+    	const click_handler_1 = () => {
+    		changeSelectedButtonOnclick("m");
+    	};
+
+    	const click_handler_2 = () => {
+    		changeSelectedButtonOnclick("d");
+    	};
+
+    	$$self.$capture_state = () => ({
+    		am5,
+    		am5xy,
+    		onMount,
+    		chartDiv,
+    		selectedChartButton,
+    		chartData,
+    		xAxis,
+    		series,
+    		changeSelectedButtonOnclick
+    	});
 
     	$$self.$inject_state = $$props => {
     		if ('chartDiv' in $$props) $$invalidate(0, chartDiv = $$props.chartDiv);
+    		if ('selectedChartButton' in $$props) $$invalidate(1, selectedChartButton = $$props.selectedChartButton);
+    		if ('chartData' in $$props) chartData = $$props.chartData;
+    		if ('xAxis' in $$props) xAxis = $$props.xAxis;
+    		if ('series' in $$props) series = $$props.series;
     	};
 
     	if ($$props && "$$inject" in $$props) {
     		$$self.$inject_state($$props.$$inject);
     	}
 
-    	return [chartDiv, div_binding];
+    	return [
+    		chartDiv,
+    		selectedChartButton,
+    		changeSelectedButtonOnclick,
+    		div0_binding,
+    		click_handler,
+    		click_handler_1,
+    		click_handler_2
+    	];
     }
 
     class Chart extends SvelteComponentDev {
