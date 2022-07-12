@@ -21,3 +21,11 @@ export const getObjectsWhereKeyEqualsValue = (listOfObjects, key, value) => {
   });
   return filteredList;
 };
+
+export const removeObjectWhereValueEqualsString = (listOfObjects, key, value) => {
+  const filteredList = listOfObjects.filter((object) => {
+    const objectKey = object[key];
+    return objectKey !== value;
+  });
+  return filteredList;
+};

@@ -10,13 +10,14 @@
 	import FormRequest from "components/FormRequest.svelte";
 	import StreetView from "components/StreetView.svelte";
 	import Chart from "components/Chart.svelte";
-
+	import { Data } from "constants/index.js";
+	import { getDataWithAxiosAndParams } from "utils/fetch-data.js";
 	import { getCurrentDateInYYYYMMDD, getCurrentTime } from "utils/fetch-time.js";
 
 	let selectedMenu = 1;
 	let pointOfInterest = null;
 	let collectionList = [];
-	let selectedGeohash = null;
+	let selectedPolygon = null;
 	let selectedDate = getCurrentDateInYYYYMMDD();
 	let selectedTime = getCurrentTime();
 	let mapStyle = "outdoors-v11";
@@ -30,9 +31,19 @@
 		pitch: 45,
 		bearing: -17.6,
 	};
+	let treesData = null;
 
-	const fetchData = () => {
-		alert(`Fetching data for: ${selectedDate} at ${selectedTime} => Geohash : ${selectedGeohash}`);
+	const fetchData = async() => {
+		console.log(`Fetching data for: ${selectedDate} at ${selectedTime} => Polygon : ${JSON.stringify(selectedPolygon.geometry.coordinates)}`);
+
+		let payload = {
+			date: selectedDate,
+			time: selectedTime,
+			polygon: JSON.stringify(selectedPolygon.geometry.coordinates),
+		};
+		const data = await getDataWithAxiosAndParams(Data.TREES_SEARCH_URL, payload)
+		console.log(data);
+		treesData = data;
 	};
 </script>
 
@@ -51,11 +62,11 @@
 			</div>
 
 			<div class="col-span-1 md:col-span-1 row-span-1">
-				<Profile {kingstonDetails} bind:selectedGeohash />
+				<Profile {kingstonDetails} bind:selectedPolygon />
 			</div>
 
 			<div class="col-span-1 md:col-span-1 row-span-1">
-				<FormRequest bind:selectedDate bind:selectedTime bind:selectedGeohash {fetchData} />
+				<FormRequest bind:selectedDate bind:selectedTime bind:selectedPolygon {fetchData} />
 			</div>
 		{:else if selectedMenu === 2}
 			<div class="col-span-1 md:col-span-1 row-span-1">
@@ -72,7 +83,7 @@
 	</div>
 
 	<div class="col-span-1 md:col-span-9  row-span-6 relative">
-		<Map {kingstonDetails} bind:collectionList bind:mapStyle bind:isReadyForStyleSwitching bind:selectedGeohash bind:pointOfInterest />
+		<Map {kingstonDetails} bind:treesData bind:collectionList bind:mapStyle bind:isReadyForStyleSwitching bind:selectedPolygon bind:pointOfInterest />
 		<div class="absolute top-1 left-1 ">
 			<StyleSelector bind:mapStyle bind:isReadyForStyleSwitching />
 		</div>
