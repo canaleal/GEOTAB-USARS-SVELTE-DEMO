@@ -73,7 +73,9 @@
 				<StreetView bind:pointOfInterest />
 			</div>
 		{:else if selectedMenu === 3}
-			 <Chart />
+			 <div class="col-span-1 md:col-span-1 row-span-1">
+				<Chart />
+			</div>
 		{/if}
 
 

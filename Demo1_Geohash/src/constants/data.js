@@ -6,10 +6,10 @@ function getFullWindowPath() {
 }
 
 export const Data = {
-  NEIGHBOURHOODS_URL: `${getFullWindowPath()}/data/neighbourhoods.geojson`,
-  TREES_URL: `${getFullWindowPath()}/data/trees.geojson`,
-  SIDEWALK_URL: `${getFullWindowPath()}/data/sidewalk.geojson`,
-  ROADWORK_URL: `${getFullWindowPath()}/data/roadwork.geojson`,
+  NEIGHBOURHOODS_URL: `${getFullWindowPath()}/Data/neighbourhoods.geojson`,
+  TREES_URL: `${getFullWindowPath()}/Data/trees.geojson`,
+  SIDEWALK_URL: `${getFullWindowPath()}/Data/sidewalk.geojson`,
+  ROADWORK_URL: `${getFullWindowPath()}/Data/roadwork.geojson`,
   TREES_SEARCH_URL: 'https://mapboxdemoapi.ue.r.appspot.com/trees',
 };
 
