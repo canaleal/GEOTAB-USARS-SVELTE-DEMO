@@ -4,6 +4,8 @@ import morgan from "morgan";
 import cors from "cors";
 import treesRouter from './source/routes/trees.js';
 import pedestriansRouter from './source/routes/pedestrians.js';
+import dotenv from 'dotenv'
+dotenv.config()
 
 const app = express();  //Create new instance
 const PORT = process.env.PORT || 5000; //Declare the port number
