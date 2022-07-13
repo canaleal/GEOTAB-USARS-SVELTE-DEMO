@@ -4,6 +4,7 @@ import morgan from "morgan";
 import cors from "cors";
 import treesRouter from './source/routes/trees.js';
 import pedestriansRouter from './source/routes/pedestrians.js';
+import cameraRouter from './source/routes/camera.js';
 import dotenv from 'dotenv'
 dotenv.config()
 
@@ -15,6 +16,7 @@ app.use(morgan("dev"));  //enable incoming request logging in dev mode
  
 app.use('/trees', treesRouter);
 app.use('/pedestrians', pedestriansRouter);
+app.use('/camera', cameraRouter);
 
 //Define the endpoint
 app.get("/ping", (req, res) => {  

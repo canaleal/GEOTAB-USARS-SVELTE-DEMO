@@ -17,6 +17,7 @@
     "express": "^4.18.1",
     "got": "^11.8.5",
     "morgan": "^1.10.0",
+    "node-fetch": "^3.2.8",
     "nodemon": "^2.0.18",
     "turf-point": "^2.0.1",
     "turf-polygon": "^1.0.3",
