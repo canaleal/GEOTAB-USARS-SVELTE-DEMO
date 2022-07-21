@@ -5870,7 +5870,7 @@ var app = (function () {
     			div = element("div");
     			create_component(streetview.$$.fragment);
     			attr_dev(div, "class", "col-span-1 md:col-span-1 row-span-1");
-    			add_location(div, file, 60, 3, 2127);
+    			add_location(div, file, 60, 3, 2148);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -6011,11 +6011,11 @@ var app = (function () {
     			div2 = element("div");
     			create_component(formrequest.$$.fragment);
     			attr_dev(div0, "class", "col-span-1 md:col-span-1 row-span-1");
-    			add_location(div0, file, 48, 3, 1695);
+    			add_location(div0, file, 48, 3, 1716);
     			attr_dev(div1, "class", "col-span-1 md:col-span-1 row-span-1");
-    			add_location(div1, file, 52, 3, 1816);
+    			add_location(div1, file, 52, 3, 1837);
     			attr_dev(div2, "class", "col-span-1 md:col-span-1 row-span-1");
-    			add_location(div2, file, 56, 3, 1939);
+    			add_location(div2, file, 56, 3, 1960);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div0, anchor);
@@ -6285,15 +6285,15 @@ var app = (function () {
     			t5 = space();
     			create_component(footer.$$.fragment);
     			attr_dev(div0, "class", "col-span-1 md:col-span-1 row-span-1");
-    			add_location(div0, file, 43, 2, 1566);
+    			add_location(div0, file, 43, 2, 1587);
     			attr_dev(div1, "class", "col-span-1 md:col-span-3 row-span-6 grid grid-cols-1 md:grid-cols-1 gap-4 h-fit");
-    			add_location(div1, file, 42, 1, 1469);
+    			add_location(div1, file, 42, 1, 1490);
     			attr_dev(div2, "class", "absolute top-1 left-1 ");
-    			add_location(div2, file, 73, 2, 2503);
+    			add_location(div2, file, 73, 2, 2524);
     			attr_dev(div3, "class", "col-span-1 md:col-span-9 row-span-6 relative");
-    			add_location(div3, file, 71, 1, 2305);
+    			add_location(div3, file, 71, 1, 2326);
     			attr_dev(section, "class", "grid grid-cols-1 md:grid-cols-12 grid-rows-6 gap-4 pb-4 px-4 h-fit");
-    			add_location(section, file, 41, 0, 1380);
+    			add_location(section, file, 41, 0, 1401);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -6493,8 +6493,8 @@ var app = (function () {
     		id: 0,
     		photoURL: "https://www.meme-arsenal.com/memes/bd75c0339be8bbe24aeecd9c64764321.jpg",
     		displayName: "Kingston",
-    		center: [-76.5, 44.233334],
-    		zoom: 12,
+    		center: [-79.42164234555081, 43.65464375881821],
+    		zoom: 10,
     		pitch: 45,
     		bearing: -17.6
     	};

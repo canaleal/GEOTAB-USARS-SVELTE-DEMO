@@ -25,8 +25,8 @@
 		id: 0,
 		photoURL: "https://www.meme-arsenal.com/memes/bd75c0339be8bbe24aeecd9c64764321.jpg",
 		displayName: "Kingston",
-		center: [-76.5, 44.233334],
-		zoom: 12,
+		center: [-79.42164234555081, 43.65464375881821],
+		zoom: 10,
 		pitch: 45,
 		bearing: -17.6,
 	};
