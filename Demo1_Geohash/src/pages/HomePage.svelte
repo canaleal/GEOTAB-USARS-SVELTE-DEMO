@@ -10,7 +10,8 @@
 	import FormRequest from "components/FormRequest.svelte";
 	import StreetView from "components/StreetView.svelte";
 	import Chart from "components/Chart.svelte";
-
+	import { Data } from "constants/index.js";
+	import { getDataWithAxiosAndParams } from "utils/fetch-data.js";
 	import { getCurrentDateInYYYYMMDD, getCurrentTime } from "utils/fetch-time.js";
 
 	let selectedMenu = 1;
@@ -30,9 +31,19 @@
 		pitch: 45,
 		bearing: -17.6,
 	};
+	let treesData = null;
 
-	const fetchData = () => {
-		alert(`Fetching data for: ${selectedDate} at ${selectedTime} => Polygon : ${selectedPolygon}`);
+	const fetchData = async() => {
+		console.log(`Fetching data for: ${selectedDate} at ${selectedTime} => Polygon : ${JSON.stringify(selectedPolygon.geometry.coordinates)}`);
+
+		let payload = {
+			date: selectedDate,
+			time: selectedTime,
+			polygon: JSON.stringify(selectedPolygon.geometry.coordinates),
+		};
+		const data = await getDataWithAxiosAndParams(Data.TREES_SEARCH_URL, payload)
+		console.log(data);
+		treesData = data;
 	};
 </script>
 
@@ -62,7 +73,9 @@
 				<StreetView bind:pointOfInterest />
 			</div>
 		{:else if selectedMenu === 3}
-			 <Chart />
+			 <div class="col-span-1 md:col-span-1 row-span-1">
+				<Chart />
+			</div>
 		{/if}
 
 
@@ -70,7 +83,7 @@
 	</div>
 
 	<div class="col-span-1 md:col-span-9  row-span-6 relative">
-		<Map {kingstonDetails} bind:collectionList bind:mapStyle bind:isReadyForStyleSwitching bind:selectedPolygon bind:pointOfInterest />
+		<Map {kingstonDetails} bind:treesData bind:collectionList bind:mapStyle bind:isReadyForStyleSwitching bind:selectedPolygon bind:pointOfInterest />
 		<div class="absolute top-1 left-1 ">
 			<StyleSelector bind:mapStyle bind:isReadyForStyleSwitching />
 		</div>

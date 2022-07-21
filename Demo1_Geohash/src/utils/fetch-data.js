@@ -7,6 +7,16 @@ export const getDataWithAxios = async (sourceLink) => {
   return response.data;
 };
 
+export const getDataWithAxiosAndParams = async (sourceLink, payload) => {
+  const response = await axios.get(
+    sourceLink,
+    {
+      params: payload,
+    },
+  );
+  return response.data;
+};
+
 export const getDataUsingFetch = async (url) => fetch(url, {
   headers: {
     'Content-Type': 'application/json',

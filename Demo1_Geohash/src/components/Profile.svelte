@@ -1,8 +1,10 @@
 <script>
 	import { getCurrentDateTime } from "utils/fetch-time";
+	import area from '@turf/area'
+
 	export let kingstonDetails;
 	export let selectedPolygon;
-
+	$: polygonArea = selectedPolygon ? area(selectedPolygon) : null
 	
 </script>
 
@@ -13,7 +15,7 @@
 		<div class="alert alert-red my-1" role="alert">Draw a polygon before searching.</div>
 	{:else}
 		<div class="alert alert-green my-1" role="alert">
-			{selectedPolygon} 
+			{Math.round(polygonArea * 100) / 100} m<sup>2</sup>
 		</div>
 	{/if}
 

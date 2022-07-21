@@ -1,0 +1,29 @@
+{
+  "name": "demo_api",
+  "version": "1.0.0",
+  "description": "Simple Node API for testing the polygon search feature for the svelte app",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alex Canales",
+  "license": "ISC",
+  "dependencies": {
+    "@turf/boolean-point-in-polygon": "^6.5.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "got": "^11.8.5",
+    "morgan": "^1.10.0",
+    "node-fetch": "^3.2.8",
+    "nodemon": "^2.0.18",
+    "turf-point": "^2.0.1",
+    "turf-polygon": "^1.0.3",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.18.0"
+  }
+}
