@@ -19,7 +19,8 @@
 	let collectionList = [];
 	let selectedPolygon = null;
 	let selectedDate = getCurrentDateInYYYYMMDD();
-	let selectedTime = getCurrentTime();
+	let selectedFrom = getCurrentTime();
+	let selectedTo = getCurrentTime();
 	let mapStyle = "outdoors-v11";
 	let isReadyForStyleSwitching = false;
 	let kingstonDetails = {
@@ -34,11 +35,12 @@
 	let treesData = null;
 
 	const fetchData = async() => {
-		console.log(`Fetching data for: ${selectedDate} at ${selectedTime} => Polygon : ${JSON.stringify(selectedPolygon.geometry.coordinates)}`);
+		console.log(`Fetching data for: ${selectedDate} from ${selectedFrom} to ${selectedTo} => Polygon : ${JSON.stringify(selectedPolygon.geometry.coordinates)}`);
 
 		let payload = {
 			date: selectedDate,
-			time: selectedTime,
+			timeFrom: selectedFrom,
+			timeTo: selectedTo,
 			polygon: JSON.stringify(selectedPolygon.geometry.coordinates),
 		};
 		const data = await getDataWithAxiosAndParams(Data.TREES_SEARCH_URL, payload)
@@ -58,7 +60,7 @@
 
 		{#if selectedMenu === 1}
 			<div class="col-span-1 md:col-span-1 row-span-1">
-				<DateTime bind:selectedDate bind:selectedTime />
+				<DateTime bind:selectedDate bind:selectedFrom bind:selectedTo />
 			</div>
 
 			<div class="col-span-1 md:col-span-1 row-span-1">
@@ -66,7 +68,7 @@
 			</div>
 
 			<div class="col-span-1 md:col-span-1 row-span-1">
-				<FormRequest bind:selectedDate bind:selectedTime bind:selectedPolygon {fetchData} />
+				<FormRequest bind:selectedDate bind:selectedFrom bind:selectedTo bind:selectedPolygon {fetchData} />
 			</div>
 		{:else if selectedMenu === 2}
 			<div class="col-span-1 md:col-span-1 row-span-1">
